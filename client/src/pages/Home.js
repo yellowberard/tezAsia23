@@ -3,7 +3,6 @@ import Background from "../components/Background";
 import { Button, Group, createStyles } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
 import { useNavigate } from "react-router-dom";
-import "./Home.css";
 
 import logo from "../assets/logo.png";
 

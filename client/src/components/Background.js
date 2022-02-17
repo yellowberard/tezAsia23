@@ -1,18 +1,18 @@
 import "./Background.css";
 import { useMantineTheme } from "@mantine/core";
 
-import blue2 from "../assets/Blue_2.png";
-import green5 from "../assets/Green_5.png";
-import red9 from "../assets/Red_9.png";
-import yellow0 from "../assets/Yellow_0.png";
-import blue3 from "../assets/Blue_3.png";
-import green4 from "../assets/Green_4.png";
-import red7 from "../assets/Red_7.png";
-import yellow1 from "../assets/Yellow_1.png";
-import wild from "../assets/Wild.png";
-import wild4 from "../assets/Wild_Draw.png";
-import yellow8 from "../assets/Yellow_8.png";
-import blue6 from "../assets/Blue_6.png";
+import blue2 from "../assets/Cards/Blue_2.png";
+import green5 from "../assets/Cards/Green_5.png";
+import red9 from "../assets/Cards/Red_9.png";
+import yellow0 from "../assets/Cards/Yellow_0.png";
+import blue3 from "../assets/Cards/Blue_3.png";
+import green4 from "../assets/Cards/Green_4.png";
+import red7 from "../assets/Cards/Red_7.png";
+import yellow1 from "../assets/Cards/Yellow_1.png";
+import wild from "../assets/Cards/Wild.png";
+import wild4 from "../assets/Cards/Wild_Draw.png";
+import yellow8 from "../assets/Cards/Yellow_8.png";
+import blue6 from "../assets/Cards/Blue_6.png";
 
 const cardsPics = [
   blue2,
