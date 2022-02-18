@@ -1,4 +1,3 @@
-import React from "react";
 import { Avatar, Badge, useMantineTheme } from "@mantine/core";
 
 import { AVATARS } from "../../utils/constants";

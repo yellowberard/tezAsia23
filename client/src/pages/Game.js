@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-import Player from "../classes/Player";
+//import Player from "../classes/Player";
 //import Deck from "../classes/Deck";
 //import GameState from "../classes/GameState";
 import Pile from "../components/Pile/Pile";
+import { useSelector } from "react-redux";
 
 import { useMantineTheme } from "@mantine/core";
 import TopHand from "../components/Hand/TopHand";
@@ -12,29 +14,34 @@ import RightHand from "../components/Hand/RightHand";
 import LeftHand from "../components/Hand/LeftHand";
 
 function Game() {
-  // const [card, setCardSrc] = useState([]);
-  const [players, setPlayers] = useState([]);
+  //const [topCard, setTopCard] = useState([]);
+  //const [players, setPlayers] = useState([]);
+  const playersList = useSelector((state) => state.game.players);
+  const navigate = useNavigate();
 
   const theme = useMantineTheme();
 
   const positions = [TopHand, RightHand, LeftHand];
 
   useEffect(() => {
-    //let deck = new Deck();
+    window.onpopstate = (e) => {
+      navigate("/");
+      //console.log("true");
+    };
     //console.log(deck);
-    let player1 = new Player("1234", "player1", "jd3jds");
+    // let player1 = new Player("1234", "player1", "jd3jds");
     // let card1 = deck.removeCard();
     // player1.addCardToHand(card1);
     //player1.addCardToHand(deck.removeCard());
     //player1.removeCardFromHand(card1.getCardID);
     //console.log(player1);
-    let player2 = new Player("1789", "player2", "jd3jds");
-    let player3 = new Player("30489", "player3", "jd3jds");
-    let player4 = new Player("313569", "player4", "jd3jds");
-    setPlayers([player1, player2, player3, player4]);
-
+    // let player2 = new Player("1789", "player2", "jd3jds");
+    //let player3 = new Player("30489", "player3", "jd3jds");
+    //let player4 = new Player("313569", "player4", "jd3jds");
+    //let gameState = new GameState([player1, player2]);
+    //setPlayers(gameState.getPlayers());
+    // setTopCard(gameState.getTopCard());
     //console.log(players);
-
     //let gamestate = new GameState([player1, player2, player3], deck);
     //console.log(gamestate);
     //gamestate.getTopCard();
@@ -50,7 +57,7 @@ function Game() {
     //console.log(player1.hand.cards);
     //player1.addCardToHand(topCard);
     // player1.removeCardFromHand(topCard.getCardID());
-  }, []);
+  }, [navigate]);
 
   return (
     <div
@@ -95,12 +102,12 @@ function Game() {
           return <Component key={players[idx].id} player={player} />;
         });
       })} */}
-      {players.map((player, idx) => {
+      {playersList.map((player) => {
         if (player.id === "1234") {
           return <PlayerHand key={player.id} player={player} />;
         }
 
-        return positions.splice(0, 1).map((Component, idx) => {
+        return positions.splice(0, 1).map((Component) => {
           return <Component key={player.id} player={player} />;
         });
       })}

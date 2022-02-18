@@ -1,11 +1,12 @@
 import { shuffle } from "./../utils";
+import Deck from "../classes/Deck";
 
 export default class GameState {
-  constructor(players, deck) {
+  constructor(players) {
     this.players = players;
     this.currentPlayer = ""; // current player's turn
-    this.deck = deck;
-    this.topCard = deck.removeTopCard();
+    this.deck = new Deck();
+    this.topCard = this.deck.removeCard();
     this.discardPile = [];
   }
 
@@ -29,6 +30,7 @@ export default class GameState {
 
   setTopCard(card) {
     this.topCard = card;
+    this.addToDiscardPile(card);
   }
 
   getTopCard() {
@@ -36,9 +38,17 @@ export default class GameState {
     return this.topCard;
   }
 
+  addToDiscardPile(card) {
+    this.discardPile.append(card);
+  }
+
   removeFromDeck(playerID) {
     //draw and action card move
     //check if the deck.length is less than or equal 4, if so keep top card and add the rest of the discard pile to draw pile
     //remove from draw deck (call remove function from deck class) and find player with that id and add the card to the player's deck
+  }
+
+  getPlayers() {
+    return this.players;
   }
 }

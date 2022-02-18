@@ -1,6 +1,7 @@
-import React from "react";
-import { createStyles, Text } from "@mantine/core";
+import { useEffect, useState } from "react";
+import { createStyles, Grid, Text } from "@mantine/core";
 import NameTag from "../NameTag/NameTag";
+import Card from "../Card/Card";
 
 const useStyles = createStyles((theme) => ({
   position: {
@@ -12,7 +13,7 @@ const useStyles = createStyles((theme) => ({
   },
   area: {
     width: "900px",
-    height: "135px",
+    height: "145px",
     backgroundColor: `${theme.colors.red[4]}`,
     borderTopLeftRadius: "400px",
     borderTopRightRadius: "400px",
@@ -25,22 +26,66 @@ const useStyles = createStyles((theme) => ({
     left: "45%",
     color: "black",
   },
+  cards: {
+    display: "flex",
+    position: "absolute",
+    top: "20%",
+    left: "13%",
+  },
+  lessCard: {
+    marginLeft: "-2rem",
+
+    "&:not(:first-of-type)": {
+      marginLeft: "-6.2rem",
+    },
+    "&:hover": {
+      transform: "translateY(-1rem)",
+    },
+  },
+
+  moreCard: {
+    marginLeft: "-2rem",
+    "&:not(:first-of-type)": {
+      marginLeft: "-7.6rem",
+    },
+    "&:hover": {
+      transform: "translateY(-2rem)",
+    },
+  },
 }));
 
 function PlayerHand({ player }) {
   //console.log(player);
+  const [cardsLength, setCardLength] = useState(0);
+
+  useEffect(() => {
+    setCardLength(player.hand.length);
+  }, [player.hand.length]);
+
   const { classes } = useStyles();
   return (
     <div className={classes.position}>
       <div className={classes.area}>
-        <Text size="xl" className={classes.text}>
+        {/*  <Text size="xl" className={classes.text}>
           {player ? player.name : "PlayerHand"}
-        </Text>
+        </Text> */}
         <NameTag />
       </div>
-      {
-        //display player card here
-      }
+
+      <div className={classes.cards}>
+        {player.hand.map((card, index) => {
+          return (
+            <div
+              key={index}
+              className={
+                cardsLength >= 16 ? classes.moreCard : classes.lessCard
+              }
+            >
+              <Card key={card.id} src={card.src} />
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
   //return that players cards and nametag

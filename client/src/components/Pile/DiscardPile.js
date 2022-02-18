@@ -1,25 +1,16 @@
-import React, { useEffect, useState } from "react";
-
-import Deck from "../../classes/Deck";
+import React from "react";
+import { useSelector } from "react-redux";
 
 function DiscardPile() {
-  const [topCard, setTopCard] = useState([]);
-  const [deck, setDeck] = useState([]);
-  useEffect(() => {
-    let deck = new Deck();
-    setDeck(deck);
-    setTopCard(deck.removeCard());
-  }, []);
+  const discardCard = useSelector((state) => state.game.TopCard);
+
   return (
     <div>
       <img
         //style={{ width: "165px", height: "200px" }}
         style={{ width: "180px", height: "230px" }}
-        src={topCard.src}
+        src={discardCard.src}
         alt="uno card"
-        onClick={() => {
-          console.log(deck.removeCard());
-        }}
       />
     </div>
   );

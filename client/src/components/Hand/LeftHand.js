@@ -1,6 +1,7 @@
-import React from "react";
+import { useEffect, useState } from "react";
 import { createStyles, Text } from "@mantine/core";
 import NameTag from "../NameTag/NameTag";
+import Card from "../Card/Card";
 
 const useStyles = createStyles((theme) => ({
   position: {
@@ -10,7 +11,7 @@ const useStyles = createStyles((theme) => ({
     transform: "translateX(-50%) translateY(-50%) rotate(90deg)",
   },
   area: {
-    width: "800px",
+    width: "870px",
     height: "125px",
     backgroundColor: `${theme.colors.red[4]}`,
     borderTopLeftRadius: "400px",
@@ -30,23 +31,67 @@ const useStyles = createStyles((theme) => ({
     left: "5%",
     transform: "translateX(-50%) translateY(-50%) rotate(270deg)",
   },
+  cards: {
+    display: "flex",
+    position: "absolute",
+    top: "20%",
+    left: "13%",
+  },
+  lessCard: {
+    marginLeft: "-2rem",
+
+    "&:not(:first-of-type)": {
+      marginLeft: "-6.2rem",
+    },
+    "&:hover": {
+      transform: "translateY(-1rem)",
+    },
+  },
+
+  moreCard: {
+    marginLeft: "-2rem",
+    "&:not(:first-of-type)": {
+      marginLeft: "-7.6rem",
+    },
+    "&:hover": {
+      transform: "translateY(-2rem)",
+    },
+  },
 }));
 
 function LeftHand({ player }) {
   const { classes } = useStyles();
+  //console.log(player);
+  const [cardsLength, setCardLength] = useState(0);
+
+  useEffect(() => {
+    setCardLength(player.hand.length);
+  }, [player.hand.length]);
+
   return (
     <div className={classes.position}>
       <div className={classes.area}>
-        <Text size="xl" className={classes.text}>
+        {/*  <Text size="xl" className={classes.text}>
           {player ? player.name : "LeftHand"}
-        </Text>
+        </Text> */}
       </div>
       <div className={classes.tag}>
         <NameTag playerName={player.name} />
       </div>
-      {
-        //display player card here
-      }
+      <div className={classes.cards}>
+        {player.hand.map((card, index) => {
+          return (
+            <div
+              key={index}
+              className={
+                cardsLength >= 16 ? classes.moreCard : classes.lessCard
+              }
+            >
+              <Card key={card.id} src={card.src} />
+            </div>
+          );
+        })}
+      </div>
     </div>
   ); //change "LeftHand to "" {empty string}"
   //return that players card and nametag

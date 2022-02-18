@@ -1,11 +1,9 @@
-import Hand from "../classes/Hand";
-
 export default class Player {
   constructor(id, name, room) {
     this.id = id;
     this.name = name;
     this.room = room;
-    this.hand = new Hand();
+    this.hand = [];
   }
 
   addCardToHand(card) {
@@ -22,6 +20,7 @@ export default class Player {
 
   getHand() {
     console.log(this.hand);
+    return this.hand;
   }
 
   getHandTotal() {
