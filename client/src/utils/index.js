@@ -1,5 +1,4 @@
 //Shuffle players and cards (Fisher–Yates shuffle)
-
 export function shuffle(items) {
   let shuffledArray = [...items];
   let m = shuffledArray.length;
@@ -16,4 +15,19 @@ export function shuffle(items) {
   }
 
   return shuffledArray;
+}
+
+export function getRandomAvatar() {
+  let avatarList = [];
+  let avatarID;
+  while (avatarList.length < 4) {
+    avatarID = Math.floor(Math.random() * 10);
+    if (avatarList.includes(avatarID)) {
+      continue;
+    } else {
+      avatarList.push(avatarID);
+    }
+  }
+
+  return avatarList;
 }

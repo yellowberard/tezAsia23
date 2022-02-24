@@ -1,13 +1,9 @@
 import { Avatar, Badge, useMantineTheme } from "@mantine/core";
+import { useEffect } from "react";
 
 import { AVATARS } from "../../utils/constants";
 
-function NameTag({ playerName }) {
-  function getRandomAvatar() {
-    return AVATARS[Math.floor(Math.random() * AVATARS.length)];
-  }
-
-  const randomAvatarSrc = getRandomAvatar();
+function NameTag({ playerName, id }) {
   const theme = useMantineTheme();
 
   const avatar = (
@@ -20,7 +16,7 @@ function NameTag({ playerName }) {
       alt="Avatar for badge"
       size={45}
       mr={5}
-      src={randomAvatarSrc}
+      src={AVATARS[id]}
     />
   );
 
@@ -47,7 +43,7 @@ function NameTag({ playerName }) {
             borderRadius: "50%",
             backgroundColor: `${theme.colors.gray[0]}`,
           }}
-          src={randomAvatarSrc}
+          src={AVATARS[id]}
           size={80}
           alt="it's me"
         />

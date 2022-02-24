@@ -19,6 +19,11 @@ const useStyles = createStyles((theme) => ({
     borderTopRightRadius: "400px",
     borderBottom: "0",
     boxSizing: "border-box",
+
+    "@media (max-width:2000px)": {
+      width: "800px",
+      height: "125px",
+    },
   },
   text: {
     position: "absolute",
@@ -32,6 +37,11 @@ const useStyles = createStyles((theme) => ({
     top: "20%",
     left: "99.5%",
     transform: "translateX(-50%) translateY(-50%) rotate(90deg)",
+
+    "@media (max-width:2000px)": {
+      top: "10%",
+      left: "89.9%",
+    },
   },
   cards: {
     display: "flex",
@@ -47,6 +57,12 @@ const useStyles = createStyles((theme) => ({
     },
     "&:hover": {
       transform: "translateY(-1rem)",
+    },
+    "@media (max-width:2000px)": {
+      marginLeft: "-4rem",
+      "&:not(:first-of-type)": {
+        marginLeft: "-6.8rem",
+      },
     },
   },
 
@@ -79,7 +95,7 @@ function RightHand({ player }) {
         </Text> */}
       </div>
       <div className={classes.tag}>
-        <NameTag playerName={player.name} />
+        <NameTag playerName={player.name} id={player.avatarID} />
       </div>
       <div className={classes.cards}>
         {player.hand.map((card, index) => {
@@ -90,7 +106,7 @@ function RightHand({ player }) {
                 cardsLength >= 16 ? classes.moreCard : classes.lessCard
               }
             >
-              <Card key={card.id} src={card.src} />
+              <Card key={card.id} card={card} playerID={player.id} />
             </div>
           );
         })}

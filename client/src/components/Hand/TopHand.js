@@ -31,6 +31,9 @@ const useStyles = createStyles((theme) => ({
     top: "67%",
     left: "108%",
     transform: "translateX(-50%) translateY(-50%) rotate(180deg)",
+    "@media (max-width:2000px)": {
+      top: "58%",
+    },
   },
   cards: {
     display: "flex",
@@ -76,7 +79,7 @@ function TopHand({ player }) {
         </Text> */}
       </div>
       <div className={classes.tag}>
-        <NameTag playerName={player.name} />
+        <NameTag playerName={player.name} id={player.avatarID} />
       </div>
       <div className={classes.cards}>
         {player.hand.map((card, index) => {
@@ -87,7 +90,7 @@ function TopHand({ player }) {
                 cardsLength >= 16 ? classes.moreCard : classes.lessCard
               }
             >
-              <Card key={card.id} src={card.src} />
+              <Card key={card.id} card={card} playerID={player.id} />
             </div>
           );
         })}

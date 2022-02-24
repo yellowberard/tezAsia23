@@ -69,7 +69,7 @@ function PlayerHand({ player }) {
         {/*  <Text size="xl" className={classes.text}>
           {player ? player.name : "PlayerHand"}
         </Text> */}
-        <NameTag />
+        <NameTag id={player.avatarID} />
       </div>
 
       <div className={classes.cards}>
@@ -81,7 +81,7 @@ function PlayerHand({ player }) {
                 cardsLength >= 16 ? classes.moreCard : classes.lessCard
               }
             >
-              <Card key={card.id} src={card.src} />
+              <Card key={card.id} card={card} playerID={player.id} />
             </div>
           );
         })}

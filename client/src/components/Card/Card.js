@@ -1,8 +1,21 @@
 import React from "react";
+import { useDrag } from "react-dnd";
 
-function Card({ src }) {
+function Card({ card, playerID }) {
+  const [{ isDragging }, drag] = useDrag(() => ({
+    type: "image",
+    item: { card: card, player: playerID },
+    collect: (monitor) => ({
+      isDragging: !!monitor.isDragging(),
+    }),
+  }));
   return (
-    <img style={{ width: "145px", height: "215px" }} src={src} alt="uno card" />
+    <img
+      ref={drag}
+      style={{ width: "145px", height: "215px" }}
+      src={card.src}
+      alt="uno card"
+    />
   );
 }
 

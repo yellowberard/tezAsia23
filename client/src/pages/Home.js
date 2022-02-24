@@ -10,6 +10,7 @@ import { reset, start } from "../feature/gameSlice";
 import { persistor } from "../app/store";
 import logo from "../assets/logo.png";
 import Deck from "../classes/Deck";
+import { getRandomAvatar } from "../utils";
 
 const useStyles = createStyles((theme) => ({
   img: {
@@ -44,11 +45,15 @@ function Home() {
     //player1.addCardToHand(deck.removeCard());
     //player1.removeCardFromHand(card1.getCardID);
     //console.log(player1);
+
+    //shuffle players before pushing to redux
     let player2 = new Player("1789", "player2", "jd3jds");
     let player3 = new Player("30489", "player3", "jd3jds");
     let player4 = new Player("313569", "player4", "jd3jds");
 
     let deck = new Deck();
+
+    let avatarList = getRandomAvatar();
 
     //find way to create multiple json objects based for players below
     let players = [
@@ -57,25 +62,29 @@ function Home() {
         name: player1.name,
         room: player1.room,
         hand: player1.hand,
+        avatarID: avatarList[0],
       },
       {
         id: player2.id,
         name: player2.name,
         room: player2.room,
         hand: player2.hand,
+        avatarID: avatarList[1],
       },
-      {
+      /* {
         id: player3.id,
         name: player3.name,
         room: player3.room,
         hand: player3.hand,
+        avatarID: avatarList[2],
       },
       {
         id: player4.id,
         name: player4.name,
         room: player4.room,
         hand: player4.hand,
-      },
+        avatarID: avatarList[3],
+      }, */
     ];
 
     dispatch(
