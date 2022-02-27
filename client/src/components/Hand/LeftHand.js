@@ -81,8 +81,10 @@ function LeftHand({ player }) {
   const [cardsLength, setCardLength] = useState(0);
 
   useEffect(() => {
+    if (cardsLength === 0) {
+    }
     setCardLength(player.hand.length);
-  }, [player.hand.length]);
+  }, [cardsLength, player.hand.length]);
 
   return (
     <div className={classes.position}>
@@ -92,7 +94,11 @@ function LeftHand({ player }) {
         </Text> */}
       </div>
       <div className={classes.tag}>
-        <NameTag playerName={player.name} id={player.avatarID} />
+        <NameTag
+          playerName={player.name}
+          playerID={player.id}
+          id={player.avatarID}
+        />
       </div>
       <div className={classes.cards}>
         {player.hand.map((card, index) => {

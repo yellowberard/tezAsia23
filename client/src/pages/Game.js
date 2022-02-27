@@ -5,21 +5,25 @@ import { useNavigate } from "react-router-dom";
 //import Deck from "../classes/Deck";
 //import GameState from "../classes/GameState";
 import Pile from "../components/Pile/Pile";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 import { useMantineTheme } from "@mantine/core";
 import TopHand from "../components/Hand/TopHand";
 import PlayerHand from "../components/Hand/PlayerHand";
 import RightHand from "../components/Hand/RightHand";
 import LeftHand from "../components/Hand/LeftHand";
+import ColorChooser from "../components/ColorChooser/ColorChooser";
 
 function Game() {
   //const [topCard, setTopCard] = useState([]);
   //const [players, setPlayers] = useState([]);
-  const playersList = useSelector((state) => state.game.players);
-  const navigate = useNavigate();
 
+  const playersList = useSelector((state) => state.game.players);
+  const isWildCard = useSelector((state) => state.game.isWild);
+  //console.log(isWildCard);
+  const navigate = useNavigate();
   const theme = useMantineTheme();
+  const dispatch = useDispatch();
 
   const positions = [TopHand, RightHand, LeftHand];
 
@@ -73,35 +77,6 @@ function Game() {
       }}
     >
       <Pile />
-      {/*card.map((card1, i) => {
-        return (
-          <img
-            key={i}
-            src={card1.src}
-            alt=""
-            style={{ width: "100px", height: "130px" }}
-          />
-        );
-      }) */}
-      {
-        //console.log(players.length)
-      }
-      {/*       {positions.slice(0, players.length).map((Component, idx) => {
-          //console.log(players[]);
-          // console.log(Component);
-
-          //console.log(idx);
-          if (player.id === "1234") {
-            //console.log(idx);
-            index = idx;
-            return <PlayerHand key={players[idx].id} player={player} />;
-          }
-          //console.log(Component);
-          //console.log(Component);
-
-          return <Component key={players[idx].id} player={player} />;
-        });
-      })} */}
       {playersList.map((player) => {
         if (player.id === "1234") {
           return <PlayerHand key={player.id} player={player} />;
@@ -111,6 +86,10 @@ function Game() {
           return <Component key={player.id} player={player} />;
         });
       })}
+      {isWildCard && <ColorChooser />}
+      {
+        //isWin display who won here !
+      }
     </div>
   );
 }

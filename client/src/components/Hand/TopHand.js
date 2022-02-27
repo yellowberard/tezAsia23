@@ -68,8 +68,11 @@ function TopHand({ player }) {
   const { classes } = useStyles();
 
   useEffect(() => {
+    if (cardsLength === 0) {
+    }
+
     setCardLength(player.hand.length);
-  }, [player.hand.length]);
+  }, [player.hand.length, cardsLength]);
 
   return (
     <div className={classes.position}>
@@ -79,7 +82,11 @@ function TopHand({ player }) {
         </Text> */}
       </div>
       <div className={classes.tag}>
-        <NameTag playerName={player.name} id={player.avatarID} />
+        <NameTag
+          playerName={player.name}
+          playerID={player.id}
+          id={player.avatarID}
+        />
       </div>
       <div className={classes.cards}>
         {player.hand.map((card, index) => {

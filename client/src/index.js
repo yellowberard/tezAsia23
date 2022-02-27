@@ -7,6 +7,7 @@ import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
+import { NotificationsProvider } from "@mantine/notifications";
 
 import { Loader } from "@mantine/core";
 
@@ -15,7 +16,9 @@ ReactDOM.render(
     <Provider store={store}>
       <PersistGate loading={<Loader size={50} />} persistor={persistor}>
         <DndProvider backend={HTML5Backend}>
-          <App />
+          <NotificationsProvider>
+            <App />
+          </NotificationsProvider>
         </DndProvider>
       </PersistGate>
     </Provider>

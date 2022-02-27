@@ -59,8 +59,10 @@ function PlayerHand({ player }) {
   const [cardsLength, setCardLength] = useState(0);
 
   useEffect(() => {
+    if (cardsLength === 0) {
+    }
     setCardLength(player.hand.length);
-  }, [player.hand.length]);
+  }, [cardsLength, player.hand.length]);
 
   const { classes } = useStyles();
   return (
@@ -69,7 +71,7 @@ function PlayerHand({ player }) {
         {/*  <Text size="xl" className={classes.text}>
           {player ? player.name : "PlayerHand"}
         </Text> */}
-        <NameTag id={player.avatarID} />
+        <NameTag playerID={player.id} id={player.avatarID} />
       </div>
 
       <div className={classes.cards}>

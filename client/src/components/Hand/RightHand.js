@@ -95,7 +95,11 @@ function RightHand({ player }) {
         </Text> */}
       </div>
       <div className={classes.tag}>
-        <NameTag playerName={player.name} id={player.avatarID} />
+        <NameTag
+          playerName={player.name}
+          playerID={player.id}
+          id={player.avatarID}
+        />
       </div>
       <div className={classes.cards}>
         {player.hand.map((card, index) => {

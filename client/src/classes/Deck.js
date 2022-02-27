@@ -91,14 +91,14 @@ export default class Deck {
       for (let i = 0; i < COLORS.length; i++) {
         this.cards.push({
           id: uuidv4(),
-          name: `${COLORS[i]}reverse`,
+          name: `reverse`,
           src: ASSETSREVERSE[i],
           color: COLORS[i],
           type: "reverse",
         });
         this.cards.push({
           id: uuidv4(),
-          name: `${COLORS[i]}skip`,
+          name: `skip`,
           src: ASSETSKIP[i],
           color: COLORS[i],
           type: "skip",
@@ -106,7 +106,7 @@ export default class Deck {
 
         this.cards.push({
           id: uuidv4(),
-          name: `${COLORS[i]}draw`,
+          name: `draw`,
           src: ASSETSDRAW[i],
           color: COLORS[i],
           type: "draw",
@@ -117,7 +117,7 @@ export default class Deck {
           name: `${WILDS[i]}card`,
           src: ASSETSWILD[i],
           color: "random",
-          type: "wild",
+          type: `${WILDS[i]}`,
         });
       }
     }

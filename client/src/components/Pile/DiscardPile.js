@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { move } from "../../feature/gameSlice";
+
 import { useDrop } from "react-dnd";
+import { move, setWildCard } from "../../feature/gameSlice";
 
 function DiscardPile() {
   const discardCard = useSelector((state) => state.game.TopCard);
-  const [isWildCard, setisWildCard] = useState(false);
+  const colorChosen = useSelector((state) => state.game.isColorChosen);
   const dispatch = useDispatch();
+  // console.log(colorChosen);
 
   const [{ isOver }, drop] = useDrop(() => ({
     accept: "image",
@@ -17,12 +19,15 @@ function DiscardPile() {
   }));
 
   useEffect(() => {
-    if (discardCard.type === "wild") {
-      setisWildCard(true);
+    if (
+      (discardCard.type === "Wild4" || discardCard.type === "Wild") &&
+      colorChosen === false
+    ) {
+      dispatch(setWildCard(true));
     } else {
-      setisWildCard(false);
+      dispatch(setWildCard(false));
     }
-  }, [discardCard]);
+  }, [colorChosen, discardCard.type, dispatch]);
 
   return (
     <div ref={drop}>
