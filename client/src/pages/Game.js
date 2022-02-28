@@ -13,6 +13,7 @@ import PlayerHand from "../components/Hand/PlayerHand";
 import RightHand from "../components/Hand/RightHand";
 import LeftHand from "../components/Hand/LeftHand";
 import ColorChooser from "../components/ColorChooser/ColorChooser";
+import Win from "../components/Win/Win";
 
 function Game() {
   //const [topCard, setTopCard] = useState([]);
@@ -20,6 +21,7 @@ function Game() {
 
   const playersList = useSelector((state) => state.game.players);
   const isWildCard = useSelector((state) => state.game.isWild);
+  const isWin = useSelector((state) => state.game.isWin);
   //console.log(isWildCard);
   const navigate = useNavigate();
   const theme = useMantineTheme();
@@ -89,6 +91,7 @@ function Game() {
       {isWildCard && <ColorChooser />}
       {
         //isWin display who won here !
+        isWin && <Win />
       }
     </div>
   );

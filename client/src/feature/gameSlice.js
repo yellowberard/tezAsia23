@@ -19,6 +19,7 @@ const initialState = {
   isWild: false,
   isColorChosen: false,
   isWin: false,
+  winner: {},
 };
 
 export const gameSlice = createSlice({
@@ -67,12 +68,34 @@ export const gameSlice = createSlice({
     draw(state, action) {
       //, action) {
       // draw from deck and add to player hand
+      state.currentType = "drawPile";
+      let currPlayerIndex;
+      let nextPlayerIndex;
+      const playerGameInfo = {
+        direction: state.direction,
+        currPlayerIndex: state.currentPlayer,
+        nextPlayerIndex: state.nextPlayer,
+        playerLength: state.players.length,
+        currentType: state.currentType,
+      };
 
-      if (state.deck.length >= 8) {
+      if (state.deck.length <= 8) {
         //move cards in discard except topCard to deckpile and shuffle again
-      }
+        console.log("deck is low in draw");
 
-      state.deck.pop();
+        console.log(current(state.discard));
+      }
+      const currentPlayerHand = state.players[state.currentPlayer].hand;
+      currentPlayerHand.push(state.deck.pop());
+
+      // switch player
+      [currPlayerIndex, nextPlayerIndex] =
+        state.players.length === 2
+          ? switchTwoPlayerGame(playerGameInfo)
+          : switchPlayers(playerGameInfo);
+
+      state.currentPlayer = currPlayerIndex;
+      state.nextPlayer = nextPlayerIndex;
     },
 
     move(state, action) {
@@ -90,8 +113,10 @@ export const gameSlice = createSlice({
         cardPlayed: cardPlayed,
       };
 
-      if (state.deck.length >= 8) {
+      if (state.deck.length <= 8) {
         //move cards in discard except topCard to deckpile and shuffle again
+        console.log("deck is low in move");
+        console.log(current(state.discard));
       }
 
       if (currentPlayer.id === playedPlayerID) {
@@ -152,6 +177,7 @@ export const gameSlice = createSlice({
 
           state.TopCard = cardPlayed;
           state.discard = [...state.discard, cardPlayed];
+
           state.currentColor = state.TopCard.color;
 
           //check for Wild4 and Wild card but do not chnage state.currentPlayer until current player chooses a new card color
@@ -179,7 +205,13 @@ export const gameSlice = createSlice({
       }
     },
 
-    Win(state, action) {},
+    Win(state, action) {
+      state.winner = {
+        name: action.payload.name,
+        avatarID: action.payload.avatar,
+      };
+      state.isWin = true;
+    },
 
     setWildCard(state, action) {
       state.isWild = action.payload;
@@ -225,6 +257,7 @@ export const {
   draw,
   reset,
   move,
+  Win,
   setWildCard,
   colorChange,
   setColorChosen,

@@ -11,7 +11,7 @@ function DeckPile() {
       style={{ width: "180px", height: "230px" }}
       src={BACKCARD}
       alt="uno back card"
-      onClick={() => {
+      onClick={(e) => {
         dispatch(draw());
       }}
     />

@@ -44,3 +44,31 @@ export function switchTwoPlayerGame({
 export function removeCardFromHand({ currentPlayer, cardPlayed }) {
   return currentPlayer.hand.filter((card) => card.id !== cardPlayed.id);
 }
+
+export function getWinnerScore(players) {
+  let score = 0;
+
+  players.forEach((player) => {
+    player.hand.forEach((card) => {
+      score = score + checkCardScore(card);
+    });
+  });
+
+  return score;
+}
+
+function checkCardScore(card) {
+  switch (card.type) {
+    case "reverse":
+    case "draw":
+    case "skip":
+      return 20;
+
+    case "Wild4":
+    case "Wild":
+      return 50;
+
+    default:
+      return 1;
+  }
+}

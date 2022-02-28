@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { createStyles, Text } from "@mantine/core";
+import { Win } from "../../feature/gameSlice";
+
 import NameTag from "../NameTag/NameTag";
 import Card from "../Card/Card";
 
@@ -64,15 +67,17 @@ const useStyles = createStyles((theme) => ({
 }));
 
 function TopHand({ player }) {
-  const [cardsLength, setCardLength] = useState(0);
   const { classes } = useStyles();
+  const dispatch = useDispatch();
+  const [cardsLength, setCardLength] = useState(0);
 
   useEffect(() => {
-    if (cardsLength === 0) {
+    if (player.hand.length === 0) {
+      dispatch(Win({ name: player.name, avatar: player.avatarID }));
     }
 
     setCardLength(player.hand.length);
-  }, [player.hand.length, cardsLength]);
+  }, [player.hand.length, dispatch, player]);
 
   return (
     <div className={classes.position}>

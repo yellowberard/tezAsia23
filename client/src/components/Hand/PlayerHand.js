@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { createStyles, Grid, Text } from "@mantine/core";
 import NameTag from "../NameTag/NameTag";
 import Card from "../Card/Card";
+import { Win } from "../../feature/gameSlice";
 
 const useStyles = createStyles((theme) => ({
   position: {
@@ -55,16 +57,18 @@ const useStyles = createStyles((theme) => ({
 }));
 
 function PlayerHand({ player }) {
-  //console.log(player);
+  const { classes } = useStyles();
+  const dispatch = useDispatch();
   const [cardsLength, setCardLength] = useState(0);
 
   useEffect(() => {
-    if (cardsLength === 0) {
+    if (player.hand.length === 0) {
+      dispatch(Win({ name: player.name, avatar: player.avatarID }));
     }
-    setCardLength(player.hand.length);
-  }, [cardsLength, player.hand.length]);
 
-  const { classes } = useStyles();
+    setCardLength(player.hand.length);
+  }, [player.hand.length, dispatch, player]);
+
   return (
     <div className={classes.position}>
       <div className={classes.area}>
