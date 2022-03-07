@@ -71,7 +71,7 @@ function Home() {
         hand: player2.hand,
         avatarID: avatarList[1],
       },
-      /* {
+      /*  {
         id: player3.id,
         name: player3.name,
         room: player3.room,

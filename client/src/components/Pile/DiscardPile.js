@@ -3,11 +3,30 @@ import { useSelector, useDispatch } from "react-redux";
 
 import { useDrop } from "react-dnd";
 import { move, setWildCard } from "../../feature/gameSlice";
+import { createStyles } from "@mantine/core";
+
+const useStyles = createStyles((theme) => ({
+  img: {
+    width: "180px",
+    height: "230px",
+
+    "@media (min-width: 180px) and (max-width: 299px)": {
+      width: "100px",
+      height: "120px",
+    },
+
+    "@media (min-width: 300px) and (max-width: 700px)": {
+      width: "115px",
+      height: "140px",
+    },
+  },
+}));
 
 function DiscardPile() {
   const discardCard = useSelector((state) => state.game.TopCard);
   const colorChosen = useSelector((state) => state.game.isColorChosen);
   const dispatch = useDispatch();
+  const { classes } = useStyles();
   // console.log(colorChosen);
 
   const [{ isOver }, drop] = useDrop(() => ({
@@ -33,7 +52,7 @@ function DiscardPile() {
     <div ref={drop}>
       <img
         //style={{ width: "165px", height: "200px" }}
-        style={{ width: "180px", height: "230px" }}
+        className={classes.img}
         src={discardCard.src}
         alt="uno card"
       />

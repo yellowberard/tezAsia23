@@ -1,7 +1,7 @@
 import React from "react";
 import DeckPile from "./DeckPile";
 import DiscardPile from "./DiscardPile";
-import "./Pile.css";
+
 import { createStyles, Text, Group } from "@mantine/core";
 import { useSelector, useDispatch } from "react-redux";
 
@@ -23,6 +23,21 @@ const useStyles = createStyles((theme, { color }) => ({
     top: "48%",
     left: "48%",
     transform: "translateX(-50%) translateY(-50%)",
+
+    "@media (max-width: 375px)": {
+      flexDirection: "column",
+      width: "110px",
+      top: "50%",
+      left: "48%",
+    },
+
+    "@media (min-width: 380px) and (max-width: 576px)": {
+      flexDirection: "column",
+      width: "110px",
+    },
+    "@media (min-width: 577px) and (max-width: 700px)": {
+      width: "350px",
+    },
   },
   background: {
     backgroundColor: ` ${theme.colors.gray[0]}`,
