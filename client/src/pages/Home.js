@@ -39,7 +39,7 @@ function Home() {
   const dispatch = useDispatch();
 
   function handleClickToGame() {
-    let player1 = new Player("1234", "player1", "jd3jds");
+    /*    let player1 = new Player("1234", "player1", "jd3jds");
     // let card1 = deck.removeCard();
     // player1.addCardToHand(card1);
     //player1.addCardToHand(deck.removeCard());
@@ -84,8 +84,8 @@ function Home() {
         room: player4.room,
         hand: player4.hand,
         avatarID: avatarList[3],
-      }, */
-    ];
+      }, 
+    ]; 
 
     dispatch(
       start({
@@ -93,9 +93,9 @@ function Home() {
         deck: deck.getDeck(),
         //topCard: deck.removeCard(),
       })
-    );
+    ); */
 
-    navigate("/Game");
+    navigate("/Create");
   }
 
   useEffect(() => {
