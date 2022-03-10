@@ -1,16 +1,25 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Background from "../components/Background";
-import { Button, Group, createStyles } from "@mantine/core";
+import {
+  useMantineTheme,
+  Text,
+  Popover,
+  Button,
+  Group,
+  Modal,
+  createStyles,
+} from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
-import { useNavigate } from "react-router-dom";
-import Player from "../classes/Player";
+import { useNavigate, useLocation } from "react-router-dom";
+import logo from "../assets/logo.png";
+/* import Player from "../classes/Player";
 //import GameState from "../classes/GameState";
+import Deck from "../classes/Deck";
+import { getRandomAvatar } from "../utils"; */
+
 import { useDispatch } from "react-redux";
 import { reset, start } from "../feature/gameSlice";
 import { persistor } from "../app/store";
-import logo from "../assets/logo.png";
-import Deck from "../classes/Deck";
-import { getRandomAvatar } from "../utils";
 
 const useStyles = createStyles((theme) => ({
   img: {
@@ -34,9 +43,14 @@ const useStyles = createStyles((theme) => ({
 function Home() {
   const { classes } = useStyles();
   const navigate = useNavigate();
+  let location = useLocation();
+
+  const theme = useMantineTheme();
 
   const query = useMediaQuery("(max-width: 719px)");
   const dispatch = useDispatch();
+
+  const [opened, setOpened] = useState(false);
 
   function handleClickToGame() {
     /*    let player1 = new Player("1234", "player1", "jd3jds");
@@ -104,11 +118,19 @@ function Home() {
 
     dispatch(reset());
     persistor.purge();
-    console.log(localStorage);
-  }, [dispatch]);
+    //console.log(localStorage);
+  }, [dispatch, location.state, navigate]);
 
   return (
     <>
+      {/* <Modal
+        size="lg"
+        opened={opened}
+        onClose={() => setOpened(false)}
+        title="Join Game"
+      >
+        hello
+      </Modal> */}
       <Group position="center" direction="column" spacing="xl">
         <img src={logo} alt="Uno Game Logo" className={classes.img} />
 
@@ -121,17 +143,58 @@ function Home() {
             color="dark"
             radius="md"
             size={query ? "lg" : "xl"}
-            onClick={handleClickToGame}
+            onClick={() => navigate("/Create")}
           >
             Create Game
           </Button>
 
-          <Button color="dark" radius="md" size={query ? "lg" : "xl"}>
+          {/* <Button
+            color="dark"
+            radius="md"
+            size={query ? "lg" : "xl"}
+            onClick={() => setOpened(true)}
+          >
             Join Game
-          </Button>
+          </Button> */}
+          <Popover
+            opened={opened}
+            onClose={() => setOpened(false)}
+            target={
+              <Button
+                color="dark"
+                radius="md"
+                size={query ? "lg" : "xl"}
+                onClick={() => setOpened((o) => !o)}
+              >
+                Join Game
+              </Button>
+            }
+            shadow="xl"
+            width={260}
+            position="bottom"
+            withArrow
+            styles={{
+              body: {
+                backgroundColor: theme.colors.dark[8],
+              },
+            }}
+          >
+            <Group position="center">
+              <Button
+                size={query ? "sm" : "md"}
+                radius="md"
+                color="gray"
+                onClick={() => navigate("/JoinPrivate")}
+              >
+                Private Game
+              </Button>
+              <Button size={query ? "sm" : "md"} radius="md" color="gray">
+                Public Game
+              </Button>
+            </Group>
+          </Popover>
         </Group>
       </Group>
-
       <Background />
     </>
   );

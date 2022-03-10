@@ -16,6 +16,7 @@ const initialState = {
   TopCard: {},
   currentColor: "",
   currentType: "",
+  gameStart: false,
   isWild: false,
   isColorChosen: false,
   isWin: false,

@@ -25,8 +25,6 @@ const useStyles = createStyles((theme) => ({
     height: "100vh",
   },
   container: {
-    width: "630px",
-    height: "630px",
     position: "absolute",
     top: "50%",
     left: "50%",
@@ -103,7 +101,9 @@ function CreateGame() {
           >
             Create Game
           </Title>
+
           <Space h="xl" />
+
           <form onSubmit={form.onSubmit(handleSubmit)}>
             <Group position="center" direction="column" grow>
               <TextInput
@@ -123,11 +123,12 @@ function CreateGame() {
                 size="md"
                 {...form.getInputProps("name")}
               />
+
               <RadioGroup
                 required
                 className={classes.radio}
                 label="Select number of players in the game."
-                size="xl"
+                size="lg"
                 color="red"
                 {...form.getInputProps("numOfPlayers", { type: "radiogroup" })}
               >
@@ -135,35 +136,40 @@ function CreateGame() {
                 <Radio value="3">3</Radio>
                 <Radio value="4">4</Radio>
               </RadioGroup>
+
               <Group>
                 <Text size="xl" weight={700}>
                   Private Game?{" "}
                 </Text>
-                <Space w="sm" />
+
                 <Checkbox
                   {...form.getInputProps("checked", {
                     type: "checkbox",
                   })}
                   label={form.values.checked ? "Yes" : "No"}
                 />
-                {form.values.checked ? (
-                  <PasswordInput
-                    required
-                    label="Game Password"
-                    placeholder="Change visibility toggle icon"
-                    description="Do not forget to give your opponents this password. Remember it is a secret :)."
-                    visibilityToggleIcon={({ reveal, size }) =>
-                      reveal ? <EyeOff size={size} /> : <EyeCheck size={size} />
-                    }
-                    {...form.getInputProps("password")}
-                    size="sm"
-                  />
-                ) : (
-                  ""
-                )}
               </Group>
+
+              {form.values.checked ? (
+                <PasswordInput
+                  required
+                  label="Game Password"
+                  placeholder="Change visibility toggle icon"
+                  description="Do not forget to give your opponents this password. Remember it is a secret :)."
+                  visibilityToggleIcon={({ reveal, size }) =>
+                    reveal ? <EyeOff size={size} /> : <EyeCheck size={size} />
+                  }
+                  {...form.getInputProps("password")}
+                  size="sm"
+                  radius="xl"
+                />
+              ) : (
+                ""
+              )}
             </Group>
+
             <Space h="xl" />
+
             <Group position="apart">
               <Button
                 color="dark"
@@ -174,6 +180,7 @@ function CreateGame() {
               >
                 Back
               </Button>
+
               <Button type="submit" color="dark" size="md">
                 Create
               </Button>

@@ -39,7 +39,7 @@ const useStyles = createStyles((theme) => ({
       height: "125px",
     },
 
-    "@media (min-width: 820px) and (max-width: 1300px)": {
+    "@media (min-width: 825px) and (max-width: 1300px)": {
       width: "700px",
       height: "125px",
     },

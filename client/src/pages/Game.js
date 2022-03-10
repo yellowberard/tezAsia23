@@ -71,7 +71,9 @@ function Game() {
         margin: "0px",
         padding: "0px",
         height: "100vh",
-        width: "100vw",
+        width: "100%",
+        position: "absolute",
+        bottom: "0",
         overflow: "hidden",
         backgroundSize: "100%",
 
