@@ -1,5 +1,6 @@
-import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { generatePath, useNavigate } from "react-router-dom";
+
 import {
   createStyles,
   TextInput,
@@ -7,6 +8,7 @@ import {
   Space,
   Paper,
   Group,
+  Modal,
   Radio,
   RadioGroup,
   useMantineTheme,
@@ -15,8 +17,9 @@ import {
   Button,
   PasswordInput,
 } from "@mantine/core";
-import { useForm } from "@mantine/hooks";
+import { useForm, useClipboard } from "@mantine/hooks";
 import { EyeCheck, EyeOff } from "tabler-icons-react";
+import socket from "../app/socket";
 
 const useStyles = createStyles((theme) => ({
   background: {
@@ -39,8 +42,12 @@ const useStyles = createStyles((theme) => ({
 
 function CreateGame() {
   const { classes } = useStyles();
+  const [opened, setOpened] = useState(true);
+  const [roomID, setRoomID] = useState("");
+  const [isPrivateGame, setIsPrivateGame] = useState(false);
   const navigate = useNavigate();
   const theme = useMantineTheme();
+  const clipboard = useClipboard({ timeout: 500 });
 
   const form = useForm({
     initialValues: {
@@ -75,16 +82,45 @@ function CreateGame() {
     }
   }, [form, form.values.checked, form.values.password]);
 
-  function handleSubmit(values) {
-    console.log("values: ", values);
-    console.log("room name: ", values.roomName);
-    console.log("Name: ", values.name);
-    console.log("checked: ", values.checked);
-    console.log("values password: ", values.password);
+  useEffect(() => {
+    socket.on("private_game_created", (roomName) => {
+      setIsPrivateGame(true);
+      setRoomID(roomName);
 
-    console.log("players: ", values.numOfPlayers);
-    //call create game socket.io connection and pass all data to create new game and new player and add player to that game
-    //navigate to waiting page
+      console.log(roomName); //TEST
+    });
+
+    socket.on("public_game_created", (roomName) => {
+      //handleNavigate(roomName)
+      setIsPrivateGame(false);
+    });
+  }, [navigate]);
+
+  /* useEffect(() => {
+    return () => {};
+  }, []); */
+
+  function handleRoomCodeClick() {
+    console.log("here");
+    handleNavigate(roomID);
+  }
+
+  function handleNavigate(id) {
+    const waitingRoomPath = generatePath("/WaitingRoom/gameroom=:id", {
+      id: id,
+    });
+    navigate(waitingRoomPath);
+  }
+
+  function joinRoom(values) {
+    const gameInfo = {
+      room: values.roomName,
+      name: values.name,
+      maxPlayers: values.numOfPlayers,
+      password: values.password,
+      publicGameCheck: values.checked ? "private" : "public",
+    };
+    socket.emit("create_game", gameInfo);
   }
 
   return (
@@ -104,7 +140,7 @@ function CreateGame() {
 
           <Space h="xl" />
 
-          <form onSubmit={form.onSubmit(handleSubmit)}>
+          <form onSubmit={form.onSubmit(joinRoom)}>
             <Group position="center" direction="column" grow>
               <TextInput
                 required
@@ -187,6 +223,46 @@ function CreateGame() {
             </Group>
           </form>
         </Paper>
+
+        {isPrivateGame && (
+          <div>
+            <Modal
+              opened={opened}
+              onClose={() => setOpened(true)}
+              title="Room Code (Private Game)!"
+              hideCloseButton
+              styles={{
+                title: {
+                  color: `${theme.colors.orange[8]}`,
+                  fontWeight: "bold",
+                },
+              }}
+            >
+              <Text>
+                Dont forget to copy the room code down below, in able for other
+                players to join your game:
+              </Text>
+
+              <Group position="center" direction="column">
+                <Text color="orange">{roomID}</Text>
+
+                <Group>
+                  <Button
+                    size="xs"
+                    color={clipboard.copied ? "teal" : "blue"}
+                    onClick={() => clipboard.copy(roomID)}
+                  >
+                    {clipboard.copied ? "Copied" : "Copy"}
+                  </Button>
+
+                  <Button size="xs" onClick={handleRoomCodeClick}>
+                    ok
+                  </Button>
+                </Group>
+              </Group>
+            </Modal>
+          </div>
+        )}
       </div>
     </div>
   );

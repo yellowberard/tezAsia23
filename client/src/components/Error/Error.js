@@ -1,0 +1,35 @@
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import { Alert, Button } from "@mantine/core";
+import { AlertCircle } from "tabler-icons-react";
+
+function Error({ setLoading }) {
+  const navigate = useNavigate();
+
+  function handleNavigate() {
+    //emit leave room here
+    setLoading(true);
+    navigate("/");
+  }
+
+  return (
+    <div>
+      <Alert icon={<AlertCircle size={19} />} title="Error!" color="orange">
+        Some error happened. Please either create a new room or join a room.
+        <Button
+          size="xs"
+          color="dark"
+          sx={(theme) => ({
+            display: "flex",
+            marginTop: "4px",
+          })}
+          onClick={handleNavigate}
+        >
+          Okay
+        </Button>
+      </Alert>
+    </div>
+  );
+}
+
+export default Error;

@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, generatePath } from "react-router-dom";
 import {
   createStyles,
   TextInput,
@@ -14,6 +14,7 @@ import {
 } from "@mantine/core";
 import { useForm } from "@mantine/hooks";
 import { EyeCheck, EyeOff } from "tabler-icons-react";
+import socket from "../../app/socket";
 
 const useStyles = createStyles((theme) => ({
   background: {
@@ -36,19 +37,18 @@ function PrivateGame() {
 
   const form = useForm({
     initialValues: {
-      roomName: "",
+      roomCode: "",
       name: "",
       password: "",
     },
     validationRules: {
-      roomName: (value) => value.trim().length >= 2 && value.trim().length <= 8,
+      roomCode: (value) => value.trim().length === 16,
       name: (value) => value.trim().length >= 2 && value.trim().length <= 6,
 
       password: (value) => value !== "",
     },
     errorMessages: {
-      roomName:
-        "room name must include at least 2 characters and max 8 characters",
+      roomCode: "room code must be 16 characters.",
       name: "Name must include at least 2 characters and max 6 characters",
       password:
         "You must enter a password if you want to play in a private game",
@@ -57,16 +57,34 @@ function PrivateGame() {
 
   useEffect(() => {
     //get socket.io connections ( on joinPrivate -> and navigate to waiting page and error -> display error )
-  }, []);
+    /*  socket.on("joined_private_game", (roomName) => {
+      //localStorage.setItem("roomID", roomID);
+      const waitingRoomPath = generatePath("/WaitingRoom/gameroom=:roomName", {
+        roomName: roomName,
+      });
+      navigate(waitingRoomPath);
+    }); */
+  }, []); //navigate]);
 
   function handleSubmit(values) {
     //call socket "private join connection", if password is correct then backend send back join
     //else call error socket connection
 
+    const joinInfo = {
+      room: values.roomCode,
+      name: values.name,
+      password: values.password,
+    };
+
     console.log("values: ", values);
-    console.log("room name: ", values.roomName);
+    console.log("room name: ", values.roomCode);
     console.log("Name: ", values.name);
-    console.log("values password: ", values.password);
+    //console.log("values password: ", values.password);
+    socket.emit("join_room", joinInfo);
+    const waitingRoomPath = generatePath("/WaitingRoom/gameroom=:id", {
+      id: values.roomCode,
+    });
+    navigate(waitingRoomPath);
     //call create game socket.io connection and pass all data to create new game and new player and add player to that game
     //navigate to waiting page
   }
@@ -95,7 +113,7 @@ function PrivateGame() {
                   label="Room Name"
                   radius="xl"
                   size="md"
-                  {...form.getInputProps("roomName")}
+                  {...form.getInputProps("roomCode")}
                 />
 
                 <TextInput
