@@ -28,6 +28,8 @@ export const gameSlice = createSlice({
   initialState,
   reducers: {
     start(state, action) {
+      state.gameStart = true;
+      console.log(action);
       action.payload.deck.forEach((card) => {
         state.deck.push(card);
       });
@@ -49,6 +51,7 @@ export const gameSlice = createSlice({
       }
 
       let topCard = state.deck.splice(randomId, 1)[0];
+      console.log(topCard);
       state.TopCard = topCard;
       state.currentColor = state.TopCard.color;
 

@@ -1,7 +1,7 @@
 import React from "react";
 import { useDrag } from "react-dnd";
+import { createStyles, Image } from "@mantine/core";
 
-import { createStyles } from "@mantine/core";
 const useStyles = createStyles((theme) => ({
   img: {
     width: "145px",
@@ -28,9 +28,7 @@ function Card({ card, playerID }) {
       isDragging: !!monitor.isDragging(),
     }),
   }));
-  return (
-    <img ref={drag} className={classes.img} src={card.src} alt="uno card" />
-  );
+  return <Image className={classes.img} src={card.src} />;
 }
 
 export default Card;

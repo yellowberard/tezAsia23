@@ -62,7 +62,7 @@ io.on("connection", (socket) => {
         }
       } else {
         //display error to client
-        //socket.emit("error_join", error)
+        socket.emit("error_join", error);
       }
 
       console.log(socket.id + " Joined " + newServer.roomID);
@@ -80,34 +80,38 @@ io.on("connection", (socket) => {
       });
 
       if (status === "success") {
-        console.log("here3");
+        console.log(`User with ID: ${socket.id} joined room: ${room}`);
+        socket.emit("join_success", gameServer.roomID);
         socket.to(gameServer.roomID).emit("player_join", player);
+        if (gameServer.maxPlayers === gameServer.players.length) {
+          console.log("game begin");
+          //set up start game
+          //const { } = gameServer.startGame()
+
+          const startGameInfo = {
+            players: gameServer.players,
+            deck: gameServer.gamestate.getDeck(),
+          };
+
+          io.in(gameServer.roomID).emit("start_game", startGameInfo);
+        }
       } else {
-        //io.emit("join_error", error);
+        socket.emit("join_error", error);
       }
     } else {
-      // io.emit("join_error","room code does not exist.")
+      socket.emit("join_error", "room code does not exist.");
     }
-
-    //check if the amount of players == number of players for the game: if so emit "start game"
-    console.log(`User with ID: ${socket.id} joined room: ${room}`);
-    // socket.emit("joined_private_game", gameServer.roomName);
   });
 
   socket.on("initial_wait", (roomID, callback) => {
-    //get players length
-    //get current players in room
-
     const server = games.get(roomID);
-
-    //console.log(server.players);
-    //console.log(server.maxPlayers);
-    //console.log(server);
-    callback({
-      roomName: server.roomName,
-      maxPlayers: server.maxPlayers,
-      players: server.players,
-    });
+    if (server) {
+      callback({
+        roomName: server.roomName,
+        maxPlayers: server.maxPlayers,
+        players: server.players,
+      });
+    }
   });
 
   socket.on("disconnect", () => {

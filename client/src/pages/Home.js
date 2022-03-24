@@ -123,14 +123,6 @@ function Home() {
 
   return (
     <>
-      {/* <Modal
-        size="lg"
-        opened={opened}
-        onClose={() => setOpened(false)}
-        title="Join Game"
-      >
-        hello
-      </Modal> */}
       <Group position="center" direction="column" spacing="xl">
         <img src={logo} alt="Uno Game Logo" className={classes.img} />
 
@@ -148,14 +140,6 @@ function Home() {
             Create Game
           </Button>
 
-          {/* <Button
-            color="dark"
-            radius="md"
-            size={query ? "lg" : "xl"}
-            onClick={() => setOpened(true)}
-          >
-            Join Game
-          </Button> */}
           <Popover
             opened={opened}
             onClose={() => setOpened(false)}
@@ -188,6 +172,7 @@ function Home() {
               >
                 Private Game
               </Button>
+
               <Button size={query ? "sm" : "md"} radius="md" color="gray">
                 Public Game
               </Button>

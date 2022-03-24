@@ -1,5 +1,3 @@
-import backcard from "../assets/Cards/Deck.png";
-
 import cat from "../assets/Avatars/cat.png";
 import bee from "../assets/Avatars/bee.png";
 import crab from "../assets/Avatars/crab.png";
@@ -24,4 +22,4 @@ export const AVATARS = [
   unicorn,
 ];
 
-export const BACKCARD = backcard;
+export const BACKCARD = "/images/Cards/Deck.png";

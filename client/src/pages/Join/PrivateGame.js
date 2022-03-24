@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, generatePath } from "react-router-dom";
 import {
   createStyles,
@@ -34,6 +34,7 @@ function PrivateGame() {
   const { classes } = useStyles();
   const navigate = useNavigate();
   const theme = useMantineTheme();
+  const [error, setError] = useState("");
 
   const form = useForm({
     initialValues: {
@@ -64,29 +65,26 @@ function PrivateGame() {
       });
       navigate(waitingRoomPath);
     }); */
-  }, []); //navigate]);
+
+    socket.on("join_error", (error) => {
+      setError(error);
+    });
+    socket.on("join_success", (roomCode) => {
+      const waitingRoomPath = generatePath("/WaitingRoom/gameroom=:id", {
+        id: roomCode,
+      });
+      navigate(waitingRoomPath);
+    });
+  }, [navigate]);
 
   function handleSubmit(values) {
-    //call socket "private join connection", if password is correct then backend send back join
-    //else call error socket connection
-
     const joinInfo = {
       room: values.roomCode,
       name: values.name,
       password: values.password,
     };
 
-    console.log("values: ", values);
-    console.log("room name: ", values.roomCode);
-    console.log("Name: ", values.name);
-    //console.log("values password: ", values.password);
     socket.emit("join_room", joinInfo);
-    const waitingRoomPath = generatePath("/WaitingRoom/gameroom=:id", {
-      id: values.roomCode,
-    });
-    navigate(waitingRoomPath);
-    //call create game socket.io connection and pass all data to create new game and new player and add player to that game
-    //navigate to waiting page
   }
 
   return (
@@ -110,7 +108,7 @@ function PrivateGame() {
                 <TextInput
                   required
                   placeholder="room"
-                  label="Room Name"
+                  label="Room  Code"
                   radius="xl"
                   size="md"
                   {...form.getInputProps("roomCode")}
@@ -135,6 +133,11 @@ function PrivateGame() {
                   {...form.getInputProps("password")}
                   size="md"
                 />
+                {error && (
+                  <Text weight={500} color="red">
+                    {error}
+                  </Text>
+                )}
               </Group>
               <Space h="xl" />
               <Group position="apart">

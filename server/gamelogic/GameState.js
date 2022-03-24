@@ -8,6 +8,7 @@ class GameState {
     this.deck = new Deck();
     this.topCard = this.deck.removeCard();
     this.discardPile = [];
+    this.gameStart = false;
   }
 
   Win() {
@@ -26,6 +27,10 @@ class GameState {
     //check if player can move card (if current turn) and if the card is a valid move or not
     //use removeFromDeck and switchPlayer, call players method (removeCardFromHand to get the remove card and set the Top card to that)
     //set Game State
+  }
+
+  getDeck() {
+    return this.deck.getDeck();
   }
 
   getAvatarID() {
