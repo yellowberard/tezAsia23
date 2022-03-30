@@ -1,5 +1,6 @@
 import React from "react";
 import {
+  useMantineTheme,
   createStyles,
   Text,
   Image,
@@ -7,9 +8,13 @@ import {
   Space,
   Card,
   Avatar,
+  Button,
 } from "@mantine/core";
+
 import logo from "../../assets/logo.png";
 import { AVATARS } from "../../utils/constants";
+import socket from "../../app/socket";
+import { useNavigate } from "react-router-dom";
 
 const useStyles = createStyles((theme) => ({
   avatar: {
@@ -21,8 +26,15 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-function Lobby({ roomName, playersList, waitingPlayers, maxRoomLength }) {
+function Lobby({ id, roomName, playersList, waitingPlayers, maxRoomLength }) {
   const { classes } = useStyles();
+  const theme = useMantineTheme();
+  const navigate = useNavigate();
+
+  function handleLeave() {
+    socket.emit("wait_room_leave", id);
+    navigate("/", { replace: true });
+  }
 
   return (
     <>
@@ -30,7 +42,6 @@ function Lobby({ roomName, playersList, waitingPlayers, maxRoomLength }) {
         shadow="sm"
         p="lg"
         sx={(theme) => ({
-          width: 450,
           margin: "auto",
           backgroundColor: theme.colors.dark[5],
         })}
@@ -81,7 +92,8 @@ function Lobby({ roomName, playersList, waitingPlayers, maxRoomLength }) {
           })}
           underline
         >
-          Players in room:
+          Players in room (
+          <span style={{ color: theme.colors.yellow[4] }}>{id}</span>):
         </Text>
 
         <Space h="md" />
@@ -126,6 +138,9 @@ function Lobby({ roomName, playersList, waitingPlayers, maxRoomLength }) {
         >
           Waiting for other players to join...
         </Text>
+        <Button size="xs" color="red" onClick={handleLeave}>
+          Leave Room
+        </Button>
       </Card>
     </>
   );

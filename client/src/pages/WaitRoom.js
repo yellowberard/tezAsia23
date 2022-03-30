@@ -1,4 +1,6 @@
-import { createStyles, Loader } from "@mantine/core";
+import { ActionIcon, Alert, createStyles, Loader } from "@mantine/core";
+import { DoorExit, LetterX } from "tabler-icons-react";
+
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams, generatePath } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -16,33 +18,43 @@ const useStyles = createStyles((theme) => ({
     left: "50%",
     transform: "translateX(-50%) translateY(-50%)",
   },
+  icon: {
+    position: "absolute",
+    top: "5%",
+    left: "90%",
+  },
 }));
 
 function WaitRoom() {
   const { id } = useParams();
   const [waitingPlayers, setWaitingPlayers] = useState(0);
   const [found, setFound] = useState("");
+  const [message, setMessage] = useState("");
   const [isLoading, setLoading] = useState(true);
   const [roomName, setRoomName] = useState("");
   const [maxRoomLength, setMaxRoomLength] = useState(0);
   const [playersList, setPlayersList] = useState([]);
+
   const navigate = useNavigate();
   const { classes } = useStyles();
   const dispatch = useDispatch();
 
   useEffect(() => {
-    //get players length
-    //get current players in room
+    // navigate back
     window.onpopstate = (e) => {
-      //socket.emit("leave_game",{id})
-      setLoading(true);
-      navigate("/");
+      socket.emit("wait_room_leave", id);
+      navigate("/", { replace: true });
     };
+
     window.onbeforeunload = (e) => {
-      console.log("refereshed");
-      //socket.emit("leave_game", {id})
+      if (found) {
+        socket.emit("wait_room_leave", id);
+      }
     };
-  }, [navigate]);
+    return () => {
+      window.onbeforeunload = null;
+    };
+  }, [found, id, navigate]);
 
   useEffect(() => {
     socket.emit("initial_wait", id, (response) => {
@@ -54,10 +66,16 @@ function WaitRoom() {
       }
     });
 
-    socket.on("player_join", (player) => {
-      setWaitingPlayers((count) => count + 1);
-      setPlayersList((players) => [...players, player]);
-      //setError(false);
+    socket.on("player_join", (newPlayersList) => {
+      setWaitingPlayers(newPlayersList.length);
+      setPlayersList(newPlayersList);
+    });
+
+    //when player leaves room, update other players in waiting room
+    socket.on("wait_room_user_leave", ({ message, newPlayersList }) => {
+      setPlayersList(newPlayersList);
+      setWaitingPlayers(newPlayersList.length);
+      setMessage(message);
     });
 
     socket.on("start_game", (data) => {
@@ -86,6 +104,7 @@ function WaitRoom() {
   useEffect(() => {
     setFound(playersList.find((player) => player.id === socket.id));
     const timer = setTimeout(() => setLoading(false), 50);
+
     return () => {
       setFound("");
       clearTimeout(timer);
@@ -98,12 +117,30 @@ function WaitRoom() {
         {isLoading ? (
           <Loader color="indigo" />
         ) : found ? (
-          <Lobby
-            roomName={roomName}
-            playersList={playersList}
-            waitingPlayers={waitingPlayers}
-            maxRoomLength={maxRoomLength}
-          />
+          <div>
+            <Lobby
+              id={id}
+              roomName={roomName}
+              playersList={playersList}
+              waitingPlayers={waitingPlayers}
+              maxRoomLength={maxRoomLength}
+            />
+            {message && (
+              <Alert
+                icon={<DoorExit size={16} />}
+                radius="md"
+                title="Player Left!"
+              >
+                <ActionIcon
+                  className={classes.icon}
+                  onClick={() => setMessage("")}
+                >
+                  <LetterX size={13} />
+                </ActionIcon>
+                {message}
+              </Alert>
+            )}
+          </div>
         ) : (
           <Error setLoading={setLoading} />
         )}

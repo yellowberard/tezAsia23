@@ -6,6 +6,7 @@ const { Server } = require("socket.io");
 const GameServer = require("./gamelogic/GameServer");
 const GameState = require("./gamelogic/GameState");
 const { v4 } = require("uuid");
+const { Console } = require("console");
 
 app.use(cors());
 const server = http.createServer(app);
@@ -55,9 +56,6 @@ io.on("connection", (socket) => {
           };
           socket.emit("public_game_created", newServer.roomID);
         } else {
-          console.log("blah");
-          //fix HERE /TESt
-
           socket.emit("private_game_created", newServer.roomID);
         }
       } else {
@@ -65,7 +63,7 @@ io.on("connection", (socket) => {
         socket.emit("error_join", error);
       }
 
-      console.log(socket.id + " Joined " + newServer.roomID);
+      //console.log(socket.id + " Joined " + newServer.roomID);
     }
   );
 
@@ -73,16 +71,16 @@ io.on("connection", (socket) => {
     const gameServer = games.get(room);
 
     if (gameServer) {
-      const { status, player, error } = gameServer.joinRoom({
+      const { status, error } = gameServer.joinRoom({
         socket: socket,
         name: name,
         password: password,
       });
 
       if (status === "success") {
-        console.log(`User with ID: ${socket.id} joined room: ${room}`);
         socket.emit("join_success", gameServer.roomID);
-        socket.to(gameServer.roomID).emit("player_join", player);
+        socket.to(gameServer.roomID).emit("player_join", gameServer.players);
+
         if (gameServer.maxPlayers === gameServer.players.length) {
           console.log("game begin");
           //set up start game
@@ -103,6 +101,7 @@ io.on("connection", (socket) => {
     }
   });
 
+  //when either a player creates a game and or joins the waiting room for the first time
   socket.on("initial_wait", (roomID, callback) => {
     const server = games.get(roomID);
     if (server) {
@@ -114,9 +113,31 @@ io.on("connection", (socket) => {
     }
   });
 
+  socket.on("wait_room_leave", (roomID) => {
+    const server = games.get(roomID);
+
+    if (server) {
+      if (server.players.length === 1) {
+        socket.leave(roomID);
+        games.delete(roomID);
+      } else {
+        const player = server.players.find((player) => player.id === socket.id);
+
+        if (player) {
+          const message = `Player: ${player.name} has left the game lobby.`;
+          server.leaveRoom(socket);
+          socket.to(roomID).emit("wait_room_user_leave", {
+            message: message,
+            newPlayersList: server.players,
+          });
+        }
+      }
+    }
+  });
+
   socket.on("disconnect", () => {
     console.log("User Disconnected", socket.id);
-    //console.log(socket.rooms);
+    console.log(socket.rooms);
   });
 });
 

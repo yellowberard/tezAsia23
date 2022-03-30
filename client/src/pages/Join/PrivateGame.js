@@ -57,15 +57,10 @@ function PrivateGame() {
   });
 
   useEffect(() => {
-    //get socket.io connections ( on joinPrivate -> and navigate to waiting page and error -> display error )
-    /*  socket.on("joined_private_game", (roomName) => {
-      //localStorage.setItem("roomID", roomID);
-      const waitingRoomPath = generatePath("/WaitingRoom/gameroom=:roomName", {
-        roomName: roomName,
-      });
-      navigate(waitingRoomPath);
-    }); */
+    return () => {};
+  }, []);
 
+  useEffect(() => {
     socket.on("join_error", (error) => {
       setError(error);
     });

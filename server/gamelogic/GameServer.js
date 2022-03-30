@@ -11,45 +11,30 @@ class GameServer {
     this.players = [];
   }
 
-  /* getRoomID() {
-    return this.roomID;
-  }
-
-  getMaxPlayerCount() {
-    return this.maxPlayers;
-  }
-
-  getRoomSize() {
-    return this.players.length;
-  } */
-  //join player to room
   joinRoom({ socket, name, password }) {
     if (this.players.length >= this.maxPlayers) {
-      console.log("room is full");
-      return { status: "failure", player: "", error: "room is full." };
+      return { status: "failure", error: "room is full." };
     } else if (
       (this.publicGameCheck === "public" || this.password === password) &&
       !this.gamestate.gameStart
     ) {
-      //console.log(socket.id + " Joined " + this.roomID);
-      console.log(" before joined length: ", this.players.length);
-
       const player = this.createPlayer({ id: socket.id, name: name });
       this.players.push(player);
-      console.log("joined length: ", this.players.length);
-
       socket.join(this.roomID);
-      return { status: "success", player: player, error: "none" };
+
+      return { status: "success", error: "none" };
     } else {
       const error = this.gamestate.gameStart
         ? "uno game has already started"
         : "password not correct.";
-      return { status: "failure", player: "", error: error };
-    }
 
-    //const newPlayer = createPlayer(socket.id)
-    //add player to this.players list
-    //add socket to room
+      return { status: "failure", error: error };
+    }
+  }
+
+  leaveRoom(socket) {
+    this.players = this.players.filter((player) => player.id !== socket.id);
+    socket.leave(this.roomID);
   }
 
   startGame() {
@@ -91,10 +76,6 @@ class GameServer {
     }, */
   }
   //remove player from room
-  leaveRoom({ socket }) {
-    //find player.id  in players ands remove from players list
-    //socket.leave(this.roomID)
-  }
 
   createPlayer({ id, name }) {
     let avatarID = this.gamestate.getAvatarID();

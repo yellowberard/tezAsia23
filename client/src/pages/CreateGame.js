@@ -76,6 +76,12 @@ function CreateGame() {
   });
 
   useEffect(() => {
+    return () => {
+      setIsPrivateGame(false);
+    };
+  }, []);
+
+  useEffect(() => {
     //resets password field when the private game checkbox is not clicked
     if (form.values.checked === false && form.values.password !== "") {
       form.setFieldValue("password", "");
@@ -86,22 +92,14 @@ function CreateGame() {
     socket.on("private_game_created", (roomName) => {
       setIsPrivateGame(true);
       setRoomID(roomName);
-
-      console.log(roomName); //TEST
     });
 
     socket.on("public_game_created", (roomName) => {
-      //handleNavigate(roomName)
       setIsPrivateGame(false);
     });
   }, [navigate]);
 
-  /* useEffect(() => {
-    return () => {};
-  }, []); */
-
   function handleRoomCodeClick() {
-    console.log("here");
     handleNavigate(roomID);
   }
 

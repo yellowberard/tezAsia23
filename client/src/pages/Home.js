@@ -2,15 +2,13 @@ import React, { useEffect, useState } from "react";
 import Background from "../components/Background";
 import {
   useMantineTheme,
-  Text,
   Popover,
   Button,
   Group,
-  Modal,
   createStyles,
 } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import logo from "../assets/logo.png";
 /* import Player from "../classes/Player";
 //import GameState from "../classes/GameState";
@@ -18,7 +16,7 @@ import Deck from "../classes/Deck";
 import { getRandomAvatar } from "../utils"; */
 
 import { useDispatch } from "react-redux";
-import { reset, start } from "../feature/gameSlice";
+import { reset } from "../feature/gameSlice";
 import { persistor } from "../app/store";
 
 const useStyles = createStyles((theme) => ({
@@ -43,7 +41,6 @@ const useStyles = createStyles((theme) => ({
 function Home() {
   const { classes } = useStyles();
   const navigate = useNavigate();
-  let location = useLocation();
 
   const theme = useMantineTheme();
 
@@ -113,13 +110,9 @@ function Home() {
   }
 
   useEffect(() => {
-    //window.onpopstate = (e) => {
-    // okay for right now, also if player disconnects from game (reset and remove player)
-
     dispatch(reset());
     persistor.purge();
-    //console.log(localStorage);
-  }, [dispatch, location.state, navigate]);
+  }, [dispatch, navigate]);
 
   return (
     <>
