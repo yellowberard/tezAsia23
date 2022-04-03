@@ -5,8 +5,6 @@ const cors = require("cors");
 const { Server } = require("socket.io");
 const GameServer = require("./gamelogic/GameServer");
 const GameState = require("./gamelogic/GameState");
-const { v4 } = require("uuid");
-const { Console } = require("console");
 
 app.use(cors());
 const server = http.createServer(app);
@@ -91,7 +89,10 @@ io.on("connection", (socket) => {
             deck: gameServer.gamestate.getDeck(),
           };
 
-          io.in(gameServer.roomID).emit("start_game", startGameInfo);
+          io.in(gameServer.roomID).emit("start_game", {
+            info: startGameInfo,
+            id: room,
+          });
         }
       } else {
         socket.emit("join_error", error);
@@ -132,6 +133,42 @@ io.on("connection", (socket) => {
           });
         }
       }
+    }
+  });
+
+  socket.on("leave_game_room", (roomID) => {
+    const server = games.get(roomID);
+
+    if (server) {
+      const player = server.players.find((player) => player.id === socket.id);
+
+      if (player) {
+        if (server.players.length == 2) {
+          socket
+            .to(roomID)
+            .emit(
+              "game_end_error",
+              "UNO Game has ended. You are the last player and have no other players to play with :("
+            );
+        }
+
+        const message = `Player: ${player.name} has left the game.`;
+        server.leaveRoom(socket, "in_game");
+        socket.to(roomID).emit("game_room_user_leave", {
+          message: message,
+          playerID: player.id,
+        });
+      }
+    }
+  });
+
+  socket.on("leave_game", (roomID) => {
+    const server = games.get(roomID);
+    console.log("leave game: ", socket.rooms);
+    if (server) {
+      socket.leave(roomID);
+      games.delete(roomID);
+      console.log("leave game: ", socket.rooms);
     }
   });
 

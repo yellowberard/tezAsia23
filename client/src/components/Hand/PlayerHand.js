@@ -195,7 +195,6 @@ function PlayerHand({ player }) {
   const { classes } = useStyles();
   const dispatch = useDispatch();
   const [cardsLength, setCardLength] = useState(0);
-  console.log(player.hand[0]);
 
   useEffect(() => {
     if (player.hand.length === 0) {
@@ -207,11 +206,7 @@ function PlayerHand({ player }) {
 
   return (
     <div className={classes.position}>
-      <div className={classes.area}>
-        {/*  <Text size="xl" className={classes.text}>
-          {player ? player.name : "PlayerHand"}
-        </Text> */}
-      </div>
+      <div className={classes.area}></div>
       <div className={classes.tag}>
         <NameTag playerID={player.id} id={player.avatarID} />
       </div>

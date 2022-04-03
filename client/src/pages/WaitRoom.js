@@ -27,6 +27,7 @@ const useStyles = createStyles((theme) => ({
 
 function WaitRoom() {
   const { id } = useParams();
+
   const [waitingPlayers, setWaitingPlayers] = useState(0);
   const [found, setFound] = useState("");
   const [message, setMessage] = useState("");
@@ -88,12 +89,13 @@ function WaitRoom() {
         //topCard: deck.removeCard(),
       })
     ); */
-      dispatch(start(data));
+      dispatch(start(data.info));
+
       const gameRoomPath = generatePath("/Game/gameroom=:id", {
-        id: id,
+        id: data.id,
       });
 
-      const gameTimer = setTimeout(() => navigate(gameRoomPath), 1200);
+      const gameTimer = setTimeout(() => navigate(gameRoomPath), 1100);
       return () => {
         setFound("");
         clearTimeout(gameTimer);
@@ -142,7 +144,7 @@ function WaitRoom() {
             )}
           </div>
         ) : (
-          <Error setLoading={setLoading} />
+          <Error />
         )}
       </div>
       <Background />

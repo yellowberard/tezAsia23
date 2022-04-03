@@ -3,13 +3,12 @@ import { useNavigate } from "react-router-dom";
 import { Alert, Button } from "@mantine/core";
 import { AlertCircle } from "tabler-icons-react";
 
-function Error({ setLoading }) {
+function Error() {
   const navigate = useNavigate();
 
   function handleNavigate() {
     //emit leave room here
-    setLoading(true);
-    navigate("/");
+    navigate("/", { replace: true });
   }
 
   return (

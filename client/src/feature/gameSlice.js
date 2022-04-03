@@ -28,8 +28,6 @@ export const gameSlice = createSlice({
   initialState,
   reducers: {
     start(state, action) {
-      state.gameStart = true;
-      console.log(action);
       action.payload.deck.forEach((card) => {
         state.deck.push(card);
       });
@@ -225,6 +223,13 @@ export const gameSlice = createSlice({
       state.isColorChosen = action.payload;
     },
 
+    updatePlayers(state, action) {
+      state.players = state.players.filter(
+        (player) => player.id !== action.payload.id
+      );
+      console.log(state.players);
+    },
+
     //called when wild card is placed after player has chosen a color
     //switch player after setting current color
     colorChange(state, action) {
@@ -262,6 +267,7 @@ export const {
   reset,
   move,
   Win,
+  updatePlayers,
   setWildCard,
   colorChange,
   setColorChosen,

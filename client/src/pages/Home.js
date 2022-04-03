@@ -17,7 +17,6 @@ import { getRandomAvatar } from "../utils"; */
 
 import { useDispatch } from "react-redux";
 import { reset } from "../feature/gameSlice";
-import { persistor } from "../app/store";
 
 const useStyles = createStyles((theme) => ({
   img: {
@@ -111,7 +110,6 @@ function Home() {
 
   useEffect(() => {
     dispatch(reset());
-    persistor.purge();
   }, [dispatch, navigate]);
 
   return (

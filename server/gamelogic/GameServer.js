@@ -32,11 +32,21 @@ class GameServer {
     }
   }
 
-  leaveRoom(socket) {
+  leaveRoom(socket, type = "") {
+    //remove the leaving player's cards and add to deck
+    if (type === "in_game") {
+      console.log(this.gamestate.getDeck().length);
+      const player = this.players.find((player) => player.id === socket.id);
+      console.log(player);
+      for (let i = 0; i < player.hand.length; i++) {
+        this.gamestate.deck.push(player.hand.pop());
+      }
+      console.log(this.gamestate.getDeck().length);
+      socket.to(this.roomID).emit("update_deck", this.gamestate.getDeck());
+    }
     this.players = this.players.filter((player) => player.id !== socket.id);
     socket.leave(this.roomID);
   }
-
   startGame() {
     //players: players,
     //deck: deck.getDeck(),
