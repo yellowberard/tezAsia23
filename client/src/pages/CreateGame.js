@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { generatePath, useNavigate } from "react-router-dom";
 
 import {
@@ -17,7 +17,8 @@ import {
   Button,
   PasswordInput,
 } from "@mantine/core";
-import { useForm, useClipboard } from "@mantine/hooks";
+import { useClipboard } from "@mantine/hooks";
+import { useForm } from "@mantine/form";
 import { EyeCheck, EyeOff } from "tabler-icons-react";
 import socket from "../app/socket";
 
@@ -88,6 +89,16 @@ function CreateGame() {
     }
   }, [form, form.values.checked, form.values.password]);
 
+  const handleNavigate = useCallback(
+    (id) => {
+      const waitingRoomPath = generatePath("/WaitingRoom/gameroom=:id", {
+        id: id,
+      });
+      navigate(waitingRoomPath);
+    },
+    [navigate]
+  );
+
   useEffect(() => {
     socket.on("private_game_created", (roomName) => {
       setIsPrivateGame(true);
@@ -96,18 +107,12 @@ function CreateGame() {
 
     socket.on("public_game_created", (roomName) => {
       setIsPrivateGame(false);
+      handleNavigate(roomName);
     });
-  }, [navigate]);
+  }, [handleNavigate, navigate]);
 
   function handleRoomCodeClick() {
     handleNavigate(roomID);
-  }
-
-  function handleNavigate(id) {
-    const waitingRoomPath = generatePath("/WaitingRoom/gameroom=:id", {
-      id: id,
-    });
-    navigate(waitingRoomPath);
   }
 
   function joinRoom(values) {

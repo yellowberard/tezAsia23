@@ -164,7 +164,12 @@ function Home() {
                 Private Game
               </Button>
 
-              <Button size={query ? "sm" : "md"} radius="md" color="gray">
+              <Button
+                size={query ? "sm" : "md"}
+                radius="md"
+                color="gray"
+                onClick={() => navigate("/JoinPublic")}
+              >
                 Public Game
               </Button>
             </Group>

@@ -1,8 +1,196 @@
-import React from "react";
+import { useEffect, useState } from "react";
 
+import {
+  createStyles,
+  useMantineTheme,
+  Paper,
+  Table,
+  ScrollArea,
+  Text,
+  Title,
+  Space,
+  Button,
+  Center,
+  Modal,
+} from "@mantine/core";
+import { Refresh } from "tabler-icons-react";
+import socket from "../../app/socket";
+import PublicForm from "../../components/PublicForm/PublicForm";
+import { generatePath, useNavigate } from "react-router-dom";
+
+const useStyles = createStyles((theme) => ({
+  background: {
+    backgroundColor: theme.colors.dark[6],
+    width: "100vw",
+    height: "100vh",
+  },
+
+  container: {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translateX(-50%) translateY(-50%)",
+  },
+
+  paper: {
+    backgroundColor: theme.colors.gray[6],
+  },
+}));
 function PublicGame() {
   //show all available public games
-  return <div>PublicGame</div>;
+  const navigate = useNavigate();
+  const theme = useMantineTheme();
+  const { classes } = useStyles();
+  const [publicGames, setPublicGames] = useState([]);
+  const [error, setError] = useState("");
+  const [roomID, setRoomID] = useState("");
+  const [opened, setOpened] = useState(false);
+
+  useEffect(() => {
+    socket.emit("get_public_games", (response) => {
+      if (response) {
+        console.log(response);
+
+        setPublicGames(response);
+      }
+    });
+
+    socket.on("join_error", (error) => {
+      setError(error);
+    });
+
+    socket.on("join_success", (roomCode) => {
+      const waitingRoomPath = generatePath("/WaitingRoom/gameroom=:id", {
+        id: roomCode,
+      });
+      navigate(waitingRoomPath);
+    });
+  }, [navigate]);
+
+  useEffect(() => {
+    socket.on("remove_room", (room) => {
+      setPublicGames(publicGames.filter((game) => game.roomID !== room));
+      console.log("public room is removed", room);
+    });
+  }, [publicGames]);
+
+  const games = publicGames.map((game) => (
+    //change to display way to allow user to enter username and enter wait
+    <tr key={game.roomID} onClick={() => handleRoomClick(game.roomID)}>
+      <td>{game.roomName}</td>
+      <td>
+        {game.playersLength}/{game.maxPlayers}
+      </td>
+    </tr>
+  ));
+
+  function refreshPage() {
+    window.location.reload();
+  }
+
+  function handleRoomClick(id) {
+    console.log("id is: ", id);
+    setRoomID(id);
+    setOpened(true);
+  }
+
+  function handleModalClick() {
+    setOpened(false);
+    setError("");
+  }
+
+  return (
+    <div className={classes.background}>
+      <div className={classes.container}>
+        <Modal opened={opened} onClose={handleModalClick}>
+          <Title
+            sx={{
+              color: `${theme.colors.dark[6]}`,
+              display: "flex",
+              justifyContent: "center",
+            }}
+            order={1}
+          >
+            Join Game
+          </Title>
+          <PublicForm roomID={roomID} />
+
+          {error && (
+            <Text weight={500} color="red">
+              {error}
+            </Text>
+          )}
+        </Modal>
+
+        <Paper
+          className={classes.paper}
+          padding="lg"
+          shadow="xs"
+          radius="xl"
+          withBorder
+        >
+          <Title
+            style={{
+              whiteSpace: "nowrap",
+              color: theme.colors.gray[0],
+              fontWeight: "700px",
+            }}
+            order={1}
+          >
+            Available Public Games
+          </Title>
+
+          <Space h="md" />
+
+          {console.log("public games is: ", publicGames)}
+
+          {publicGames.length ? (
+            <Table horizontalSpacing="xl" highlightOnHover>
+              <thead>
+                <tr>
+                  <th
+                    style={{
+                      color: theme.colors.yellow[4],
+                      fontWeight: "800px",
+                    }}
+                  >
+                    Room:
+                  </th>
+                  <th
+                    style={{
+                      color: theme.colors.yellow[4],
+                      fontWeight: "800px",
+                    }}
+                  >
+                    Number of Players:
+                  </th>
+                </tr>
+              </thead>
+
+              <tbody>{games}</tbody>
+            </Table>
+          ) : (
+            <Center>
+              <Text
+                size="lg"
+                style={{ color: theme.colors.yellow[4], fontWeight: "800px" }}
+              >
+                No public games available
+              </Text>
+            </Center>
+          )}
+          <Space h="md" />
+
+          <Center>
+            <Button color="dark" onClick={refreshPage}>
+              <Refresh size={20} />
+              Update
+            </Button>
+          </Center>
+        </Paper>
+      </div>
+    </div>
+  );
 }
 
 export default PublicGame;

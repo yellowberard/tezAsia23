@@ -58,7 +58,7 @@ function WaitRoom() {
   }, [found, id, navigate]);
 
   useEffect(() => {
-    socket.emit("initial_wait", id, (response) => {
+    socket.emit("get_players_in_wait", id, (response) => {
       if (response) {
         setRoomName(response.roomName);
         setMaxRoomLength(response.maxPlayers);
@@ -89,6 +89,7 @@ function WaitRoom() {
         //topCard: deck.removeCard(),
       })
     ); */
+
       dispatch(start(data.info));
 
       const gameRoomPath = generatePath("/Game/gameroom=:id", {

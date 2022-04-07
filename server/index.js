@@ -83,7 +83,8 @@ io.on("connection", (socket) => {
           console.log("game begin");
           //set up start game
           //const { } = gameServer.startGame()
-
+          //TEST
+          //gameServer.gamestate.gameStart = true;
           const startGameInfo = {
             players: gameServer.players,
             deck: gameServer.gamestate.getDeck(),
@@ -94,6 +95,11 @@ io.on("connection", (socket) => {
             id: room,
           });
         }
+
+        if (gameServer.publicGameCheck === "public") {
+          console.log("game is public");
+          socket.broadcast.emit("remove_room", room);
+        }
       } else {
         socket.emit("join_error", error);
       }
@@ -102,8 +108,24 @@ io.on("connection", (socket) => {
     }
   });
 
+  socket.on("get_public_games", (callback) => {
+    const publicGames = [];
+    games.forEach((value, key) => {
+      const game = {
+        roomID: key,
+        roomName: value.roomName,
+        maxPlayers: value.maxPlayers,
+        playersLength: value.players.length,
+      };
+      if (value.publicGameCheck && !value.gamestate.gameStart) {
+        publicGames.push(game);
+      }
+    });
+    callback(publicGames);
+  });
+
   //when either a player creates a game and or joins the waiting room for the first time
-  socket.on("initial_wait", (roomID, callback) => {
+  socket.on("get_players_in_wait", (roomID, callback) => {
     const server = games.get(roomID);
     if (server) {
       callback({
