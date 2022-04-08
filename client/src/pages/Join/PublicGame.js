@@ -77,8 +77,8 @@ function PublicGame() {
   const games = publicGames.map((game) => (
     //change to display way to allow user to enter username and enter wait
     <tr key={game.roomID} onClick={() => handleRoomClick(game.roomID)}>
-      <td>{game.roomName}</td>
-      <td>
+      <td style={{ fontSize: "16px", fontWeight: "bold" }}>{game.roomName}</td>
+      <td style={{ fontSize: "16px", fontWeight: "bold" }}>
         {game.playersLength}/{game.maxPlayers}
       </td>
     </tr>
@@ -142,38 +142,40 @@ function PublicGame() {
 
           <Space h="md" />
 
-          {console.log("public games is: ", publicGames)}
-
           {publicGames.length ? (
-            <Table horizontalSpacing="xl" highlightOnHover>
-              <thead>
-                <tr>
-                  <th
-                    style={{
-                      color: theme.colors.yellow[4],
-                      fontWeight: "800px",
-                    }}
-                  >
-                    Room:
-                  </th>
-                  <th
-                    style={{
-                      color: theme.colors.yellow[4],
-                      fontWeight: "800px",
-                    }}
-                  >
-                    Number of Players:
-                  </th>
-                </tr>
-              </thead>
+            <ScrollArea style={{ height: 250 }} type="auto" scrollbarSize={18}>
+              <Table horizontalSpacing="xl" highlightOnHover>
+                <thead>
+                  <tr>
+                    <th
+                      style={{
+                        color: theme.colors.blue[7],
+                        fontWeight: "bold",
+                        fontSize: "17px",
+                      }}
+                    >
+                      Room:
+                    </th>
+                    <th
+                      style={{
+                        color: theme.colors.blue[7],
+                        fontWeight: "bold",
+                        fontSize: "17px",
+                      }}
+                    >
+                      Number of Players:
+                    </th>
+                  </tr>
+                </thead>
 
-              <tbody>{games}</tbody>
-            </Table>
+                <tbody>{games}</tbody>
+              </Table>
+            </ScrollArea>
           ) : (
             <Center>
               <Text
                 size="lg"
-                style={{ color: theme.colors.yellow[4], fontWeight: "800px" }}
+                style={{ color: theme.colors.blue[7], fontWeight: "bold" }}
               >
                 No public games available
               </Text>

@@ -75,14 +75,14 @@ class Deck {
           id: v4(),
           name: `reverse`,
           src: ASSETSREVERSE[i],
-          color: COLORS[i],
+          color: COLORS[i].toString(),
           type: "reverse",
         });
         this.cards.push({
           id: v4(),
           name: `skip`,
           src: ASSETSKIP[i],
-          color: COLORS[i],
+          color: COLORS[i].toString(),
           type: "skip",
         });
 
@@ -90,7 +90,7 @@ class Deck {
           id: v4(),
           name: `draw`,
           src: ASSETSDRAW[i],
-          color: COLORS[i],
+          color: COLORS[i].toString(),
           type: "draw",
         });
 

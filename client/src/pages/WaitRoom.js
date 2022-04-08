@@ -90,6 +90,7 @@ function WaitRoom() {
       })
     ); */
 
+      console.log(data);
       dispatch(start(data.info));
 
       const gameRoomPath = generatePath("/Game/gameroom=:id", {
@@ -106,7 +107,7 @@ function WaitRoom() {
 
   useEffect(() => {
     setFound(playersList.find((player) => player.id === socket.id));
-    const timer = setTimeout(() => setLoading(false), 50);
+    const timer = setTimeout(() => setLoading(false), 70);
 
     return () => {
       setFound("");

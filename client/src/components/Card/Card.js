@@ -1,6 +1,7 @@
 import React from "react";
 import { useDrag } from "react-dnd";
 import { createStyles, Image } from "@mantine/core";
+import { BACKCARD } from "../../utils/constants";
 
 const useStyles = createStyles((theme) => ({
   img: {
@@ -19,7 +20,7 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-function Card({ card, playerID }) {
+function Card({ card, playerID, back }) {
   const { classes } = useStyles();
   const [{ isDragging }, drag] = useDrag(() => ({
     type: "image",
@@ -28,7 +29,18 @@ function Card({ card, playerID }) {
       isDragging: !!monitor.isDragging(),
     }),
   }));
-  return <Image className={classes.img} src={card.src} />;
+  if (back) {
+    return (
+      <img
+        draggable="false"
+        className={classes.img}
+        src={BACKCARD}
+        alt="Back Uno Card"
+      />
+    );
+  } else {
+    return <img className={classes.img} src={card.src} alt="Uno Card" />;
+  }
 }
 
 export default Card;

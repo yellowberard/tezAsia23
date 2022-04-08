@@ -35,55 +35,60 @@ class GameServer {
   leaveRoom(socket, type = "") {
     //remove the leaving player's cards and add to deck
     if (type === "in_game") {
-      console.log(this.gamestate.getDeck().length);
+      console.log(this.gamestate.deck.length);
       const player = this.players.find((player) => player.id === socket.id);
       console.log(player);
       for (let i = 0; i < player.hand.length; i++) {
         this.gamestate.deck.push(player.hand.pop());
       }
-      console.log(this.gamestate.getDeck().length);
-      socket.to(this.roomID).emit("update_deck", this.gamestate.getDeck());
+      console.log(this.gamestate.deck.length);
+
+      socket.to(this.roomID).emit("update_deck", this.gamestate.deck);
     }
     this.players = this.players.filter((player) => player.id !== socket.id);
     socket.leave(this.roomID);
   }
+
   startGame() {
     //players: players,
     //deck: deck.getDeck(),
     //topCard: deck.removeCard(),
-    action.payload.deck.forEach((card) => {
-      state.deck.push(card);
+
+    let randomId;
+    let deck = this.gamestate.getDeck();
+
+    while (true) {
+      randomId = Math.floor(Math.random() * deck.length);
+
+      if (
+        deck[randomId].type === "Wild" ||
+        deck[randomId].type === "Wild4" ||
+        deck[randomId].type === "draw" ||
+        deck[randomId].type === "reverse" ||
+        deck[randomId].type === "skip"
+      ) {
+        continue;
+      } else {
+        break;
+      }
+    }
+
+    let topCard = deck.splice(randomId, 1)[0];
+    this.gamestate.setTopCard(topCard);
+
+    this.players.forEach((player) => {
+      for (let i = 0; i < 7; i++) {
+        player.hand.push(deck.pop());
+      }
     });
 
-    /*    let randomId;
-      while (true) {
-        randomId = Math.floor(Math.random() * state.deck.length);
-        if (
-          state.deck[randomId].type === "Wild" ||
-          state.deck[randomId].type === "Wild4" ||
-          state.deck[randomId].type === "draw" ||
-          state.deck[randomId].type === "reverse" ||
-          state.deck[randomId].type === "skip"
-        ) {
-          continue;
-        } else {
-          break;
-        }
-      }
+    this.gamestate.deck = [...deck];
 
-      let topCard = state.deck.splice(randomId, 1)[0];
-      state.TopCard = topCard;
-      state.currentColor = state.TopCard.color;
-
-      action.payload.players.forEach((player) => {
-        for (let i = 0; i < 7; i++) {
-          player.hand.push(state.deck.pop());
-        }
-        state.players.push(player);
-      });
-
-      state.discard.push(topCard);
-    }, */
+    return {
+      deck: deck,
+      players: this.players,
+      topCard: topCard,
+    };
   }
   //remove player from room
 

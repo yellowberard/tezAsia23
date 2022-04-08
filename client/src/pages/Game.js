@@ -34,6 +34,12 @@ const useStyles = createStyles((theme) => ({
     top: "5%",
     left: "90%",
   },
+  center: {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translateX(-50%) translateY(-50%)",
+  },
 }));
 
 function Game() {
@@ -118,7 +124,9 @@ function Game() {
       }}
     >
       {isLoading ? (
-        <Loader color="indigo" />
+        <div className={classes.center}>
+          <Loader color="indigo" />
+        </div>
       ) : found ? (
         <div>
           <Pile />

@@ -28,39 +28,20 @@ export const gameSlice = createSlice({
   initialState,
   reducers: {
     start(state, action) {
+      console.log(action.payload);
       action.payload.deck.forEach((card) => {
         state.deck.push(card);
       });
 
-      let randomId;
-      while (true) {
-        randomId = Math.floor(Math.random() * state.deck.length);
-        if (
-          state.deck[randomId].type === "Wild" ||
-          state.deck[randomId].type === "Wild4" ||
-          state.deck[randomId].type === "draw" ||
-          state.deck[randomId].type === "reverse" ||
-          state.deck[randomId].type === "skip"
-        ) {
-          continue;
-        } else {
-          break;
-        }
-      }
-
-      let topCard = state.deck.splice(randomId, 1)[0];
-      console.log(topCard);
-      state.TopCard = topCard;
+      state.deck = [...action.payload.deck];
+      console.log(state.deck);
+      state.players = [...action.payload.players];
+      console.log(state.players);
+      state.TopCard = action.payload.topCard;
       state.currentColor = state.TopCard.color;
-
-      action.payload.players.forEach((player) => {
-        for (let i = 0; i < 7; i++) {
-          player.hand.push(state.deck.pop());
-        }
-        state.players.push(player);
-      });
-
-      state.discard.push(topCard);
+      console.log(state.currentColor);
+      state.discard.push(action.payload.topCard);
+      console.log(state.discard);
     },
 
     removePlayer(state, action) {

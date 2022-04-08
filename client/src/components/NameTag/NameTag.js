@@ -81,6 +81,8 @@ function NameTag({ playerName, playerID, id }) {
   const playerList = useSelector((state) => state.game.players);
   const currIndex = useSelector((state) => state.game.currentPlayer);
 
+  console.log(playerList[currIndex].id);
+
   let isCurrentPlayer = playerList[currIndex].id === playerID;
   const { classes } = useStyles({ isCurrentPlayer });
 

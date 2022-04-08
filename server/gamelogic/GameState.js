@@ -5,6 +5,7 @@ class GameState {
     this.avatarIDList = [];
     this.currentPlayer = ""; // current player's turn
     this.nextPlayer = "";
+    this.currentColor = "";
     this.deck = new Deck();
     this.topCard = this.deck.removeCard();
     this.discardPile = [];
@@ -49,16 +50,13 @@ class GameState {
 
   setTopCard(card) {
     this.topCard = card;
-    this.addToDiscardPile(card);
+    this.currentColor = this.topCard.color;
+    this.discardPile.push(card);
   }
 
   getTopCard() {
     console.log(this.topCard);
     return this.topCard;
-  }
-
-  addToDiscardPile(card) {
-    this.discardPile.append(card);
   }
 
   removeFromDeck(playerID) {

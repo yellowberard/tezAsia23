@@ -80,15 +80,8 @@ io.on("connection", (socket) => {
         socket.to(gameServer.roomID).emit("player_join", gameServer.players);
 
         if (gameServer.maxPlayers === gameServer.players.length) {
-          console.log("game begin");
           //set up start game
-          //const { } = gameServer.startGame()
-          //TEST
-          //gameServer.gamestate.gameStart = true;
-          const startGameInfo = {
-            players: gameServer.players,
-            deck: gameServer.gamestate.getDeck(),
-          };
+          const startGameInfo = gameServer.startGame();
 
           io.in(gameServer.roomID).emit("start_game", {
             info: startGameInfo,
@@ -97,14 +90,13 @@ io.on("connection", (socket) => {
         }
 
         if (gameServer.publicGameCheck === "public") {
-          console.log("game is public");
           socket.broadcast.emit("remove_room", room);
         }
       } else {
         socket.emit("join_error", error);
       }
     } else {
-      socket.emit("join_error", "room code does not exist.");
+      socket.emit("join_error", "game room does not exist.");
     }
   });
 
