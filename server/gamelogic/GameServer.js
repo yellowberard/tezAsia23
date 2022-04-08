@@ -1,4 +1,5 @@
 const { v4 } = require("uuid");
+const { shuffle } = require("./utils");
 
 class GameServer {
   constructor({ room, maxPlayers, password, publicGameCheck, gamestate }) {
@@ -81,6 +82,12 @@ class GameServer {
         player.hand.push(deck.pop());
       }
     });
+
+    console.log(this.players);
+
+    this.players = shuffle(this.players);
+
+    console.log(this.players);
 
     this.gamestate.deck = [...deck];
 

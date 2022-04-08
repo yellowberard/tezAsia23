@@ -3,8 +3,8 @@ const Deck = require("./Deck");
 class GameState {
   constructor() {
     this.avatarIDList = [];
-    this.currentPlayer = ""; // current player's turn
-    this.nextPlayer = "";
+    this.currentPlayer = 0; // current player's turn
+    this.nextPlayer = 1;
     this.currentColor = "";
     this.deck = new Deck();
     this.topCard = this.deck.removeCard();
