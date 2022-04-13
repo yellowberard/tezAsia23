@@ -50,7 +50,7 @@ io.on("connection", (socket) => {
           const data = {
             roomName: newServer.roomName,
             maxPlayers: newServer.maxPlayers,
-            player: newServer.players[0],
+            player: newServer.gamestate.players[0],
           };
           socket.emit("public_game_created", newServer.roomID);
         } else {
@@ -77,9 +77,11 @@ io.on("connection", (socket) => {
 
       if (status === "success") {
         socket.emit("join_success", gameServer.roomID);
-        socket.to(gameServer.roomID).emit("player_join", gameServer.players);
+        socket
+          .to(gameServer.roomID)
+          .emit("player_join", gameServer.gamestate.players);
 
-        if (gameServer.maxPlayers === gameServer.players.length) {
+        if (gameServer.maxPlayers === gameServer.gamestate.players.length) {
           //set up start game
           const startGameInfo = gameServer.startGame();
 
@@ -107,7 +109,7 @@ io.on("connection", (socket) => {
         roomID: key,
         roomName: value.roomName,
         maxPlayers: value.maxPlayers,
-        playersLength: value.players.length,
+        playersLength: value.gamestate.players.length,
       };
       if (value.publicGameCheck && !value.gamestate.gameStart) {
         publicGames.push(game);
@@ -123,7 +125,67 @@ io.on("connection", (socket) => {
       callback({
         roomName: server.roomName,
         maxPlayers: server.maxPlayers,
-        players: server.players,
+        players: server.gamestate.players,
+      });
+    }
+  });
+
+  socket.on("move", ({ roomID, card, player }) => {
+    const server = games.get(roomID);
+    if (server) {
+      const gamestate = server.gamestate;
+
+      const moveInfo = {
+        playerID: player,
+        cardPlayed: card,
+      };
+
+      const updatedInfo = gamestate.Move(moveInfo);
+
+      if (updatedInfo.status === "success") {
+        io.in(roomID).emit("update_move", updatedInfo);
+
+        if (gamestate.Win(player)) {
+          console.log("player played last card...");
+          //const winnerInfo = gamestate.Won(player)
+          // io.in(roomID).emit("winner",winnerInfo);
+        }
+      }
+    }
+  });
+
+  socket.on("wild_move", ({ roomID, currPlayerIndex, isWild }) => {
+    const server = games.get(roomID);
+
+    if (server) {
+      const gamestate = server.gamestate;
+
+      const currPlayerID = gamestate.players[currPlayerIndex].id;
+      gamestate.isWild = isWild;
+      // console.log("curr player: ", currPlayerID); TEST
+      if (isWild) {
+        io.to(currPlayerID).emit("update_wild_move", isWild);
+      } else {
+        io.in(roomID).emit("update_wild_move", isWild);
+      }
+    }
+  });
+
+  socket.on("change_current_color", ({ roomID, color }) => {
+    const server = games.get(roomID);
+
+    if (server) {
+      const gamestate = server.gamestate;
+
+      const { updatedCurrentPlayerIndex, nextPlayerIndex } =
+        gamestate.WildMove(color);
+      console.log("currPlayer: ", updatedCurrentPlayerIndex);
+      console.log("nextPlayer: ", nextPlayerIndex);
+
+      io.in(roomID).emit("update_current_color", {
+        color: color,
+        updatedCurrentPlayerIndex: updatedCurrentPlayerIndex,
+        nextPlayerIndex: nextPlayerIndex,
       });
     }
   });
@@ -132,18 +194,20 @@ io.on("connection", (socket) => {
     const server = games.get(roomID);
 
     if (server) {
-      if (server.players.length === 1) {
+      if (server.gamestate.players.length === 1) {
         socket.leave(roomID);
         games.delete(roomID);
       } else {
-        const player = server.players.find((player) => player.id === socket.id);
+        const player = server.gamestate.players.find(
+          (player) => player.id === socket.id
+        );
 
         if (player) {
           const message = `Player: ${player.name} has left the game lobby.`;
           server.leaveRoom(socket);
           socket.to(roomID).emit("wait_room_user_leave", {
             message: message,
-            newPlayersList: server.players,
+            newPlayersList: server.gamestate.players,
           });
         }
       }
@@ -154,10 +218,12 @@ io.on("connection", (socket) => {
     const server = games.get(roomID);
 
     if (server) {
-      const player = server.players.find((player) => player.id === socket.id);
+      const player = server.gamestate.players.find(
+        (player) => player.id === socket.id
+      );
 
       if (player) {
-        if (server.players.length == 2) {
+        if (server.gamestate.players.length == 2) {
           socket
             .to(roomID)
             .emit(
@@ -167,10 +233,13 @@ io.on("connection", (socket) => {
         }
 
         const message = `Player: ${player.name} has left the game.`;
-        server.leaveRoom(socket, "in_game");
+        server.leaveRoom(socket);
+
         socket.to(roomID).emit("game_room_user_leave", {
           message: message,
           playerID: player.id,
+          currentPlayerIndex: server.gamestate.currentPlayerIndex,
+          nextPlayerIndex: server.gamestate.nextPlayerIndex,
         });
       }
     }

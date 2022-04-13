@@ -15,6 +15,8 @@ import {
   Text,
   useMantineTheme,
 } from "@mantine/core";
+import { useNotifications } from "@mantine/notifications";
+
 import TopHand from "../components/Hand/TopHand";
 import PlayerHand from "../components/Hand/PlayerHand";
 import RightHand from "../components/Hand/RightHand";
@@ -24,7 +26,12 @@ import Win from "../components/Win/Win";
 
 import socket from "../app/socket";
 import Exit from "../components/Exit/Exit";
-import { updatePlayers } from "../feature/gameSlice";
+import {
+  updatePlayers,
+  move,
+  setWildCard,
+  colorChange,
+} from "../feature/gameSlice";
 import { DoorExit, LetterX } from "tabler-icons-react";
 import Error from "../components/Error/Error";
 
@@ -44,7 +51,7 @@ const useStyles = createStyles((theme) => ({
 
 function Game() {
   const { id } = useParams();
-  console.log(id);
+
   const { classes } = useStyles();
 
   const [isLoading, setLoading] = useState(true);
@@ -58,6 +65,7 @@ function Game() {
   const isWin = useSelector((state) => state.game.isWin);
 
   const navigate = useNavigate();
+  const notifications = useNotifications();
   const theme = useMantineTheme();
   const dispatch = useDispatch();
 
@@ -83,15 +91,58 @@ function Game() {
   }, [found, id, navigate]);
 
   useEffect(() => {
+    const moveListener = (data) => {
+      notifications.showNotification({
+        autoClose: 1650,
+        color:
+          data.cardPlayed.color === "random"
+            ? "dark"
+            : data.cardPlayed.color.toLowerCase(),
+        message: `A ${data.cardPlayed.name} was played! `,
+      });
+      dispatch(move(data));
+      console.log("move dispatch is firing!"); //TEST
+    };
+
+    const colorListener = (colorInfo) => {
+      notifications.showNotification({
+        autoClose: 1500,
+        color: colorInfo.color.toLowerCase(),
+        message: `Color ${colorInfo.color} was Chosen!`,
+      });
+      dispatch(colorChange(colorInfo));
+    };
+
     socket.on("game_end_error", (message) => {
       setMessage(message);
     });
 
-    socket.on("game_room_user_leave", ({ message, playerID }) => {
-      setPlayerLeaveMessage(message);
-      dispatch(updatePlayers({ id: playerID }));
+    socket.on("update_move", moveListener);
+
+    socket.on("update_wild_move", (isWild) => {
+      dispatch(setWildCard(isWild));
     });
-  }, [dispatch]);
+
+    socket.on("update_current_color", colorListener);
+
+    socket.on(
+      "game_room_user_leave",
+      ({ message, playerID, currentPlayerIndex, nextPlayerIndex }) => {
+        setPlayerLeaveMessage(message);
+        dispatch(
+          updatePlayers({
+            id: playerID,
+            currPlayer: currentPlayerIndex,
+            nextPlayer: nextPlayerIndex,
+          })
+        );
+      }
+    );
+    return () => {
+      socket.off("update_current_color", colorListener);
+      socket.off("update_move", moveListener);
+    };
+  }, [dispatch, notifications]);
 
   useEffect(() => {
     setFound(playersList.find((player) => player.id === socket.id));
@@ -130,6 +181,7 @@ function Game() {
       ) : found ? (
         <div>
           <Pile />
+
           {playersList.map((player) => {
             if (player.id === socket.id) {
               return <PlayerHand key={player.id} player={player} />;
@@ -139,8 +191,11 @@ function Game() {
               return <Component key={player.id} player={player} />;
             });
           })}
+
           {isWildCard && <ColorChooser />}
+
           {isWin && <Win />}
+
           {message && (
             <Modal
               opened={opened}

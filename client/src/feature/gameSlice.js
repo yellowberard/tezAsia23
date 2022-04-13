@@ -28,28 +28,23 @@ export const gameSlice = createSlice({
   initialState,
   reducers: {
     start(state, action) {
-      console.log(action.payload);
       action.payload.deck.forEach((card) => {
         state.deck.push(card);
       });
 
       state.deck = [...action.payload.deck];
-      console.log(state.deck);
+
       state.players = [...action.payload.players];
       console.log(state.players);
-      state.TopCard = action.payload.topCard;
-      state.currentColor = state.TopCard.color;
-      console.log(state.currentColor);
-      state.discard.push(action.payload.topCard);
-      console.log(state.discard);
-    },
 
-    removePlayer(state, action) {
-      //if player disconnects or leaves game
+      state.TopCard = action.payload.topCard;
+
+      state.currentColor = state.TopCard.color;
+
+      state.discard.push(action.payload.topCard);
     },
 
     draw(state, action) {
-      //, action) {
       // draw from deck and add to player hand
       state.currentType = "drawPile";
       let currPlayerIndex;
@@ -82,109 +77,43 @@ export const gameSlice = createSlice({
     },
 
     move(state, action) {
-      let currPlayerIndex = state.currentPlayer;
-      let nextPlayerIndex = state.nextPlayer;
+      const currentPlayer = state.players.find(
+        (player) => player.id === action.payload.id
+      );
+      const cardPlayed = action.payload.cardPlayed;
+      const nextPlayerHand = action.payload.updatedNextPlayerHand;
 
-      const playedPlayerID = action.payload.player;
-      const playerLength = state.players.length;
-
-      const cardPlayed = action.payload.card;
-      const topcard = state.TopCard;
-      const currentPlayer = state.players[currPlayerIndex];
-      const cardGameInfo = {
-        currentPlayer: currentPlayer,
-        cardPlayed: cardPlayed,
-      };
-
-      if (state.deck.length <= 8) {
-        //move cards in discard except topCard to deckpile and shuffle again
-        console.log("deck is low in move");
-        console.log(current(state.discard));
+      if (nextPlayerHand.length) {
+        console.log("player has cards to be added");
+        console.log("1: ", state.players[state.nextPlayer].hand.length);
+        state.players[state.nextPlayer].hand.push(...nextPlayerHand);
+        console.log("2:", state.players[state.nextPlayer].hand.length);
+        state.deck = [...action.payload.updatedDeck];
       }
 
-      if (currentPlayer.id === playedPlayerID) {
-        if (
-          cardPlayed.color === state.currentColor || //convert to function : FIX
-          cardPlayed.color === topcard.color ||
-          cardPlayed.name === topcard.name
-        ) {
-          //convert to function : FIX
+      if (cardPlayed.name === "Wild4card" || cardPlayed.name === "Wildcard") {
+        currentPlayer.hand = currentPlayer.hand.filter(
+          (card) => card.id !== cardPlayed.id
+        );
 
-          switch (cardPlayed.type) {
-            case "reverse":
-              //convert to function: FIX
-              state.currentType = "reverse";
+        state.TopCard = cardPlayed;
+        state.currentColor = state.TopCard.color;
+        state.discard = [...state.discard, cardPlayed];
+      } else {
+        state.currentPlayer = action.payload.updatedCurrentPlayerIndex;
+        state.nextPlayer = action.payload.nextPlayerIndex;
 
-              if (state.direction === "forward") {
-                state.direction = "reverse";
-                break;
-              } else {
-                state.direction = "forward";
-                break;
-              }
+        state.isColorChosen = false;
 
-            case "skip":
-              state.currentType = "skip";
-              break;
+        currentPlayer.hand = currentPlayer.hand.filter(
+          (card) => card.id !== cardPlayed.id
+        );
 
-            case "draw":
-              state.currentType = "draw";
+        state.TopCard = cardPlayed;
 
-              for (let i = 0; i < 2; i++) {
-                state.players[state.nextPlayer].hand.push(state.deck.pop());
-              }
-              break;
+        state.discard = [...state.discard, cardPlayed];
 
-            default:
-              state.currentType = "normal";
-              break;
-          }
-          const playerGameInfo = {
-            direction: state.direction,
-            currPlayerIndex: currPlayerIndex,
-            nextPlayerIndex: nextPlayerIndex,
-            playerLength: playerLength,
-            currentType: state.currentType,
-          };
-
-          [currPlayerIndex, nextPlayerIndex] =
-            playerLength === 2
-              ? switchTwoPlayerGame(playerGameInfo)
-              : switchPlayers(playerGameInfo);
-
-          state.currentPlayer = currPlayerIndex;
-          state.nextPlayer = nextPlayerIndex;
-
-          state.isColorChosen = false;
-          currentPlayer.hand = removeCardFromHand(cardGameInfo);
-
-          state.TopCard = cardPlayed;
-          state.discard = [...state.discard, cardPlayed];
-
-          state.currentColor = state.TopCard.color;
-
-          //check for Wild4 and Wild card but do not chnage state.currentPlayer until current player chooses a new card color
-        } else if (
-          cardPlayed.name === "Wild4card" ||
-          cardPlayed.name === "Wildcard"
-        ) {
-          switch (cardPlayed.type) {
-            case "Wild4":
-              state.currentType = "Wild4";
-              for (let i = 0; i < 4; i++) {
-                state.players[state.nextPlayer].hand.push(state.deck.pop());
-              }
-              break;
-            case "Wild":
-              state.currentType = "Wild";
-              break;
-            default:
-              break;
-          }
-          currentPlayer.hand = removeCardFromHand(cardGameInfo);
-          state.TopCard = cardPlayed;
-          state.discard = [...state.discard, cardPlayed];
-        }
+        state.currentColor = state.TopCard.color;
       }
     },
 
@@ -208,32 +137,19 @@ export const gameSlice = createSlice({
       state.players = state.players.filter(
         (player) => player.id !== action.payload.id
       );
-      console.log(state.players);
+      state.currentPlayer = action.payload.currPlayer;
+
+      state.nextPlayer = action.payload.nextPlayer;
     },
 
     //called when wild card is placed after player has chosen a color
     //switch player after setting current color
     colorChange(state, action) {
-      let currPlayerIndex = state.currentPlayer;
-      let nextPlayerIndex = state.nextPlayer;
-      const playerLength = state.players.length;
-      const playerGameInfo = {
-        direction: state.direction,
-        currPlayerIndex: currPlayerIndex,
-        nextPlayerIndex: nextPlayerIndex,
-        playerLength: playerLength,
-        currentType: state.currentType,
-      };
       state.isColorChosen = true;
-      state.currentColor = action.payload;
+      state.currentColor = action.payload.color;
 
-      [currPlayerIndex, nextPlayerIndex] =
-        playerLength === 2
-          ? switchTwoPlayerGame(playerGameInfo)
-          : switchPlayers(playerGameInfo);
-
-      state.currentPlayer = currPlayerIndex;
-      state.nextPlayer = nextPlayerIndex;
+      state.currentPlayer = action.payload.updatedCurrentPlayerIndex;
+      state.nextPlayer = action.payload.nextPlayerIndex;
     },
 
     reset() {

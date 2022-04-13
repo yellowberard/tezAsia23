@@ -26,6 +26,7 @@ function DeckPile() {
   const dispatch = useDispatch();
   return (
     <img
+      draggable="false"
       className={classes.img}
       src={BACKCARD}
       alt="uno back card"

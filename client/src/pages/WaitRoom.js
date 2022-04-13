@@ -80,24 +80,13 @@ function WaitRoom() {
     });
 
     socket.on("start_game", (data) => {
-      //
-
-      /* dispatch(
-      start({
-        players: players,
-        deck: deck.getDeck(),
-        //topCard: deck.removeCard(),
-      })
-    ); */
-
-      console.log(data);
       dispatch(start(data.info));
 
       const gameRoomPath = generatePath("/Game/gameroom=:id", {
         id: data.id,
       });
 
-      const gameTimer = setTimeout(() => navigate(gameRoomPath), 1100);
+      const gameTimer = setTimeout(() => navigate(gameRoomPath), 950);
       return () => {
         setFound("");
         clearTimeout(gameTimer);

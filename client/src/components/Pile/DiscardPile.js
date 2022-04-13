@@ -4,6 +4,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { useDrop } from "react-dnd";
 import { move, setWildCard } from "../../feature/gameSlice";
 import { createStyles } from "@mantine/core";
+import socket from "../../app/socket";
+import { useParams } from "react-router-dom";
 
 const useStyles = createStyles((theme) => ({
   img: {
@@ -23,15 +25,19 @@ const useStyles = createStyles((theme) => ({
 }));
 
 function DiscardPile() {
+  const { id } = useParams();
   const discardCard = useSelector((state) => state.game.TopCard);
   const colorChosen = useSelector((state) => state.game.isColorChosen);
+  const currIndex = useSelector((state) => state.game.currentPlayer);
+
   const dispatch = useDispatch();
   const { classes } = useStyles();
   // console.log(colorChosen);
 
   const [{ isOver }, drop] = useDrop(() => ({
     accept: "image",
-    drop: (item) => dispatch(move(item)),
+    drop: (item) =>
+      socket.emit("move", { roomID: id, card: item.card, player: item.player }),
     collect: (monitor) => ({
       isOver: !!monitor.isOver(),
     }),
@@ -42,16 +48,24 @@ function DiscardPile() {
       (discardCard.type === "Wild4" || discardCard.type === "Wild") &&
       colorChosen === false
     ) {
-      dispatch(setWildCard(true));
+      socket.emit("wild_move", {
+        roomID: id,
+        currPlayerIndex: currIndex,
+        isWild: true,
+      });
     } else {
-      dispatch(setWildCard(false));
+      socket.emit("wild_move", {
+        roomID: id,
+        currPlayerIndex: currIndex,
+        isWild: false,
+      });
     }
-  }, [colorChosen, discardCard.type, dispatch]);
+  }, [colorChosen, currIndex, discardCard.type, dispatch, id]);
 
   return (
     <div ref={drop}>
       <img
-        //style={{ width: "165px", height: "200px" }}
+        draggable="false"
         className={classes.img}
         src={discardCard.src}
         alt="uno card"

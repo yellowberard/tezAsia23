@@ -12,6 +12,7 @@ const useStyles = createStyles((theme, { color }) => ({
     display: "flex",
 
     border: ` ${theme.colors.blue[4]} solid 10px `,
+    backgroundColor: ` ${theme.colors.blue[4]} `,
     borderRadius: "15px",
 
     width: "480px",
@@ -50,7 +51,10 @@ const useStyles = createStyles((theme, { color }) => ({
     height: "0",
     border: "50px solid transparent",
 
-    borderBottomColor: `${theme.colors[color][4]}`,
+    borderBottomColor:
+      color === "random"
+        ? ` ${theme.colors.gray[4]}`
+        : `${theme.colors[color][4]} `,
 
     position: "relative",
     top: "-50px",
@@ -63,13 +67,17 @@ const useStyles = createStyles((theme, { color }) => ({
       width: "0",
       height: "0",
       border: "50px solid transparent",
-      borderTopColor: `${theme.colors[color][4]}`,
+      borderTopColor:
+        color === "random"
+          ? ` ${theme.colors.gray[4]}`
+          : `${theme.colors[color][4]} `,
     },
   },
 }));
 
 function Pile() {
   const currentColor = useSelector((state) => state.game.currentColor);
+
   const color = currentColor.toLowerCase();
 
   const { classes } = useStyles({ color });

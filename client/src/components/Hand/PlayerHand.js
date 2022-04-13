@@ -195,7 +195,6 @@ function PlayerHand({ player }) {
   const { classes } = useStyles();
   const dispatch = useDispatch();
   const [cardsLength, setCardLength] = useState(0);
-  console.log(player);
 
   useEffect(() => {
     if (player.hand.length === 0) {

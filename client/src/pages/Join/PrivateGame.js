@@ -12,7 +12,7 @@ import {
   Button,
   PasswordInput,
 } from "@mantine/core";
-import { useForm } from "@mantine/hooks";
+import { useForm } from "@mantine/form";
 import { EyeCheck, EyeOff } from "tabler-icons-react";
 import socket from "../../app/socket";
 
@@ -42,17 +42,18 @@ function PrivateGame() {
       name: "",
       password: "",
     },
-    validationRules: {
-      roomCode: (value) => value.trim().length === 16,
-      name: (value) => value.trim().length >= 2 && value.trim().length <= 6,
+    validate: {
+      roomCode: (value) =>
+        value.trim().length === 16 ? null : "room code must be 16 characters.",
+      name: (value) =>
+        value.trim().length >= 2 && value.trim().length <= 6
+          ? null
+          : "Name must include at least 2 characters and max 6 characters",
 
-      password: (value) => value !== "",
-    },
-    errorMessages: {
-      roomCode: "room code must be 16 characters.",
-      name: "Name must include at least 2 characters and max 6 characters",
-      password:
-        "You must enter a password if you want to play in a private game",
+      password: (value) =>
+        value !== ""
+          ? null
+          : "You must enter a password if you want to play in a private game",
     },
   });
 

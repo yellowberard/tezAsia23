@@ -39,7 +39,9 @@ function Card({ card, playerID, back }) {
       />
     );
   } else {
-    return <img className={classes.img} src={card.src} alt="Uno Card" />;
+    return (
+      <img ref={drag} className={classes.img} src={card.src} alt="Uno Card" />
+    );
   }
 }
 

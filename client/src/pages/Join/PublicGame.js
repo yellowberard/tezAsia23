@@ -49,8 +49,6 @@ function PublicGame() {
   useEffect(() => {
     socket.emit("get_public_games", (response) => {
       if (response) {
-        console.log(response);
-
         setPublicGames(response);
       }
     });
@@ -70,7 +68,6 @@ function PublicGame() {
   useEffect(() => {
     socket.on("remove_room", (room) => {
       setPublicGames(publicGames.filter((game) => game.roomID !== room));
-      console.log("public room is removed", room);
     });
   }, [publicGames]);
 
@@ -89,7 +86,6 @@ function PublicGame() {
   }
 
   function handleRoomClick(id) {
-    console.log("id is: ", id);
     setRoomID(id);
     setOpened(true);
   }

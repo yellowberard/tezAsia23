@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import {
   useMantineTheme,
@@ -10,25 +11,23 @@ import {
   Center,
 } from "@mantine/core";
 
-import { useNotifications } from "@mantine/notifications";
+import socket from "../../app/socket";
 
-import { colorChange, setWildCard } from "../../feature/gameSlice";
 function ColorChooser() {
+  const { id } = useParams();
   const [opened, setOpened] = useState(true);
   const [color, setValue] = useState("red");
-  const notifications = useNotifications();
   const theme = useMantineTheme();
   const dispatch = useDispatch();
 
   function handleChooseColor() {
-    notifications.showNotification({
+    /*  notifications.showNotification({
       autoClose: 4000,
       color: color.toLowerCase(),
       message: `Color ${color} was Chosen!`,
-    });
+    }); */
     setOpened(false);
-    dispatch(colorChange(color));
-    dispatch(setWildCard(false));
+    socket.emit("change_current_color", { roomID: id, color: color });
   }
 
   return (

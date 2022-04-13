@@ -59,20 +59,22 @@ function CreateGame() {
       password: "",
     },
 
-    validationRules: {
-      roomName: (value) => value.trim().length >= 2 && value.trim().length <= 8,
-      name: (value) => value.trim().length >= 2 && value.trim().length <= 6,
+    validate: {
+      roomName: (value) =>
+        value.trim().length >= 2 && value.trim().length <= 8
+          ? null
+          : "room name must include at least 2 characters and max 8 characters",
+      name: (value) =>
+        value.trim().length >= 2 && value.trim().length <= 6
+          ? null
+          : "Name must include at least 2 characters and max 6 characters",
 
       password: (password, values) =>
         (values.checked === true && password !== "") ||
         (values.checked === false && password === "") ||
-        (values.checked === false && password !== ""),
-    },
-    errorMessages: {
-      roomName:
-        "room name must include at least 2 characters and max 8 characters",
-      name: "Name must include at least 2 characters and max 6 characters",
-      password: "You must enter a password if you want your game to be private",
+        (values.checked === false && password !== "")
+          ? null
+          : "You must enter a password if you want your game to be private",
     },
   });
 

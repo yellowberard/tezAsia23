@@ -8,11 +8,11 @@ function PublicForm({ roomID }) {
       name: "",
     },
 
-    validationRules: {
-      name: (value) => value.trim().length >= 2 && value.trim().length <= 6,
-    },
-    errorMessages: {
-      name: "Name must include at least 2 characters and max 6 characters",
+    validate: {
+      name: (value) =>
+        value.trim().length >= 2 && value.trim().length <= 6
+          ? null
+          : "Name must include at least 2 characters and max 6 characters",
     },
   });
 
@@ -22,8 +22,6 @@ function PublicForm({ roomID }) {
       name: values.name,
       password: "",
     };
-
-    console.log(joinInfo);
     socket.emit("join_room", joinInfo);
   }
   return (

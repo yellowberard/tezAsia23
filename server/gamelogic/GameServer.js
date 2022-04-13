@@ -9,18 +9,18 @@ class GameServer {
     this.password = password;
     this.publicGameCheck = publicGameCheck;
     this.gamestate = gamestate;
-    this.players = [];
   }
 
   joinRoom({ socket, name, password }) {
-    if (this.players.length >= this.maxPlayers) {
+    const players = this.gamestate.players;
+    if (players.length >= this.maxPlayers) {
       return { status: "failure", error: "room is full." };
     } else if (
       (this.publicGameCheck === "public" || this.password === password) &&
       !this.gamestate.gameStart
     ) {
       const player = this.createPlayer({ id: socket.id, name: name });
-      this.players.push(player);
+      players.push(player);
       socket.join(this.roomID);
 
       return { status: "success", error: "none" };
@@ -33,20 +33,27 @@ class GameServer {
     }
   }
 
-  leaveRoom(socket, type = "") {
+  leaveRoom(socket) {
     //remove the leaving player's cards and add to deck
-    if (type === "in_game") {
+
+    if (this.gamestate.gameStart) {
       console.log(this.gamestate.deck.length);
-      const player = this.players.find((player) => player.id === socket.id);
-      console.log(player);
-      for (let i = 0; i < player.hand.length; i++) {
-        this.gamestate.deck.push(player.hand.pop());
-      }
+      const player = this.gamestate.players.find(
+        (player) => player.id === socket.id
+      );
+
+      console.log("player: ", player.hand.length);
+      this.gamestate.deck.push(...player.hand);
       console.log(this.gamestate.deck.length);
 
       socket.to(this.roomID).emit("update_deck", this.gamestate.deck);
     }
-    this.players = this.players.filter((player) => player.id !== socket.id);
+    this.gamestate.players = this.gamestate.players.filter(
+      (player) => player.id !== socket.id
+    );
+
+    this.gamestate.switchPlayers("leave_game");
+
     socket.leave(this.roomID);
   }
 
@@ -54,9 +61,10 @@ class GameServer {
     //players: players,
     //deck: deck.getDeck(),
     //topCard: deck.removeCard(),
-
+    this.gamestate.gameStart = true;
     let randomId;
     let deck = this.gamestate.getDeck();
+    console.log("1: ", deck.length);
 
     while (true) {
       randomId = Math.floor(Math.random() * deck.length);
@@ -77,23 +85,21 @@ class GameServer {
     let topCard = deck.splice(randomId, 1)[0];
     this.gamestate.setTopCard(topCard);
 
-    this.players.forEach((player) => {
+    this.gamestate.players.forEach((player) => {
       for (let i = 0; i < 7; i++) {
         player.hand.push(deck.pop());
       }
     });
+    console.log("2: ", deck.length);
 
-    console.log(this.players);
-
-    this.players = shuffle(this.players);
-
-    console.log(this.players);
+    this.gamestate.players = shuffle(this.gamestate.players);
 
     this.gamestate.deck = [...deck];
+    console.log("3: ", this.gamestate.deck.length);
 
     return {
       deck: deck,
-      players: this.players,
+      players: this.gamestate.players,
       topCard: topCard,
     };
   }
