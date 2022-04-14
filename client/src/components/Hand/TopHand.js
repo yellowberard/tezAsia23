@@ -193,12 +193,8 @@ function TopHand({ player }) {
   const [cardsLength, setCardLength] = useState(0);
 
   useEffect(() => {
-    if (player.hand.length === 0) {
-      dispatch(Win({ name: player.name, avatar: player.avatarID }));
-    }
-
     setCardLength(player.hand.length);
-  }, [player.hand.length, dispatch, player]);
+  }, [player.hand.length, dispatch]);
 
   return (
     <div className={classes.position}>

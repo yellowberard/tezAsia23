@@ -192,8 +192,6 @@ function LeftHand({ player }) {
   const [cardsLength, setCardLength] = useState(0);
 
   useEffect(() => {
-    if (cardsLength === 0) {
-    }
     setCardLength(player.hand.length);
   }, [cardsLength, player.hand.length]);
 

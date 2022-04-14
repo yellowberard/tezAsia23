@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   useMantineTheme,
   Modal,
@@ -11,9 +11,9 @@ import {
   createStyles,
 } from "@mantine/core";
 import { useSelector } from "react-redux";
-import { getWinnerScore } from "../../utils/gameLogicUtil";
 import NameTag from "../NameTag/NameTag";
 import logo from "../../assets/logo.png";
+import socket from "../../app/socket";
 
 const useStyles = createStyles((theme) => ({
   img: {
@@ -23,21 +23,19 @@ const useStyles = createStyles((theme) => ({
 }));
 
 function Win() {
+  const { id } = useParams();
   const [opened, setOpened] = useState(true);
-  const [score, setScore] = useState(0);
+  //const [score, setScore] = useState(0);
   const winner = useSelector((state) => state.game.winner);
-  const players = useSelector((state) => state.game.players);
+  const score = useSelector((state) => state.game.winnerScore);
   const theme = useMantineTheme();
   const navigate = useNavigate();
   const { classes } = useStyles();
 
   function handleClick() {
+    socket.emit("leave_game_room", id);
     navigate("/");
   }
-
-  useEffect(() => {
-    setScore(getWinnerScore(players));
-  }, [players]);
 
   return (
     <>

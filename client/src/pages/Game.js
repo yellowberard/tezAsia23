@@ -31,6 +31,8 @@ import {
   move,
   setWildCard,
   colorChange,
+  draw,
+  WinGame,
 } from "../feature/gameSlice";
 import { DoorExit, LetterX } from "tabler-icons-react";
 import Error from "../components/Error/Error";
@@ -104,6 +106,10 @@ function Game() {
       console.log("move dispatch is firing!"); //TEST
     };
 
+    const drawListener = (drawInfo) => {
+      dispatch(draw(drawInfo));
+    };
+
     const colorListener = (colorInfo) => {
       notifications.showNotification({
         autoClose: 1500,
@@ -117,6 +123,8 @@ function Game() {
       setMessage(message);
     });
 
+    socket.on("update_draw_move", drawListener);
+
     socket.on("update_move", moveListener);
 
     socket.on("update_wild_move", (isWild) => {
@@ -124,6 +132,10 @@ function Game() {
     });
 
     socket.on("update_current_color", colorListener);
+
+    socket.on("winner", (winnerData) => {
+      dispatch(WinGame(winnerData));
+    });
 
     socket.on(
       "game_room_user_leave",
@@ -141,6 +153,7 @@ function Game() {
     return () => {
       socket.off("update_current_color", colorListener);
       socket.off("update_move", moveListener);
+      socket.off("update_draw_move", drawListener);
     };
   }, [dispatch, notifications]);
 

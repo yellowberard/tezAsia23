@@ -27,23 +27,23 @@ function switchTwoPlayerGame({
 }) {
   //if playing reverseCard,skip Card, draw2 or WildDraw 4 Card, can play again
   //else wildcard, regular card goes to next player
-  //console.log("currentType: ", currentType);  TEST
-  //console.log("curr: ", currPlayerIndex); TEST
-  //console.log("next: ", nextPlayerIndex); TEST
+  //console.log("currentType: ", currentType);  //TEST
+  //console.log("curr: ", currPlayerIndex); //TEST
+  //console.log("next: ", nextPlayerIndex); //TEST
   switch (currentType) {
     case "reverse":
     case "skip":
     case "draw":
     case "Wild4":
-      // console.log("herewe"); TEST
+      // console.log("herewe"); //TEST
       return [currPlayerIndex, nextPlayerIndex];
 
     default:
     case "leave_game":
       currPlayerIndex = (currPlayerIndex + 1) % playerLength;
       nextPlayerIndex = (nextPlayerIndex + 1) % playerLength;
-      // console.log("bye1: ", currPlayerIndex); TEST
-      // console.log("bye2: ", nextPlayerIndex); TEST
+      // console.log("bye1: ", currPlayerIndex); //TEST
+      // console.log("bye2: ", nextPlayerIndex); //TEST
       return [currPlayerIndex, nextPlayerIndex];
   }
 }

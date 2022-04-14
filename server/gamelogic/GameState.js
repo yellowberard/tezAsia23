@@ -2,6 +2,7 @@ const {
   switchTwoPlayerGame,
   switchPlayers,
   removeCardFromHand,
+  getWinnerScore,
 } = require("../gamelogic/gameLogicUtils");
 const Deck = require("./Deck");
 
@@ -18,11 +19,18 @@ class GameState {
     this.isWild = false;
     this.discardPile = [];
     this.gameStart = false;
+    this.isWin = false;
     this.players = [];
   }
 
-  Win() {
+  Win(currentPlayerID) {
     //determine win (if a player's card == 0) then they win
+    const currentPlayer = this.players.find(
+      (player) => player.id === currentPlayerID
+    );
+    console.log(currentPlayer.hand.length); //TEST
+
+    return currentPlayer.hand.length === 0;
   }
 
   switchPlayers(type = "") {
@@ -30,7 +38,7 @@ class GameState {
     let nextPlayerIndex = this.nextPlayerIndex;
     let playerLength = this.players.length;
 
-    console.log("maxPlayer: ", playerLength <= 2);
+    //console.log("maxPlayer: ", playerLength <= 2); //TEST
     const playerGameInfo = {
       direction: this.direction,
       currPlayerIndex: currPlayerIndex,
@@ -39,9 +47,9 @@ class GameState {
       currentType: type ? type : this.currentType,
     };
 
-    console.log("length: ", playerLength);
-    console.log("currPlayer: ", currPlayerIndex);
-    console.log("nextPlayer: ", nextPlayerIndex);
+    /*  console.log("length: ", playerLength); //TEST
+    console.log("currPlayer: ", currPlayerIndex); //TEST
+    console.log("nextPlayer: ", nextPlayerIndex); //TEST */
 
     // switch player
     [currPlayerIndex, nextPlayerIndex] =
@@ -65,9 +73,6 @@ class GameState {
     //use removeFromDeck and switchPlayer, call players method (removeCardFromHand to get the remove card and set the Top card to that)
     //set Game State
     let currentPlayer = this.players[this.currentPlayerIndex];
-    let playerLength = this.players.length;
-    let currPlayerIndex = this.currentPlayerIndex;
-    let nextPlayerIndex = this.nextPlayerIndex;
     let updatedNextPlayerHand = [];
 
     const cardGameInfo = {
@@ -117,14 +122,6 @@ class GameState {
             this.currentType = "normal";
             break;
         }
-
-        const playerGameInfo = {
-          direction: this.direction,
-          currPlayerIndex: currPlayerIndex,
-          nextPlayerIndex: nextPlayerIndex,
-          playerLength: playerLength,
-          currentType: this.currentType,
-        };
 
         if (updatedNextPlayerHand.length) {
           this.players[this.nextPlayerIndex].hand.push(
@@ -200,8 +197,43 @@ class GameState {
     };
   }
 
+  Draw(playerID) {
+    this.currentType = "drawPile";
+    let currentPlayer = this.players[this.currentPlayerIndex];
+
+    if (this.deck.length <= 8) {
+      //move cards in discard except topCard to deckpile and shuffle again
+      console.log("deck is low in draw");
+    }
+    if (currentPlayer.id === playerID) {
+      const currentPlayerHand = this.players[this.currentPlayerIndex].hand;
+      const discardCard = this.deck.pop();
+      currentPlayerHand.push(discardCard);
+
+      // switch player
+      this.switchPlayers();
+
+      return {
+        status: "success",
+        id: currentPlayer.id,
+        updatedDeck: this.deck,
+        updatedCurrentPlayerIndex: this.currentPlayerIndex,
+        nextPlayerIndex: this.nextPlayerIndex,
+        discardCard: discardCard,
+      };
+    }
+
+    return {
+      status: "error",
+    };
+  }
+
   getDeck() {
     return this.deck.getDeck();
+  }
+
+  getWinnerScore() {
+    return getWinnerScore(this.players);
   }
 
   getAvatarID() {
@@ -222,17 +254,6 @@ class GameState {
     this.topCard = card;
     this.currentColor = this.topCard.color;
     this.discardPile.push(card);
-  }
-
-  getTopCard() {
-    console.log(this.topCard);
-    return this.topCard;
-  }
-
-  removeFromDeck(playerID) {
-    //draw and action card move
-    //check if the deck.length is less than or equal 4, if so keep top card and add the rest of the discard pile to draw pile
-    //remove from draw deck (call remove function from deck class) and find player with that id and add the card to the player's deck
   }
 }
 

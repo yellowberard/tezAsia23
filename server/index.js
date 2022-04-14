@@ -5,6 +5,7 @@ const cors = require("cors");
 const { Server } = require("socket.io");
 const GameServer = require("./gamelogic/GameServer");
 const GameState = require("./gamelogic/GameState");
+const e = require("express");
 
 app.use(cors());
 const server = http.createServer(app);
@@ -147,9 +148,23 @@ io.on("connection", (socket) => {
 
         if (gamestate.Win(player)) {
           console.log("player played last card...");
-          //const winnerInfo = gamestate.Won(player)
-          // io.in(roomID).emit("winner",winnerInfo);
+          gamestate.isWin = true;
+          const score = gamestate.getWinnerScore();
+
+          io.in(roomID).emit("winner", { playerID: player, score: score });
         }
+      }
+    }
+  });
+
+  socket.on("draw", ({ roomID, playerID }) => {
+    const server = games.get(roomID);
+    if (server) {
+      const gamestate = server.gamestate;
+
+      const drawInfo = gamestate.Draw(playerID);
+      if (drawInfo.status === "success") {
+        io.in(roomID).emit("update_draw_move", drawInfo);
       }
     }
   });
@@ -223,24 +238,30 @@ io.on("connection", (socket) => {
       );
 
       if (player) {
-        if (server.gamestate.players.length == 2) {
-          socket
-            .to(roomID)
-            .emit(
-              "game_end_error",
-              "UNO Game has ended. You are the last player and have no other players to play with :("
-            );
+        //when a player has won the game and rest of players have left the room
+        if (server.gamestate.players.length == 1) {
+          server.leaveRoom(socket);
+          games.delete(roomID);
+        } else {
+          if (server.gamestate.players.length == 2 && !server.gamestate.isWin) {
+            socket
+              .to(roomID)
+              .emit(
+                "game_end_error",
+                "UNO Game has ended. You are the last player and have no other players to play with :("
+              );
+          }
+
+          const message = `Player: ${player.name} has left the game.`;
+          server.leaveRoom(socket);
+
+          socket.to(roomID).emit("game_room_user_leave", {
+            message: message,
+            playerID: player.id,
+            currentPlayerIndex: server.gamestate.currentPlayerIndex,
+            nextPlayerIndex: server.gamestate.nextPlayerIndex,
+          });
         }
-
-        const message = `Player: ${player.name} has left the game.`;
-        server.leaveRoom(socket);
-
-        socket.to(roomID).emit("game_room_user_leave", {
-          message: message,
-          playerID: player.id,
-          currentPlayerIndex: server.gamestate.currentPlayerIndex,
-          nextPlayerIndex: server.gamestate.nextPlayerIndex,
-        });
       }
     }
   });

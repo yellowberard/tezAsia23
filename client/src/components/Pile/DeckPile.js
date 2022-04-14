@@ -4,6 +4,8 @@ import { BACKCARD } from "../../utils/constants";
 import { useDispatch } from "react-redux";
 import { draw } from "../../feature/gameSlice";
 import { createStyles } from "@mantine/core";
+import socket from "../../app/socket";
+import { useParams } from "react-router-dom";
 
 const useStyles = createStyles((theme) => ({
   img: {
@@ -23,7 +25,8 @@ const useStyles = createStyles((theme) => ({
 
 function DeckPile() {
   const { classes } = useStyles();
-  const dispatch = useDispatch();
+  const { id } = useParams();
+
   return (
     <img
       draggable="false"
@@ -31,7 +34,7 @@ function DeckPile() {
       src={BACKCARD}
       alt="uno back card"
       onClick={(e) => {
-        dispatch(draw());
+        socket.emit("draw", { roomID: id, playerID: socket.id });
       }}
     />
   );

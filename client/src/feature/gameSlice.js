@@ -1,9 +1,4 @@
-import { createSlice, current } from "@reduxjs/toolkit";
-import {
-  switchPlayers,
-  switchTwoPlayerGame,
-  removeCardFromHand,
-} from "../utils/gameLogicUtil";
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   players: [],
@@ -21,6 +16,7 @@ const initialState = {
   isColorChosen: false,
   isWin: false,
   winner: {},
+  winnerScore: 0,
 };
 
 export const gameSlice = createSlice({
@@ -45,35 +41,18 @@ export const gameSlice = createSlice({
     },
 
     draw(state, action) {
-      // draw from deck and add to player hand
-      state.currentType = "drawPile";
-      let currPlayerIndex;
-      let nextPlayerIndex;
-      const playerGameInfo = {
-        direction: state.direction,
-        currPlayerIndex: state.currentPlayer,
-        nextPlayerIndex: state.nextPlayer,
-        playerLength: state.players.length,
-        currentType: state.currentType,
-      };
+      const currentPlayer = state.players.find(
+        (player) => player.id === action.payload.id
+      );
+      console.log("1: ", currentPlayer.hand.length);
+      currentPlayer.hand = [...currentPlayer.hand, action.payload.discardCard];
+      console.log("2: ", currentPlayer.hand.length);
 
-      if (state.deck.length <= 8) {
-        //move cards in discard except topCard to deckpile and shuffle again
-        console.log("deck is low in draw");
+      //Switch Player
+      state.currentPlayer = action.payload.updatedCurrentPlayerIndex;
+      state.nextPlayer = action.payload.nextPlayerIndex;
 
-        console.log(current(state.discard));
-      }
-      const currentPlayerHand = state.players[state.currentPlayer].hand;
-      currentPlayerHand.push(state.deck.pop());
-
-      // switch player
-      [currPlayerIndex, nextPlayerIndex] =
-        state.players.length === 2
-          ? switchTwoPlayerGame(playerGameInfo)
-          : switchPlayers(playerGameInfo);
-
-      state.currentPlayer = currPlayerIndex;
-      state.nextPlayer = nextPlayerIndex;
+      state.deck = [...action.payload.updatedDeck];
     },
 
     move(state, action) {
@@ -84,10 +63,10 @@ export const gameSlice = createSlice({
       const nextPlayerHand = action.payload.updatedNextPlayerHand;
 
       if (nextPlayerHand.length) {
-        console.log("player has cards to be added");
-        console.log("1: ", state.players[state.nextPlayer].hand.length);
+        console.log("player has cards to be added"); //TEST
+        console.log("1: ", state.players[state.nextPlayer].hand.length); //TEST
         state.players[state.nextPlayer].hand.push(...nextPlayerHand);
-        console.log("2:", state.players[state.nextPlayer].hand.length);
+        console.log("2:", state.players[state.nextPlayer].hand.length); //TEST
         state.deck = [...action.payload.updatedDeck];
       }
 
@@ -117,11 +96,15 @@ export const gameSlice = createSlice({
       }
     },
 
-    Win(state, action) {
+    WinGame(state, action) {
+      const currentPlayer = state.players.find(
+        (player) => player.id === action.payload.playerID
+      );
       state.winner = {
-        name: action.payload.name,
-        avatarID: action.payload.avatar,
+        name: currentPlayer.name,
+        avatarID: currentPlayer.avatarID,
       };
+      state.winnerScore = action.payload.score;
       state.isWin = true;
     },
 
@@ -163,7 +146,7 @@ export const {
   draw,
   reset,
   move,
-  Win,
+  WinGame,
   updatePlayers,
   setWildCard,
   colorChange,
