@@ -1,5 +1,5 @@
 const { v4 } = require("uuid");
-const { shuffle } = require("./utils");
+const { shuffle } = require("./utils/utils");
 
 class GameServer {
   constructor({ room, maxPlayers, password, publicGameCheck, gamestate }) {

@@ -3,7 +3,7 @@ const {
   switchPlayers,
   removeCardFromHand,
   getWinnerScore,
-} = require("../gamelogic/gameLogicUtils");
+} = require("./utils/gameLogicUtils");
 const Deck = require("./Deck");
 
 class GameState {

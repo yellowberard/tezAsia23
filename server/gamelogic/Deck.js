@@ -1,4 +1,4 @@
-const { shuffle } = require("./utils");
+const { shuffle } = require("./utils/utils");
 const { v4 } = require("uuid");
 
 const {
@@ -13,7 +13,7 @@ const {
   ASSETSWILD,
   WILDS,
   COLORS,
-} = require("./constants.js");
+} = require("./utils/constants.js");
 
 class Deck {
   constructor() {
