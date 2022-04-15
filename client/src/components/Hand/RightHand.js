@@ -77,9 +77,7 @@ const useStyles = createStyles((theme) => ({
     "&:not(:first-of-type)": {
       marginLeft: "-7rem",
     },
-    "&:hover": {
-      transform: "translateY(-1rem)",
-    },
+
     "@media (min-width: 180px) and (max-width: 299px)": {
       marginLeft: "-0.2rem",
 
@@ -133,9 +131,6 @@ const useStyles = createStyles((theme) => ({
     "&:not(:first-of-type)": {
       marginLeft: "-7.6rem",
     },
-    "&:hover": {
-      transform: "translateY(-2rem)",
-    },
     "@media (min-width: 180px) and (max-width: 299px)": {
       marginLeft: "-0rem",
 
@@ -156,9 +151,6 @@ const useStyles = createStyles((theme) => ({
       "&:not(:first-of-type)": {
         marginLeft: "-8rem",
       },
-      "&:hover": {
-        transform: "translateY(-1.5rem)",
-      },
     },
     "@media (min-width: 701px) and (max-width: 819px)": {
       marginLeft: "-2rem",
@@ -175,9 +167,6 @@ const useStyles = createStyles((theme) => ({
     },
     "@media (min-width: 1200px) and (max-width: 1300px)": {
       marginLeft: "-3.2rem",
-      "&:hover": {
-        transform: "translateY(-1.5rem)",
-      },
     },
   },
 }));
@@ -215,7 +204,12 @@ function RightHand({ player }) {
                 cardsLength >= 16 ? classes.moreCard : classes.lessCard
               }
             >
-              <Card key={card.id} card={card} playerID={player.id} />
+              <Card
+                key={card.id}
+                card={card}
+                playerID={player.id}
+                back={true}
+              />
             </div>
           );
         })}

@@ -9,7 +9,7 @@ import Card from "../Card/Card";
 const useStyles = createStyles((theme) => ({
   position: {
     position: "absolute",
-    top: "8%",
+    top: "6.5%",
     left: "48%",
     transform: "translateX(-50%) translateY(-50%) rotate(180deg)",
     "@media (min-width: 280px) and (max-width: 1668px)": {
@@ -229,7 +229,7 @@ function TopHand({ player }) {
           );
         })}
       </div>
-    </div> //change "TopHand to "" {empty string}"
+    </div>
   );
 }
 

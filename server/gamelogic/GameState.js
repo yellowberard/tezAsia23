@@ -64,8 +64,8 @@ class GameState {
     this.currentPlayerIndex = currPlayerIndex;
     this.nextPlayerIndex = nextPlayerIndex;
 
-    console.log("currPlayer2: ", this.currentPlayerIndex);
-    console.log("nextPlayer2: ", this.nextPlayerIndex);
+    //console.log("currPlayer2: ", this.currentPlayerIndex); //TEST
+    //console.log("nextPlayer2: ", this.nextPlayerIndex); //TEST
   }
 
   Move({ playerID, cardPlayed }) {
@@ -87,7 +87,6 @@ class GameState {
     /*  console.log("id: ", currentPlayer.id);
     console.log("id2: ", playerID); */
     if (currentPlayer.id === playerID) {
-      console.log("hello1");
       if (
         cardPlayed.color === this.currentColor || //convert to function : FIX
         cardPlayed.color === this.topCard.color ||
@@ -164,6 +163,12 @@ class GameState {
             break;
           default:
             break;
+        }
+
+        if (updatedNextPlayerHand.length) {
+          this.players[this.nextPlayerIndex].hand.push(
+            ...updatedNextPlayerHand
+          );
         }
 
         currentPlayer.hand = removeCardFromHand(cardGameInfo);

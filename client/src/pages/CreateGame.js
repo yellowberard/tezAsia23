@@ -244,7 +244,7 @@ function CreateGame() {
               }}
             >
               <Text>
-                Dont forget to copy the room code down below, in able for other
+                Don't forget to copy the room code down below, in able for other
                 players to join your game:
               </Text>
 

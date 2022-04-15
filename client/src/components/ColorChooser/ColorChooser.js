@@ -18,16 +18,15 @@ function ColorChooser() {
   const [opened, setOpened] = useState(true);
   const [color, setValue] = useState("red");
   const theme = useMantineTheme();
-  const dispatch = useDispatch();
 
   function handleChooseColor() {
-    /*  notifications.showNotification({
-      autoClose: 4000,
-      color: color.toLowerCase(),
-      message: `Color ${color} was Chosen!`,
-    }); */
     setOpened(false);
+
     socket.emit("change_current_color", { roomID: id, color: color });
+
+    return () => {
+      setOpened(true);
+    };
   }
 
   return (

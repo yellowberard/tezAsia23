@@ -102,7 +102,9 @@ function Game() {
             : data.cardPlayed.color.toLowerCase(),
         message: `A ${data.cardPlayed.name} was played! `,
       });
+
       dispatch(move(data));
+
       console.log("move dispatch is firing!"); //TEST
     };
 
@@ -116,6 +118,7 @@ function Game() {
         color: colorInfo.color.toLowerCase(),
         message: `Color ${colorInfo.color} was Chosen!`,
       });
+
       dispatch(colorChange(colorInfo));
     };
 
@@ -253,7 +256,9 @@ function Game() {
           <Exit />
         </div>
       ) : (
-        <Error />
+        <div className={classes.center}>
+          <Error />
+        </div>
       )}
     </div>
   );

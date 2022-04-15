@@ -112,7 +112,7 @@ io.on("connection", (socket) => {
         maxPlayers: value.maxPlayers,
         playersLength: value.gamestate.players.length,
       };
-      if (value.publicGameCheck && !value.gamestate.gameStart) {
+      if (value.publicGameCheck === "public" && !value.gamestate.gameStart) {
         publicGames.push(game);
       }
     });
