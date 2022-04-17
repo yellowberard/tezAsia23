@@ -41,12 +41,12 @@ class GameServer {
       const player = this.gamestate.players.find(
         (player) => player.id === socket.id
       );
-
-      //console.log("player: ", player.hand.length); //TEST
+      // console.log(this.gamestate.deck.length); //TEST
+      // console.log("player: ", player.hand.length); //TEST
       this.gamestate.deck.push(...player.hand);
       // console.log(this.gamestate.deck.length); //TEST
 
-      socket.to(this.roomID).emit("update_deck", this.gamestate.deck);
+      socket.to(this.roomID).emit("update_deck", player.hand);
     }
     this.gamestate.players = this.gamestate.players.filter(
       (player) => player.id !== socket.id

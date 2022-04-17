@@ -3,6 +3,7 @@ const {
   switchPlayers,
   removeCardFromHand,
   getWinnerScore,
+  canPlayWild4Card,
 } = require("./utils/gameLogicUtils");
 const Deck = require("./Deck");
 
@@ -57,7 +58,7 @@ class GameState {
         ? switchTwoPlayerGame(playerGameInfo)
         : switchPlayers(playerGameInfo);
 
-    /*   console.log("curr2: ", playerIndex);
+    /*
     console.log("curr3: ", playerIndex[0]);
     console.log("curr4: ", playerIndex[1]); */
 
@@ -127,10 +128,13 @@ class GameState {
             ...updatedNextPlayerHand
           );
         }
+        console.log(currentPlayer.name);
 
         this.switchPlayers();
 
         currentPlayer.hand = removeCardFromHand(cardGameInfo);
+
+        console.log("2:", currentPlayer.name);
 
         this.topCard = cardPlayed;
         this.discardPile = [...this.discardPile, cardPlayed];
@@ -143,6 +147,7 @@ class GameState {
           updatedDeck: this.deck,
           updatedNextPlayerHand: updatedNextPlayerHand,
           updatedCurrentPlayerIndex: this.currentPlayerIndex,
+          prevNextPlayer: this.prevNextPlayerIndex,
           nextPlayerIndex: this.nextPlayerIndex,
           cardPlayed: cardPlayed,
         };
@@ -150,13 +155,24 @@ class GameState {
         cardPlayed.name === "Wild4card" ||
         cardPlayed.name === "Wildcard"
       ) {
+        const wild4Info = {
+          currentPlayer: currentPlayer,
+          currentColor: this.currentColor,
+        };
+
         switch (cardPlayed.type) {
           case "Wild4":
-            this.currentType = "Wild4";
-            for (let i = 0; i < 4; i++) {
-              updatedNextPlayerHand.push(this.deck.pop());
+            if (canPlayWild4Card(wild4Info)) {
+              this.currentType = "Wild4";
+              for (let i = 0; i < 4; i++) {
+                updatedNextPlayerHand.push(this.deck.pop());
+              }
+              break;
+            } else {
+              return {
+                status: "error",
+              };
             }
-            break;
 
           case "Wild":
             this.currentType = "Wild";
@@ -172,6 +188,7 @@ class GameState {
         }
 
         currentPlayer.hand = removeCardFromHand(cardGameInfo);
+
         this.topCard = cardPlayed;
         this.discardPile = [...this.discardPile, cardPlayed];
 

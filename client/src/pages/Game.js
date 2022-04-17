@@ -33,6 +33,7 @@ import {
   colorChange,
   draw,
   WinGame,
+  updateDeck,
 } from "../feature/gameSlice";
 import { DoorExit, LetterX } from "tabler-icons-react";
 import Error from "../components/Error/Error";
@@ -112,6 +113,10 @@ function Game() {
       dispatch(draw(drawInfo));
     };
 
+    const deckListener = (playerHand) => {
+      dispatch(updateDeck(playerHand));
+    };
+
     const colorListener = (colorInfo) => {
       notifications.showNotification({
         autoClose: 1500,
@@ -133,6 +138,8 @@ function Game() {
     socket.on("update_wild_move", (isWild) => {
       dispatch(setWildCard(isWild));
     });
+
+    socket.on("update_deck", deckListener);
 
     socket.on("update_current_color", colorListener);
 
@@ -238,6 +245,7 @@ function Game() {
               </Group>
             </Modal>
           )}
+
           {playerLeaveMessage && (
             <Alert
               icon={<DoorExit size={16} />}
@@ -253,6 +261,7 @@ function Game() {
               {playerLeaveMessage}
             </Alert>
           )}
+
           <Exit />
         </div>
       ) : (

@@ -64,9 +64,9 @@ export const gameSlice = createSlice({
 
       if (nextPlayerHand.length) {
         console.log("player has cards to be added"); //TEST
-        console.log("1: ", state.players[state.nextPlayer].hand.length); //TEST
+
         state.players[state.nextPlayer].hand.push(...nextPlayerHand);
-        console.log("2:", state.players[state.nextPlayer].hand.length); //TEST
+
         state.deck = [...action.payload.updatedDeck];
       }
 
@@ -125,6 +125,10 @@ export const gameSlice = createSlice({
       state.nextPlayer = action.payload.nextPlayer;
     },
 
+    updateDeck(state, action) {
+      state.deck.push(...action.payload);
+    },
+
     //called when wild card is placed after player has chosen a color
     //switch player after setting current color
     colorChange(state, action) {
@@ -148,6 +152,7 @@ export const {
   move,
   WinGame,
   updatePlayers,
+  updateDeck,
   setWildCard,
   colorChange,
   setColorChosen,

@@ -113,6 +113,7 @@ io.on("connection", (socket) => {
         playersLength: value.gamestate.players.length,
       };
       if (value.publicGameCheck === "public" && !value.gamestate.gameStart) {
+        console.log("true");
         publicGames.push(game);
       }
     });
@@ -194,8 +195,6 @@ io.on("connection", (socket) => {
 
       const { updatedCurrentPlayerIndex, nextPlayerIndex } =
         gamestate.WildMove(color);
-      console.log("currPlayer: ", updatedCurrentPlayerIndex);
-      console.log("nextPlayer: ", nextPlayerIndex);
 
       io.in(roomID).emit("update_current_color", {
         color: color,
