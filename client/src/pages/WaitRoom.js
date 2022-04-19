@@ -86,7 +86,7 @@ function WaitRoom() {
         id: data.id,
       });
 
-      const gameTimer = setTimeout(() => navigate(gameRoomPath), 950);
+      const gameTimer = setTimeout(() => navigate(gameRoomPath), 650);
       return () => {
         setFound("");
         clearTimeout(gameTimer);

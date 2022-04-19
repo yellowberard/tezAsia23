@@ -61,8 +61,6 @@ io.on("connection", (socket) => {
         //display error to client
         socket.emit("error_join", error);
       }
-
-      //console.log(socket.id + " Joined " + newServer.roomID);
     }
   );
 
@@ -113,7 +111,6 @@ io.on("connection", (socket) => {
         playersLength: value.gamestate.players.length,
       };
       if (value.publicGameCheck === "public" && !value.gamestate.gameStart) {
-        console.log("true");
         publicGames.push(game);
       }
     });
@@ -178,7 +175,7 @@ io.on("connection", (socket) => {
 
       const currPlayerID = gamestate.players[currPlayerIndex].id;
       gamestate.isWild = isWild;
-      // console.log("curr player: ", currPlayerID); TEST
+
       if (isWild) {
         io.to(currPlayerID).emit("update_wild_move", isWild);
       } else {

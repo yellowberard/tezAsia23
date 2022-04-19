@@ -29,7 +29,6 @@ class GameState {
     const currentPlayer = this.players.find(
       (player) => player.id === currentPlayerID
     );
-    console.log(currentPlayer.hand.length); //TEST
 
     return currentPlayer.hand.length === 0;
   }
@@ -39,7 +38,6 @@ class GameState {
     let nextPlayerIndex = this.nextPlayerIndex;
     let playerLength = this.players.length;
 
-    //console.log("maxPlayer: ", playerLength <= 2); //TEST
     const playerGameInfo = {
       direction: this.direction,
       currPlayerIndex: currPlayerIndex,
@@ -48,25 +46,14 @@ class GameState {
       currentType: type ? type : this.currentType,
     };
 
-    /*  console.log("length: ", playerLength); //TEST
-    console.log("currPlayer: ", currPlayerIndex); //TEST
-    console.log("nextPlayer: ", nextPlayerIndex); //TEST */
-
     // switch player
     [currPlayerIndex, nextPlayerIndex] =
       playerLength <= 2
         ? switchTwoPlayerGame(playerGameInfo)
         : switchPlayers(playerGameInfo);
 
-    /*
-    console.log("curr3: ", playerIndex[0]);
-    console.log("curr4: ", playerIndex[1]); */
-
     this.currentPlayerIndex = currPlayerIndex;
     this.nextPlayerIndex = nextPlayerIndex;
-
-    //console.log("currPlayer2: ", this.currentPlayerIndex); //TEST
-    //console.log("nextPlayer2: ", this.nextPlayerIndex); //TEST
   }
 
   Move({ playerID, cardPlayed }) {
@@ -85,28 +72,20 @@ class GameState {
       //move cards in discard except topCard to deckpile and shuffle again
       console.log("deck is low in move");
     }
-    /*  console.log("id: ", currentPlayer.id);
-    console.log("id2: ", playerID); */
+
     if (currentPlayer.id === playerID) {
       if (
-        cardPlayed.color === this.currentColor || //convert to function : FIX
+        cardPlayed.color === this.currentColor ||
         cardPlayed.color === this.topCard.color ||
         cardPlayed.name === this.topCard.name
       ) {
-        //convert to function : FIX
-
         switch (cardPlayed.type) {
           case "reverse":
-            //convert to function: FIX
             this.currentType = "reverse";
+            this.direction =
+              this.direction === "forward" ? "reverse" : "forward";
+            break;
 
-            if (this.direction === "forward") {
-              this.direction = "reverse";
-              break;
-            } else {
-              this.direction = "forward";
-              break;
-            }
           case "skip":
             this.currentType = "skip";
             break;
@@ -128,13 +107,10 @@ class GameState {
             ...updatedNextPlayerHand
           );
         }
-        console.log(currentPlayer.name);
 
         this.switchPlayers();
 
         currentPlayer.hand = removeCardFromHand(cardGameInfo);
-
-        console.log("2:", currentPlayer.name);
 
         this.topCard = cardPlayed;
         this.discardPile = [...this.discardPile, cardPlayed];
@@ -147,7 +123,6 @@ class GameState {
           updatedDeck: this.deck,
           updatedNextPlayerHand: updatedNextPlayerHand,
           updatedCurrentPlayerIndex: this.currentPlayerIndex,
-          prevNextPlayer: this.prevNextPlayerIndex,
           nextPlayerIndex: this.nextPlayerIndex,
           cardPlayed: cardPlayed,
         };
@@ -229,7 +204,9 @@ class GameState {
     }
     if (currentPlayer.id === playerID) {
       const currentPlayerHand = this.players[this.currentPlayerIndex].hand;
+
       const discardCard = this.deck.pop();
+
       currentPlayerHand.push(discardCard);
 
       // switch player

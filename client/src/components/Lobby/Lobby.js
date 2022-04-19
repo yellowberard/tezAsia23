@@ -138,6 +138,9 @@ function Lobby({ id, roomName, playersList, waitingPlayers, maxRoomLength }) {
         >
           Waiting for other players to join...
         </Text>
+
+        <Space h="md" />
+
         <Button size="xs" color="red" onClick={handleLeave}>
           Leave Room
         </Button>

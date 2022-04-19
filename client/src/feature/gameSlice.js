@@ -31,7 +31,6 @@ export const gameSlice = createSlice({
       state.deck = [...action.payload.deck];
 
       state.players = [...action.payload.players];
-      console.log(state.players);
 
       state.TopCard = action.payload.topCard;
 
@@ -44,9 +43,8 @@ export const gameSlice = createSlice({
       const currentPlayer = state.players.find(
         (player) => player.id === action.payload.id
       );
-      console.log("1: ", currentPlayer.hand.length);
+
       currentPlayer.hand = [...currentPlayer.hand, action.payload.discardCard];
-      console.log("2: ", currentPlayer.hand.length);
 
       //Switch Player
       state.currentPlayer = action.payload.updatedCurrentPlayerIndex;
@@ -63,8 +61,6 @@ export const gameSlice = createSlice({
       const nextPlayerHand = action.payload.updatedNextPlayerHand;
 
       if (nextPlayerHand.length) {
-        console.log("player has cards to be added"); //TEST
-
         state.players[state.nextPlayer].hand.push(...nextPlayerHand);
 
         state.deck = [...action.payload.updatedDeck];

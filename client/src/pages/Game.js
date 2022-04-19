@@ -105,8 +105,6 @@ function Game() {
       });
 
       dispatch(move(data));
-
-      console.log("move dispatch is firing!"); //TEST
     };
 
     const drawListener = (drawInfo) => {
@@ -151,6 +149,7 @@ function Game() {
       "game_room_user_leave",
       ({ message, playerID, currentPlayerIndex, nextPlayerIndex }) => {
         setPlayerLeaveMessage(message);
+
         dispatch(
           updatePlayers({
             id: playerID,

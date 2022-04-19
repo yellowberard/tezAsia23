@@ -20,7 +20,9 @@ class GameServer {
       !this.gamestate.gameStart
     ) {
       const player = this.createPlayer({ id: socket.id, name: name });
+
       players.push(player);
+
       socket.join(this.roomID);
 
       return { status: "success", error: "none" };
@@ -37,14 +39,11 @@ class GameServer {
     //remove the leaving player's cards and add to deck
 
     if (this.gamestate.gameStart) {
-      //console.log(this.gamestate.deck.length); //TEST
       const player = this.gamestate.players.find(
         (player) => player.id === socket.id
       );
-      // console.log(this.gamestate.deck.length); //TEST
-      // console.log("player: ", player.hand.length); //TEST
+
       this.gamestate.deck.push(...player.hand);
-      // console.log(this.gamestate.deck.length); //TEST
 
       socket.to(this.roomID).emit("update_deck", player.hand);
     }
@@ -58,13 +57,9 @@ class GameServer {
   }
 
   startGame() {
-    //players: players,
-    //deck: deck.getDeck(),
-    //topCard: deck.removeCard(),
     this.gamestate.gameStart = true;
     let randomId;
     let deck = this.gamestate.getDeck();
-    //console.log("1: ", deck.length); //TEST
 
     while (true) {
       randomId = Math.floor(Math.random() * deck.length);
@@ -90,12 +85,10 @@ class GameServer {
         player.hand.push(deck.pop());
       }
     });
-    //console.log("2: ", deck.length); //TEST
 
     this.gamestate.players = shuffle(this.gamestate.players);
 
     this.gamestate.deck = [...deck];
-    //console.log("3: ", this.gamestate.deck.length); //TEST
 
     return {
       deck: deck,
