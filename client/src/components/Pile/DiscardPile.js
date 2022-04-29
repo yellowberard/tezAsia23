@@ -32,7 +32,6 @@ function DiscardPile() {
 
   const dispatch = useDispatch();
   const { classes } = useStyles();
-  // console.log(colorChosen);
 
   const [{ isOver }, drop] = useDrop(() => ({
     accept: "image",

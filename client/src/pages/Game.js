@@ -125,6 +125,11 @@ function Game() {
       dispatch(colorChange(colorInfo));
     };
 
+    const wildListener = (isWild) => {
+      console.log("isWild: ", isWild);
+      dispatch(setWildCard(isWild));
+    };
+
     socket.on("game_end_error", (message) => {
       setMessage(message);
     });
@@ -133,9 +138,7 @@ function Game() {
 
     socket.on("update_move", moveListener);
 
-    socket.on("update_wild_move", (isWild) => {
-      dispatch(setWildCard(isWild));
-    });
+    socket.on("update_wild_move", wildListener);
 
     socket.on("update_deck", deckListener);
 
@@ -163,6 +166,8 @@ function Game() {
       socket.off("update_current_color", colorListener);
       socket.off("update_move", moveListener);
       socket.off("update_draw_move", drawListener);
+
+      socket.off("update_wild_move", wildListener);
     };
   }, [dispatch, notifications]);
 

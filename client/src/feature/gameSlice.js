@@ -73,12 +73,12 @@ export const gameSlice = createSlice({
 
         state.TopCard = cardPlayed;
         state.currentColor = state.TopCard.color;
+        state.isColorChosen = false;
+
         state.discard = [...state.discard, cardPlayed];
       } else {
         state.currentPlayer = action.payload.updatedCurrentPlayerIndex;
         state.nextPlayer = action.payload.nextPlayerIndex;
-
-        state.isColorChosen = false;
 
         currentPlayer.hand = currentPlayer.hand.filter(
           (card) => card.id !== cardPlayed.id
@@ -106,10 +106,6 @@ export const gameSlice = createSlice({
 
     setWildCard(state, action) {
       state.isWild = action.payload;
-    },
-
-    setColorChosen(state, action) {
-      state.isColorChosen = action.payload;
     },
 
     updatePlayers(state, action) {
@@ -151,6 +147,5 @@ export const {
   updateDeck,
   setWildCard,
   colorChange,
-  setColorChosen,
 } = gameSlice.actions;
 export default gameSlice.reducer;
