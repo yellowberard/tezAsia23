@@ -72,10 +72,19 @@ function PublicGame() {
   }, [publicGames]);
 
   const games = publicGames.map((game) => (
-    //change to display way to allow user to enter username and enter wait
     <tr key={game.roomID} onClick={() => handleRoomClick(game.roomID)}>
-      <td style={{ fontSize: "16px", fontWeight: "bold" }}>{game.roomName}</td>
-      <td style={{ fontSize: "16px", fontWeight: "bold" }}>
+      <td
+        style={{
+          fontWeight: "bold",
+        }}
+      >
+        {game.roomName}
+      </td>
+      <td
+        style={{
+          fontWeight: "bold",
+        }}
+      >
         {game.playersLength}/{game.maxPlayers}
       </td>
     </tr>
@@ -120,7 +129,7 @@ function PublicGame() {
 
         <Paper
           className={classes.paper}
-          padding="lg"
+          p="lg"
           shadow="xs"
           radius="xl"
           withBorder
@@ -140,12 +149,12 @@ function PublicGame() {
 
           {publicGames.length ? (
             <ScrollArea style={{ height: 250 }} type="auto" scrollbarSize={18}>
-              <Table horizontalSpacing="xl" highlightOnHover>
+              <Table horizontalSpacing="xl" highlightOnHover fontSize="md">
                 <thead>
                   <tr>
                     <th
                       style={{
-                        color: theme.colors.blue[7],
+                        color: theme.colors.yellow[5],
                         fontWeight: "bold",
                         fontSize: "17px",
                       }}
@@ -154,7 +163,7 @@ function PublicGame() {
                     </th>
                     <th
                       style={{
-                        color: theme.colors.blue[7],
+                        color: theme.colors.yellow[5],
                         fontWeight: "bold",
                         fontSize: "17px",
                       }}

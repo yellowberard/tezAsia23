@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
+  roomName: "",
   players: [],
   deck: [],
   discard: [],
@@ -27,6 +28,8 @@ export const gameSlice = createSlice({
       action.payload.deck.forEach((card) => {
         state.deck.push(card);
       });
+
+      state.roomName = action.payload.roomName;
 
       state.deck = [...action.payload.deck];
 

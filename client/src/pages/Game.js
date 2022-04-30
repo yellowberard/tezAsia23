@@ -35,8 +35,9 @@ import {
   WinGame,
   updateDeck,
 } from "../feature/gameSlice";
-import { DoorExit, LetterX } from "tabler-icons-react";
+import { BrandHipchat, DoorExit, LetterX } from "tabler-icons-react";
 import Error from "../components/Error/Error";
+import Chat from "../components/Chat/Chat";
 
 const useStyles = createStyles((theme) => ({
   icon: {
@@ -214,6 +215,7 @@ function Game() {
               return <PlayerHand key={player.id} player={player} />;
             }
 
+            //places each player around the board (removes 1 element at index 0 in positions array)
             return positions.splice(0, 1).map((Component) => {
               return <Component key={player.id} player={player} />;
             });
@@ -265,6 +267,8 @@ function Game() {
               {playerLeaveMessage}
             </Alert>
           )}
+
+          <Chat />
 
           <Exit />
         </div>

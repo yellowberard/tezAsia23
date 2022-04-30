@@ -87,7 +87,7 @@ function PrivateGame() {
     <div>
       <div className={classes.background}>
         <div className={classes.container}>
-          <Paper padding="md" shadow="xs" radius="xl" withBorder>
+          <Paper p="md" shadow="xs" radius="xl" withBorder>
             <Title
               sx={{
                 color: `${theme.colors.blue[6]}`,

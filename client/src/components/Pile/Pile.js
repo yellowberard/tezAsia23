@@ -30,7 +30,7 @@ const useStyles = createStyles((theme, { color }) => ({
     "@media (max-width: 375px)": {
       flexDirection: "column",
       width: "110px",
-      top: "50%",
+      top: "46%",
       left: "48%",
     },
 

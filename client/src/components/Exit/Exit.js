@@ -16,6 +16,10 @@ const useStyles = createStyles((theme) => ({
     position: "absolute",
     top: "80%",
     left: "45%",
+
+    "@media (max-width: 444px)": {
+      left: "68.5%",
+    },
   },
 }));
 

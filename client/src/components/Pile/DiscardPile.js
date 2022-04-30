@@ -43,6 +43,7 @@ function DiscardPile() {
   }));
 
   useEffect(() => {
+    //check if the top card is a wild card and prevents other users from choosing color with colorChosen
     if (
       (discardCard.type === "Wild4" || discardCard.type === "Wild") &&
       colorChosen === false

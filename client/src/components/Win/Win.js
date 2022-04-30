@@ -42,7 +42,6 @@ function Win() {
       <Modal
         opened={opened}
         onClose={() => setOpened(true)}
-        //title="CONGRAULATIONS!!!"
         hideCloseButton
         styles={{
           title: { color: `${theme.colors.blue[8]}`, fontWeight: "bold" },

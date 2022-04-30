@@ -91,6 +91,7 @@ class GameServer {
     this.gamestate.deck = [...deck];
 
     return {
+      roomName: this.roomName,
       deck: deck,
       players: this.gamestate.players,
       topCard: topCard,
