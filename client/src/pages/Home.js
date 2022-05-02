@@ -17,6 +17,7 @@ import { getRandomAvatar } from "../utils"; */
 
 import { useDispatch } from "react-redux";
 import { reset } from "../feature/gameSlice";
+import { resetChat } from "../feature/chatSlice";
 
 const useStyles = createStyles((theme) => ({
   img: {
@@ -50,6 +51,7 @@ function Home() {
 
   useEffect(() => {
     dispatch(reset());
+    dispatch(resetChat());
   }, [dispatch, navigate]);
 
   return (

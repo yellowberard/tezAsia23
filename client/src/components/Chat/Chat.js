@@ -1,9 +1,11 @@
 import { ActionIcon, createStyles, Indicator } from "@mantine/core";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { BrandHipchat } from "tabler-icons-react";
 import ChatBox from "./ChatBox";
+import { resetUnreadCount, updateChatBoxOpen } from "../../feature/chatSlice";
+import socket from "../../app/socket";
 
 const useStyles = createStyles((theme) => ({
   chatButton: {
@@ -23,18 +25,35 @@ const useStyles = createStyles((theme) => ({
 
 function Chat() {
   const { classes } = useStyles();
+  const dispatch = useDispatch();
+  const unreadMessages = useSelector((state) => state.chat.unreadMessagesCount);
 
   const [opened, setOpened] = useState(false);
+
+  function handleOpenChatBox() {
+    setOpened((o) => !o);
+    socket.emit("display_chat_box", opened);
+  }
+
+  useEffect(() => {
+    socket.on("reset_unreadMessage", () => {
+      dispatch(resetUnreadCount());
+    });
+
+    socket.on("update_box_open", (opened) => {
+      dispatch(updateChatBoxOpen(opened));
+    });
+  }, [dispatch]);
 
   return (
     <>
       {opened && <ChatBox />}
 
       <Indicator
-        color="yellow"
+        color="green"
         className={classes.chatButton}
         inline
-        label={5}
+        label={unreadMessages}
         size={16}
       >
         <ActionIcon
@@ -42,7 +61,7 @@ function Chat() {
           size="xl"
           radius="xl"
           variant="filled"
-          onClick={() => setOpened((o) => !o)}
+          onClick={handleOpenChatBox}
         >
           <BrandHipchat />
         </ActionIcon>

@@ -4,7 +4,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { Send, Dots } from "tabler-icons-react";
 import {
   ActionIcon,
-  Box,
+  Paper,
+  Badge,
   Center,
   Container,
   createStyles,
@@ -15,6 +16,8 @@ import {
   useMantineTheme,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
+import socket from "../../app/socket";
+import { v4 } from "uuid";
 
 const useStyles = createStyles((theme) => ({
   chatbox: {
@@ -38,8 +41,8 @@ const useStyles = createStyles((theme) => ({
     },
 
     "@media (max-width: 816px)": {
-      top: "25%",
-      left: "25%",
+      top: "15%",
+      left: "15%",
     },
 
     "@media (max-width: 450px)": {
@@ -74,13 +77,34 @@ const useStyles = createStyles((theme) => ({
   messageContainer: {
     backgroundColor: theme.colors.red[4],
   },
+
+  messageBox: {
+    display: "flex",
+    marginBottom: "15px",
+  },
+
+  right: {
+    float: "right",
+  },
+
+  left: {
+    float: "left",
+  },
+
+  firstPerson: {
+    backgroundColor: theme.colors.blue[8],
+    color: theme.colors.gray[0],
+  },
 }));
 
 function ChatBox() {
   const { id } = useParams();
+  const dispatch = useDispatch();
   const { classes, cx } = useStyles();
   const theme = useMantineTheme();
   const roomName = useSelector((state) => state.game.roomName);
+  const players = useSelector((state) => state.game.players);
+  const messages = useSelector((state) => state.chat.messages);
 
   const form = useForm({
     initialValues: {
@@ -94,22 +118,33 @@ function ChatBox() {
   });
 
   function sendMessage(values) {
-    console.log(values);
-    //emit all submited messages here
+    const author = players.find((player) => player.id === socket.id);
+    const time = new Date();
+
+    const messageInfo = {
+      roomID: id,
+      messageID: v4(),
+      authorID: socket.id,
+      author: author.name,
+      message: values.message,
+      time: time.toLocaleString("en-US", {
+        hour: "numeric",
+        minute: "numeric",
+        hour12: true,
+      }),
+    };
+    console.log("before: ", messageInfo);
+    socket.emit("send_message", messageInfo);
     form.setFieldValue("message", "");
   }
 
-  useEffect(() => {
-    //recieve the sended message here (socket.on)
-  }, []);
-
   return (
     <>
-      <Box
+      <Paper
         className={cx(classes.chatbox, classes.border)}
-        //shadow="xl"
+        shadow="xl"
         radius="md"
-        //withBorder
+        withBorder
       >
         <Container
           className={cx(
@@ -144,7 +179,38 @@ function ChatBox() {
             type="auto"
             scrollbarSize={18}
           >
-            <Text>Message Here</Text>
+            {messages.map((messageContent) => {
+              return (
+                <Paper
+                  key={messageContent.messageID}
+                  radius="xl"
+                  p="md"
+                  className={
+                    messageContent.authorID === socket.id
+                      ? cx(
+                          classes.firstPerson,
+                          classes.right,
+                          classes.messageBox
+                        )
+                      : cx(classes.left, classes.messageBox)
+                  }
+                >
+                  <Group>
+                    <Badge>{messageContent.author}</Badge>
+
+                    <Text
+                      weight={500}
+                      align="center"
+                      style={{ wordBreak: "break-word" }}
+                    >
+                      {messageContent.message}
+                    </Text>
+
+                    <Text align="right">{messageContent.time}</Text>
+                  </Group>
+                </Paper>
+              );
+            })}
           </ScrollArea>
         </Container>
 
@@ -178,7 +244,7 @@ function ChatBox() {
             </Group>
           </form>
         </Container>
-      </Box>
+      </Paper>
     </>
   );
 }

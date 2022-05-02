@@ -38,6 +38,7 @@ import {
 import { BrandHipchat, DoorExit, LetterX } from "tabler-icons-react";
 import Error from "../components/Error/Error";
 import Chat from "../components/Chat/Chat";
+import { addMessage, updateUnreadCount } from "../feature/chatSlice";
 
 const useStyles = createStyles((theme) => ({
   icon: {
@@ -67,6 +68,7 @@ function Game() {
   const playersList = useSelector((state) => state.game.players);
   const isWildCard = useSelector((state) => state.game.isWild);
   const isWin = useSelector((state) => state.game.isWin);
+  const isOpened = useSelector((state) => state.chat.isChatBoxOpen);
 
   const navigate = useNavigate();
   const notifications = useNotifications();
@@ -77,7 +79,6 @@ function Game() {
 
   useEffect(() => {
     // navigate back
-
     window.onpopstate = function () {
       socket.emit("leave_game_room", id);
       navigate("/", { replace: true });
@@ -127,9 +128,19 @@ function Game() {
     };
 
     const wildListener = (isWild) => {
-      console.log("isWild: ", isWild);
       dispatch(setWildCard(isWild));
     };
+
+    const messageListener = (messageInfo) => {
+      dispatch(addMessage(messageInfo));
+    };
+
+    const unreadMessageListener = () => {
+      //chatbox is not open, count the # of unread messages
+      dispatch(updateUnreadCount());
+    };
+
+    socket.on("recieve_message", messageListener);
 
     socket.on("game_end_error", (message) => {
       setMessage(message);
@@ -149,6 +160,8 @@ function Game() {
       dispatch(WinGame(winnerData));
     });
 
+    socket.on("update_unread_count", unreadMessageListener);
+
     socket.on(
       "game_room_user_leave",
       ({ message, playerID, currentPlayerIndex, nextPlayerIndex }) => {
@@ -164,10 +177,11 @@ function Game() {
       }
     );
     return () => {
+      socket.off("recieve_message", messageListener);
       socket.off("update_current_color", colorListener);
+      socket.off("update_unread_count", unreadMessageListener);
       socket.off("update_move", moveListener);
       socket.off("update_draw_move", drawListener);
-
       socket.off("update_wild_move", wildListener);
     };
   }, [dispatch, notifications]);
@@ -230,7 +244,7 @@ function Game() {
               opened={opened}
               onClose={() => setOpened(true)}
               title="Game Error"
-              hideCloseButton
+              withCloseButton={false}
               styles={{
                 title: {
                   color: `${theme.colors.yellow[5]}`,
