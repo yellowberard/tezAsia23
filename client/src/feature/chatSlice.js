@@ -11,7 +11,6 @@ export const chatSlice = createSlice({
   initialState,
   reducers: {
     addMessage(state, action) {
-      console.log(action.payload);
       state.messages = [...state.messages, action.payload];
     },
     updateUnreadCount(state) {

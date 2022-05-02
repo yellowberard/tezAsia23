@@ -105,27 +105,12 @@ class Deck {
     }
   }
 
-  removeCard() {
-    if (this.getTotalCards() <= 8) {
-      return null; //deck is getting low -> add cards from discard pile except top card to deck
-    }
-    return this.cards.pop();
-  }
-
   shuffle() {
     this.cards = shuffle(this.cards);
   }
 
-  addCard(card) {
-    this.cards.push(card);
-  }
-
   getDeck() {
     return this.cards;
-  }
-
-  getTotalCards() {
-    return this.cards.length;
   }
 }
 

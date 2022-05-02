@@ -16,5 +16,4 @@ function getAllGames() {
   return games;
 }
 
-console.log(games);
 module.exports = { addGame, getGame, getAllGames, deleteGame };

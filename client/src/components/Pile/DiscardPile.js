@@ -70,10 +70,6 @@ function DiscardPile() {
         src={discardCard.src}
         alt="uno card"
       />
-      {
-        // if isWildCard is true => display modal to choose color once color is choosen then dispatch (chooseColor)  or emit to backened (multiplayer)
-        //isWildCard ? : null
-      }
     </div>
   );
 }

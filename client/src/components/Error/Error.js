@@ -7,7 +7,6 @@ function Error() {
   const navigate = useNavigate();
 
   function handleNavigate() {
-    //emit leave room here
     navigate("/", { replace: true });
   }
 

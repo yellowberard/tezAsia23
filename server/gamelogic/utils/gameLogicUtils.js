@@ -104,6 +104,10 @@ function removeCardFromHand({ currentPlayer, cardPlayed }) {
   return currentPlayer.hand.filter((card) => card.id !== cardPlayed.id);
 }
 
+function removeCardFromDiscard(deck, card) {
+  return deck.filter((cards) => cards.id !== card.id);
+}
+
 function canPlayWild4Card({ currentPlayer, currentColor }) {
   let canPlay = true;
 
@@ -149,5 +153,6 @@ module.exports = {
   switchTwoPlayerGame,
   canPlayWild4Card,
   removeCardFromHand,
+  removeCardFromDiscard,
   getWinnerScore,
 };

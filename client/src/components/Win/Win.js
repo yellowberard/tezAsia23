@@ -25,7 +25,6 @@ const useStyles = createStyles((theme) => ({
 function Win() {
   const { id } = useParams();
   const [opened, setOpened] = useState(true);
-  //const [score, setScore] = useState(0);
   const winner = useSelector((state) => state.game.winner);
   const score = useSelector((state) => state.game.winnerScore);
   const theme = useMantineTheme();
@@ -56,10 +55,9 @@ function Win() {
             <Text color={theme.colors.yellow[2]} size="xl" weight={800}>
               WINNER!
             </Text>
+
             <NameTag id={winner.avatarID} />
-            {
-              //add winner player score here (winner score -> add up all the remaining cards from other players)
-            }
+
             <Text color={theme.colors.blue[2]} size="xl" weight={800}>
               Score:{" "}
               <span

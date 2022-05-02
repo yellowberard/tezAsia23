@@ -189,20 +189,15 @@ const useStyles = createStyles((theme) => ({
 
 function TopHand({ player }) {
   const { classes } = useStyles();
-  const dispatch = useDispatch();
   const [cardsLength, setCardLength] = useState(0);
 
   useEffect(() => {
     setCardLength(player.hand.length);
-  }, [player.hand.length, dispatch]);
+  }, [player.hand.length]);
 
   return (
     <div className={classes.position}>
-      <div className={classes.area}>
-        {/*   <Text size="xl" className={classes.text}>
-          {player ? player.name : "TopHand"}
-        </Text> */}
-      </div>
+      <div className={classes.area}></div>
       <div className={classes.tag}>
         <NameTag
           playerName={player.name}

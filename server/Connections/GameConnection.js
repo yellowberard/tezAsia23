@@ -152,6 +152,8 @@ class GameConnection {
       const gamestate = server.gamestate;
 
       const moveInfo = {
+        io: this.io,
+        roomID: roomID,
         playerID: player,
         cardPlayed: card,
       };
@@ -177,7 +179,13 @@ class GameConnection {
     if (server) {
       const gamestate = server.gamestate;
 
-      const drawInfo = gamestate.Draw(playerID);
+      const gameInfo = {
+        io: this.io,
+        roomID: roomID,
+        playerID: playerID,
+      };
+
+      const drawInfo = gamestate.Draw(gameInfo);
       if (drawInfo.status === "success") {
         this.io.in(roomID).emit("update_draw_move", drawInfo);
       }

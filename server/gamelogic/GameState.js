@@ -4,6 +4,7 @@ const {
   removeCardFromHand,
   getWinnerScore,
   canPlayWild4Card,
+  removeCardFromDiscard,
 } = require("./utils/gameLogicUtils");
 const Deck = require("./Deck");
 
@@ -56,7 +57,22 @@ class GameState {
     this.nextPlayerIndex = nextPlayerIndex;
   }
 
-  Move({ playerID, cardPlayed }) {
+  moveDiscardCardsToDeck() {
+    const discardCards = [];
+
+    this.discardPile.forEach((card) => {
+      if (card !== this.topCard) {
+        discardCards.push(card);
+        this.discardPile = removeCardFromDiscard(this.discardPile, card);
+      }
+    });
+
+    this.deck.push(...discardCards);
+
+    return discardCards;
+  }
+
+  Move({ io, roomID, playerID, cardPlayed }) {
     //check if player can move card (if current turn) and if the card is a valid move or not
     //use removeFromDeck and switchPlayer, call players method (removeCardFromHand to get the remove card and set the Top card to that)
     //set Game State
@@ -69,8 +85,9 @@ class GameState {
     };
 
     if (this.deck.length <= 8) {
-      //move cards in discard except topCard to deckpile and shuffle again
-      console.log("deck is low in move");
+      const discardCards = this.moveDiscardCardsToDeck();
+
+      io.to(roomID).emit("update_deck", discardCards);
     }
 
     if (currentPlayer.id === playerID) {
@@ -194,13 +211,15 @@ class GameState {
     };
   }
 
-  Draw(playerID) {
+  Draw({ io, playerID, roomID }) {
     this.currentType = "drawPile";
     let currentPlayer = this.players[this.currentPlayerIndex];
 
     if (this.deck.length <= 8) {
       //move cards in discard except topCard to deckpile and shuffle again
-      console.log("deck is low in draw");
+      const discardCards = this.moveDiscardCardsToDeck();
+
+      io.to(roomID).emit("update_deck", discardCards);
     }
     if (currentPlayer.id === playerID) {
       const currentPlayerHand = this.players[this.currentPlayerIndex].hand;

@@ -176,6 +176,7 @@ function Game() {
         );
       }
     );
+
     return () => {
       socket.off("recieve_message", messageListener);
       socket.off("update_current_color", colorListener);

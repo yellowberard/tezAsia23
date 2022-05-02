@@ -10,10 +10,6 @@ import {
 import { useMediaQuery } from "@mantine/hooks";
 import { useNavigate } from "react-router-dom";
 import logo from "../assets/logo.png";
-/* import Player from "../classes/Player";
-//import GameState from "../classes/GameState";
-import Deck from "../classes/Deck";
-import { getRandomAvatar } from "../utils"; */
 
 import { useDispatch } from "react-redux";
 import { reset } from "../feature/gameSlice";

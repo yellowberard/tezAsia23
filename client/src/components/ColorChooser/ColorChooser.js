@@ -35,7 +35,7 @@ function ColorChooser() {
         opened={opened}
         onClose={() => setOpened(true)}
         title="Choose a Color!"
-        hideCloseButton
+        withCloseButton={false}
         styles={{
           title: { color: `${theme.colors.violet[8]}`, fontWeight: "bold" },
         }}

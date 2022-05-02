@@ -193,12 +193,11 @@ const useStyles = createStyles((theme) => ({
 
 function PlayerHand({ player }) {
   const { classes } = useStyles();
-  const dispatch = useDispatch();
   const [cardsLength, setCardLength] = useState(0);
 
   useEffect(() => {
     setCardLength(player.hand.length);
-  }, [player.hand.length, dispatch]);
+  }, [player.hand.length]);
 
   return (
     <div className={classes.position}>
