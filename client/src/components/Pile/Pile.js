@@ -1,11 +1,10 @@
 import React from "react";
-import { CircleX } from "tabler-icons-react";
-import { createStyles, Text, Group, ActionIcon } from "@mantine/core";
+import { createStyles, Text, Group } from "@mantine/core";
 
 import DeckPile from "./DeckPile";
 import DiscardPile from "./DiscardPile";
 
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
 const useStyles = createStyles((theme, { color }) => ({
   container: {

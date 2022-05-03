@@ -1,8 +1,6 @@
 import React from "react";
 
 import { BACKCARD } from "../../utils/constants";
-import { useDispatch } from "react-redux";
-import { draw } from "../../feature/gameSlice";
 import { createStyles } from "@mantine/core";
 import socket from "../../app/socket";
 import { useParams } from "react-router-dom";
@@ -33,7 +31,7 @@ function DeckPile() {
       className={classes.img}
       src={BACKCARD}
       alt="uno back card"
-      onClick={(e) => {
+      onClick={() => {
         socket.emit("draw", { roomID: id, playerID: socket.id });
       }}
     />

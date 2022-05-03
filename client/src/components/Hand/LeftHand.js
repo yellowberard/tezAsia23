@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { createStyles, Text } from "@mantine/core";
+import { createStyles } from "@mantine/core";
 import NameTag from "../NameTag/NameTag";
 import Card from "../Card/Card";
 

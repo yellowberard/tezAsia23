@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { createStyles, Text } from "@mantine/core";
+import { createStyles } from "@mantine/core";
 
 import NameTag from "../NameTag/NameTag";
 import Card from "../Card/Card";
@@ -208,9 +208,8 @@ function RightHand({ player }) {
           );
         })}
       </div>
-    </div> //change "TopHand to "" {empty string}"
+    </div>
   );
-  //return that players card and nametag
 }
 
 export default RightHand;

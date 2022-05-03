@@ -1,9 +1,7 @@
 import { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { createStyles, Grid, Text } from "@mantine/core";
+import { createStyles } from "@mantine/core";
 import NameTag from "../NameTag/NameTag";
 import Card from "../Card/Card";
-import { Win } from "../../feature/gameSlice";
 
 const useStyles = createStyles((theme) => ({
   position: {
@@ -221,7 +219,6 @@ function PlayerHand({ player }) {
       </div>
     </div>
   );
-  //return that players cards and nametag
 }
 
 export default PlayerHand;

@@ -1,6 +1,5 @@
 import { ActionIcon, createStyles, Indicator } from "@mantine/core";
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { BrandHipchat } from "tabler-icons-react";
 import ChatBox from "./ChatBox";

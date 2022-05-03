@@ -1,8 +1,5 @@
-import { Avatar, Badge, useMantineTheme } from "@mantine/core";
-import { useEffect } from "react";
-
+import { Avatar, Badge } from "@mantine/core";
 import { useSelector } from "react-redux";
-
 import { AVATARS } from "../../utils/constants";
 import { createStyles } from "@mantine/core";
 
@@ -77,7 +74,6 @@ const useStyles = createStyles((theme, { isCurrentPlayer }) => ({
 }));
 
 function NameTag({ playerName, playerID, id }) {
-  const theme = useMantineTheme();
   const playerList = useSelector((state) => state.game.players);
   const currIndex = useSelector((state) => state.game.currentPlayer);
 

@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useParams } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { Send, Dots } from "tabler-icons-react";
 import {
   ActionIcon,
@@ -13,7 +13,6 @@ import {
   ScrollArea,
   Text,
   Textarea,
-  useMantineTheme,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import socket from "../../app/socket";
@@ -99,9 +98,8 @@ const useStyles = createStyles((theme) => ({
 
 function ChatBox() {
   const { id } = useParams();
-  const dispatch = useDispatch();
   const { classes, cx } = useStyles();
-  const theme = useMantineTheme();
+
   const roomName = useSelector((state) => state.game.roomName);
   const players = useSelector((state) => state.game.players);
   const messages = useSelector((state) => state.chat.messages);
@@ -133,7 +131,6 @@ function ChatBox() {
         hour12: true,
       }),
     };
-    console.log("before: ", messageInfo);
     socket.emit("send_message", messageInfo);
     form.setFieldValue("message", "");
   }

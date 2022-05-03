@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { createStyles, Text } from "@mantine/core";
-import { Win } from "../../feature/gameSlice";
+
+import { createStyles } from "@mantine/core";
 
 import NameTag from "../NameTag/NameTag";
 import Card from "../Card/Card";

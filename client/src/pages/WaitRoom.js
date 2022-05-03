@@ -6,7 +6,7 @@ import { useNavigate, useParams, generatePath } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { start } from "../feature/gameSlice";
 
-import Background from "../components/Background";
+import Background from "../components/Background/Background";
 import socket from "../app/socket";
 import Lobby from "../components/Lobby/Lobby";
 import Error from "../components/Error/Error";

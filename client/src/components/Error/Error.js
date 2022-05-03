@@ -17,10 +17,10 @@ function Error() {
         <Button
           size="xs"
           color="dark"
-          sx={(theme) => ({
+          sx={{
             display: "flex",
             marginTop: "4px",
-          })}
+          }}
           onClick={handleNavigate}
         >
           Okay

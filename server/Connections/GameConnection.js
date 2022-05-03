@@ -164,7 +164,6 @@ class GameConnection {
         this.io.in(roomID).emit("update_move", updatedInfo);
 
         if (gamestate.Win(player)) {
-          console.log("player played last card...");
           gamestate.isWin = true;
           const score = gamestate.getWinnerScore();
 
@@ -235,9 +234,7 @@ class GameConnection {
 
     if (server) {
       if (server.gamestate.players.length === 1) {
-        console.log("leave wait1: ", this.socket.rooms);
         this.socket.leave(roomID);
-        console.log("leave wait2: ", this.socket.rooms);
         deleteGame(roomID);
       } else {
         const player = server.gamestate.players.find(
@@ -298,17 +295,15 @@ class GameConnection {
   //last player to leave the room before a player has won
   removeLastPlayerInGame(roomID) {
     const server = getGame(roomID);
-    console.log("leave game: ", this.socket.rooms);
+
     if (server) {
       this.socket.leave(roomID);
       deleteGame(roomID);
-      console.log("leave game: ", this.socket.rooms);
     }
   }
 
   disconnect() {
     console.log("User Disconnected", this.socket.id);
-    console.log(this.socket.rooms);
   }
 }
 

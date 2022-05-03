@@ -35,7 +35,7 @@ import {
   WinGame,
   updateDeck,
 } from "../feature/gameSlice";
-import { BrandHipchat, DoorExit, LetterX } from "tabler-icons-react";
+import { DoorExit, LetterX } from "tabler-icons-react";
 import Error from "../components/Error/Error";
 import Chat from "../components/Chat/Chat";
 import { addMessage, updateUnreadCount } from "../feature/chatSlice";
@@ -56,8 +56,11 @@ const useStyles = createStyles((theme) => ({
 
 function Game() {
   const { id } = useParams();
-
   const { classes } = useStyles();
+  const navigate = useNavigate();
+  const notifications = useNotifications();
+  const theme = useMantineTheme();
+  const dispatch = useDispatch();
 
   const [isLoading, setLoading] = useState(true);
   const [message, setMessage] = useState("");
@@ -68,12 +71,6 @@ function Game() {
   const playersList = useSelector((state) => state.game.players);
   const isWildCard = useSelector((state) => state.game.isWild);
   const isWin = useSelector((state) => state.game.isWin);
-  const isOpened = useSelector((state) => state.chat.isChatBoxOpen);
-
-  const navigate = useNavigate();
-  const notifications = useNotifications();
-  const theme = useMantineTheme();
-  const dispatch = useDispatch();
 
   const positions = [TopHand, RightHand, LeftHand];
 

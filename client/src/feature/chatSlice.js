@@ -14,9 +14,7 @@ export const chatSlice = createSlice({
       state.messages = [...state.messages, action.payload];
     },
     updateUnreadCount(state) {
-      console.log("1: ", state.unreadMessagesCount);
       state.unreadMessagesCount += 1;
-      console.log("2: ", state.unreadMessagesCount);
     },
 
     updateChatBoxOpen(state, action) {

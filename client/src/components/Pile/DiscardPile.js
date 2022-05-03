@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import { useDrop } from "react-dnd";
-import { move, setWildCard } from "../../feature/gameSlice";
 import { createStyles } from "@mantine/core";
 import socket from "../../app/socket";
 import { useParams } from "react-router-dom";
@@ -33,7 +32,7 @@ function DiscardPile() {
   const dispatch = useDispatch();
   const { classes } = useStyles();
 
-  const [{ isOver }, drop] = useDrop(() => ({
+  const [drop] = useDrop(() => ({
     accept: "image",
     drop: (item) =>
       socket.emit("move", { roomID: id, card: item.card, player: item.player }),
@@ -43,7 +42,7 @@ function DiscardPile() {
   }));
 
   useEffect(() => {
-    //check if the top card is a wild card and prevents other users from choosing color with colorChosen
+    //checks if the top card is a wild card and prevents other users from choosing color with colorChosen
     if (
       (discardCard.type === "Wild4" || discardCard.type === "Wild") &&
       colorChosen === false

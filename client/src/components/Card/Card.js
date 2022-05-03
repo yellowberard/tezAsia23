@@ -1,6 +1,6 @@
 import React from "react";
 import { useDrag } from "react-dnd";
-import { createStyles, Image } from "@mantine/core";
+import { createStyles } from "@mantine/core";
 import { BACKCARD } from "../../utils/constants";
 
 const useStyles = createStyles((theme) => ({
@@ -22,7 +22,7 @@ const useStyles = createStyles((theme) => ({
 
 function Card({ card, playerID, back }) {
   const { classes } = useStyles();
-  const [{ isDragging }, drag] = useDrag(() => ({
+  const [drag] = useDrag(() => ({
     type: "image",
     item: { card: card, player: playerID },
     collect: (monitor) => ({

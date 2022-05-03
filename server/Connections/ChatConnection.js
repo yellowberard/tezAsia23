@@ -34,9 +34,8 @@ class ChatConnection {
     this.socket.emit("update_box_open", this.isChatBoxOpen);
 
     if (this.isChatBoxOpen) {
-      console.log("here");
       this.unreadMessagesCount = 0;
-      console.log("3: ", this.unreadMessagesCount);
+
       this.socket.emit("reset_unreadMessage");
     }
   }
