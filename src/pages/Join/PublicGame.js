@@ -12,6 +12,7 @@ import {
   Button,
   Center,
   Modal,
+  Group,
 } from "@mantine/core";
 import { Refresh } from "tabler-icons-react";
 import socket from "../../app/socket";
@@ -188,12 +189,20 @@ function PublicGame() {
           )}
           <Space h="md" />
 
-          <Center>
+          <Group position="apart">
             <Button color="dark" onClick={refreshPage}>
               <Refresh size={20} />
               Update
             </Button>
-          </Center>
+            <Button
+              color="dark"
+              onClick={() => {
+                navigate(-1);
+              }}
+            >
+              Back
+            </Button>
+          </Group>
         </Paper>
       </div>
     </div>
