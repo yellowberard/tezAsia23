@@ -1,8 +1,8 @@
 # UNO
 
-##### Demo: [CLICK HERE](https://uno-react.netlify.app)
+#### Demo: [CLICK HERE](https://uno-react.netlify.app)
 
-##### Backend Link [CLICK HERE](https://github.com/amarikb/UNO-Backend)
+#### Backend Link [CLICK HERE](https://github.com/amarikb/UNO-Backend)
 
 ## Table of Contents
 
@@ -58,6 +58,7 @@ The project is created with:
 
 ---
 
+<p align="center">
 Frontend:
 <a href="https://www.netlify.com">
 <img src="https://img.shields.io/badge/Netlify-00C7B7?style=for-the-badge&logo=netlify&logoColor=white" /></a>
@@ -66,13 +67,15 @@ Backend:
 <a href="https://www.heroku.com">
 <img src="https://img.shields.io/badge/Heroku-430098?style=for-the-badge&logo=heroku&logoColor=white"/></a>
 
+</p>
+
 ## Credits
 
 ---
 
 Avatar Images:
 
-###### bee image: ["https://icons8.com/icon/101705/bee"]("https://icons8.com/icon/101705/bee")
+###### [bee image:]("https://icons8.com/icon/101705/bee")
 
 ###### cat image: ["https://icons8.com/icon/101706/cat"]("https://icons8.com/icon/101706/cat")
 
