@@ -1,70 +1,90 @@
-# Getting Started with Create React App
+# UNO
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+### Demo: [CLICK HERE] (https://uno-react.netlify.app)
 
-## Available Scripts
+### Backend Link [CLICK HERE] (https://github.com/amarikb/UNO-Backend)
 
-In the project directory, you can run:
+## Table of Contents
 
-### `npm start`
+---
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- [General Info](#general-info)
+- [Preview](#preview)
+- [Built With](#built-with)
+- [Deployed With](#deployed-with)
+- [Credits](#credits)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## General Info
 
-### `npm test`
+---
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+A online multiplayer cards game built to play as the same classic Uno game.
+The game features public and private games, chat feature between players in a same game.
 
-### `npm run build`
+## Preview
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+---
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+![](https://github.com/amarikb/Song-Trivia-Game/blob/main/data/readme/highscore.png)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Built With
 
-### `npm run eject`
+---
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+The project is created with:
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+<img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" />
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+<img src="https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white" />
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+<img src="	https://img.shields.io/badge/JavaScript-323330?style=for-the-badge&logo=javascript&logoColor=F7DF1E" />
 
-## Learn More
+<img src="	https://img.shields.io/badge/Express.js-404D59?style=for-the-badge" />
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+<img src="https://img.shields.io/badge/Socket.io-black?style=for-the-badge&logo=socket.io&badgeColor=010101" />
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+<a href="https://mantine.dev">
+<img src="https://img.shields.io/badge/mantine.dev-%20-blue" />
+</a>
 
-### Code Splitting
+## Deployed With
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+---
 
-### Analyzing the Bundle Size
+Frontend:
+<img src="	https://img.shields.io/badge/Netlify-00C7B7?style=for-the-badge&logo=netlify&logoColor=white" />
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+Backend:
+<img src="https://img.shields.io/badge/Heroku-430098?style=for-the-badge&logo=heroku&logoColor=white"/>
 
-### Making a Progressive Web App
+## Credits
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+---
 
-### Advanced Configuration
+Avatar Images:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+###### [bee]("https://icons8.com/icon/101705/bee")
 
-### Deployment
+###### [cat]("https://icons8.com/icon/101706/cat")
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+###### [crab]("https://icons8.com/icon/xtp_K8TJSIbw/crab")
 
-### `npm run build` fails to minify
+###### [dog]("https://icons8.com/icon/101712/dog")
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+###### [elephant]("https://icons8.com/icon/101717/elephant")
+
+###### [flamingo]("https://icons8.com/icon/P7vVMRB25WEC/flamingo")
+
+###### [octopus]("https://icons8.com/icon/bJ_EPaHOlIJt/octopus")
+
+###### [penguin]("https://icons8.com/icon/101724/penguin")
+
+###### [pig]("https://icons8.com/icon/101721/pig")
+
+###### [unicorn]("https://icons8.com/icon/101728/unicorn")
+
+Icon:
+[Uno Logo]("https://www.pngaaa.com/detail/4113531")
+
+Cards:
+[Uno Cards]("https://alexder.itch.io/uno-card-game-asset-pack")

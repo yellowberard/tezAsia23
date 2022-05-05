@@ -32,7 +32,7 @@ function DiscardPile() {
   const dispatch = useDispatch();
   const { classes } = useStyles();
 
-  const [drop] = useDrop(() => ({
+  const [, drop] = useDrop(() => ({
     accept: "image",
     drop: (item) =>
       socket.emit("move", { roomID: id, card: item.card, player: item.player }),

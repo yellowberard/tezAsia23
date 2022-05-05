@@ -22,7 +22,7 @@ const useStyles = createStyles((theme) => ({
 
 function Card({ card, playerID, back }) {
   const { classes } = useStyles();
-  const [drag] = useDrag(() => ({
+  const [, drag] = useDrag(() => ({
     type: "image",
     item: { card: card, player: playerID },
     collect: (monitor) => ({
