@@ -26,11 +26,9 @@ The game features 2-4 player public or private games, chat feature between playe
 
 ---
 
-| Creating/Joining Public Game                                                                                           |                                             Creating/Joining Pprivate Game                                             |                                                                                 Chat Feature |
-| :--------------------------------------------------------------------------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------------: | -------------------------------------------------------------------------------------------: |
-| ![creating and joining public game](https://github.com/amarikb/UNO/blob/main/src/assets/readme/publicGameCreation.gif) | ![creating and joing private game](https://github.com/amarikb/UNO/blob/main/src/assets/readme/privateGameCreation.gif) | ![chat feature in game](https://github.com/amarikb/UNO/blob/main/src/assets/readme/chat.gif) |
-
-![player win in game](https://github.com/amarikb/UNO/blob/main/src/assets/readme/win.gif)
+| Creating/Joining Public Game                                                                                           |                                             Creating/Joining Private Game                                              |                                         Chat Feature                                         |                                                                        Player win in game |
+| :--------------------------------------------------------------------------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------: | ----------------------------------------------------------------------------------------: |
+| ![creating and joining public game](https://github.com/amarikb/UNO/blob/main/src/assets/readme/publicGameCreation.gif) | ![creating and joing private game](https://github.com/amarikb/UNO/blob/main/src/assets/readme/privateGameCreation.gif) | ![chat feature in game](https://github.com/amarikb/UNO/blob/main/src/assets/readme/chat.gif) | ![player win in game](https://github.com/amarikb/UNO/blob/main/src/assets/readme/win.gif) |
 
 ## Built With
 
