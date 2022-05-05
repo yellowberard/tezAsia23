@@ -58,6 +58,7 @@ The project is created with:
 
 ---
 
+<p align="center" >
 Frontend: &nbsp;
 <a href="https://www.netlify.com">
 <img src="https://img.shields.io/badge/Netlify-00C7B7?style=for-the-badge&logo=netlify&logoColor=white" /></a>
@@ -66,11 +67,15 @@ Backend: &nbsp;
 <a href="https://www.heroku.com">
 <img src="https://img.shields.io/badge/Heroku-430098?style=for-the-badge&logo=heroku&logoColor=white"/></a>
 
+</p>
+
 ## Credits
 
 ---
 
 Avatar Images:
+
+<p align="center">
 
 ###### [bee image](https://icons8.com/icon/101705/bee)
 
@@ -92,6 +97,8 @@ Avatar Images:
 
 ###### [unicorn image](https://icons8.com/icon/101728/unicorn)
 
-[Uno Logo](https://www.pngaaa.com/detail/4113531)
+</p>
 
-[Uno Cards](https://alexder.itch.io/uno-card-game-asset-pack)
+Logo: ######[Uno Logo](https://www.pngaaa.com/detail/4113531)
+
+Cards: ######[Uno Cards](https://alexder.itch.io/uno-card-game-asset-pack)
