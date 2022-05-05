@@ -19,20 +19,18 @@
 ---
 
 A online multiplayer cards game built to play as the same classic Uno game. <br/>
-&nbsp;
+<br/>
 The game features 2-4 player public or private games, chat feature between players in a same game.
 
 ## Preview
 
 ---
 
-![](https://github.com/amarikb/UNO/blob/main/src/assets/readme/publicGameCreation.gif)
+| Creating/Joining Public Game                                                                                           |                                             Creating/Joining Pprivate Game                                             |                                                                                 Chat Feature |
+| :--------------------------------------------------------------------------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------------: | -------------------------------------------------------------------------------------------: |
+| ![creating and joining public game](https://github.com/amarikb/UNO/blob/main/src/assets/readme/publicGameCreation.gif) | ![creating and joing private game](https://github.com/amarikb/UNO/blob/main/src/assets/readme/privateGameCreation.gif) | ![chat feature in game](https://github.com/amarikb/UNO/blob/main/src/assets/readme/chat.gif) |
 
-![](https://github.com/amarikb/UNO/blob/main/src/assets/readme/privateGameCreation.gif)
-
-![](https://github.com/amarikb/UNO/blob/main/src/assets/readme/chat.gif)
-
-![](https://github.com/amarikb/UNO/blob/main/src/assets/readme/win.gif)
+![player win in game](https://github.com/amarikb/UNO/blob/main/src/assets/readme/win.gif)
 
 ## Built With
 
