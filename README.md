@@ -58,16 +58,13 @@ The project is created with:
 
 ---
 
-<p align="center">
-Frontend:
+Frontend: &nbsp;
 <a href="https://www.netlify.com">
 <img src="https://img.shields.io/badge/Netlify-00C7B7?style=for-the-badge&logo=netlify&logoColor=white" /></a>
 
-Backend:
+Backend: &nbsp;
 <a href="https://www.heroku.com">
 <img src="https://img.shields.io/badge/Heroku-430098?style=for-the-badge&logo=heroku&logoColor=white"/></a>
-
-</p>
 
 ## Credits
 
@@ -75,26 +72,26 @@ Backend:
 
 Avatar Images:
 
-###### [bee image:]("https://icons8.com/icon/101705/bee")
+###### [bee image](https://icons8.com/icon/101705/bee)
 
-###### cat image: ["https://icons8.com/icon/101706/cat"]("https://icons8.com/icon/101706/cat")
+###### [cat image](https://icons8.com/icon/101706/cat)
 
-###### crab image: ["https://icons8.com/icon/xtp_K8TJSIbw/crab"]("https://icons8.com/icon/xtp_K8TJSIbw/crab")
+###### [crab image](https://icons8.com/icon/xtp_K8TJSIbw/crab)
 
-###### dog image: ["https://icons8.com/icon/101712/dog"]("https://icons8.com/icon/101712/dog")
+###### [dog image](https://icons8.com/icon/101712/dog)
 
-###### elephant image: ["https://icons8.com/icon/101717/elephant"]("https://icons8.com/icon/101717/elephant")
+###### [elephant image](https://icons8.com/icon/101717/elephant)
 
-###### flamingo image: ["https://icons8.com/icon/P7vVMRB25WEC/flamingo"]("https://icons8.com/icon/P7vVMRB25WEC/flamingo")
+###### [flamingo image](https://icons8.com/icon/P7vVMRB25WEC/flamingo)
 
-###### octopus image: ["https://icons8.com/icon/bJ_EPaHOlIJt/octopus"]("https://icons8.com/icon/bJ_EPaHOlIJt/octopus")
+###### [octopus image](https://icons8.com/icon/bJ_EPaHOlIJt/octopus)
 
-###### penguin image: ["https://icons8.com/icon/101724/penguin"]("https://icons8.com/icon/101724/penguin")
+###### [penguin image](https://icons8.com/icon/101724/penguin)
 
-###### pig image: ["https://icons8.com/icon/101721/pig"]("https://icons8.com/icon/101721/pig")
+###### [pig image](https://icons8.com/icon/101721/pig)
 
-###### unicorn image: ["https://icons8.com/icon/101728/unicorn"]("https://icons8.com/icon/101728/unicorn")
+###### [unicorn image](https://icons8.com/icon/101728/unicorn)
 
-Uno Logo: ["https://www.pngaaa.com/detail/4113531"]("https://www.pngaaa.com/detail/4113531")
+[Uno Logo](https://www.pngaaa.com/detail/4113531)
 
-Uno Cards: ["https://alexder.itch.io/uno-card-game-asset-pack"]("https://alexder.itch.io/uno-card-game-asset-pack")
+[Uno Cards](https://alexder.itch.io/uno-card-game-asset-pack)
