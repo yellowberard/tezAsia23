@@ -1,8 +1,8 @@
 # UNO
 
-#### Demo: [CLICK HERE](https://uno-react.netlify.app)
+### Demo: [CLICK HERE](https://uno-react.netlify.app)
 
-#### Backend Link [CLICK HERE](https://github.com/amarikb/UNO-Backend)
+### Backend Link: [CLICK HERE](https://github.com/amarikb/UNO-Backend)
 
 ## Table of Contents
 
@@ -18,8 +18,8 @@
 
 ---
 
-A online multiplayer cards game built to play as the same classic Uno game.
-The game features public and private games, chat feature between players in a same game.
+A online multiplayer cards game built to play as the same classic Uno game. <br/>
+The game features 2-4 player public and private games, chat feature between players in a same game.
 
 ## Preview
 
@@ -58,7 +58,6 @@ The project is created with:
 
 ---
 
-<p align="center" >
 Frontend: &nbsp;
 <a href="https://www.netlify.com">
 <img src="https://img.shields.io/badge/Netlify-00C7B7?style=for-the-badge&logo=netlify&logoColor=white" /></a>
@@ -67,15 +66,11 @@ Backend: &nbsp;
 <a href="https://www.heroku.com">
 <img src="https://img.shields.io/badge/Heroku-430098?style=for-the-badge&logo=heroku&logoColor=white"/></a>
 
-</p>
-
 ## Credits
 
 ---
 
 Avatar Images:
-
-<p align="center">
 
 ###### [bee image](https://icons8.com/icon/101705/bee)
 
@@ -97,8 +92,10 @@ Avatar Images:
 
 ###### [unicorn image](https://icons8.com/icon/101728/unicorn)
 
-</p>
+Logo:
 
-Logo: ######[Uno Logo](https://www.pngaaa.com/detail/4113531)
+###### [Uno Logo](https://www.pngaaa.com/detail/4113531)
 
-Cards: ######[Uno Cards](https://alexder.itch.io/uno-card-game-asset-pack)
+Cards:
+
+###### [Uno Cards](https://alexder.itch.io/uno-card-game-asset-pack)
