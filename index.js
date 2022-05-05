@@ -10,7 +10,7 @@ const server = http.createServer(app);
 const PORT = process.env.PORT || 3001;
 const io = new Server(server, {
   cors: {
-    origin: "https://uno-react.netlify.app",
+    origin: "http://localhost:3000", //"https://uno-react.netlify.app",
     methods: ["GET", "POST"],
   },
 });
