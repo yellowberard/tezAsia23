@@ -12,7 +12,7 @@ const useStyles = createStyles((theme) => ({
     left: "48%",
     transform: "translateX(-50%) translateY(-50%) rotate(180deg)",
     "@media (min-width: 280px) and (max-width: 1668px)": {
-      top: "3%",
+      top: "6%",
     },
   },
   area: {
