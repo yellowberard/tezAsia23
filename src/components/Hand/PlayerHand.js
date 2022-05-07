@@ -94,7 +94,7 @@ const useStyles = createStyles((theme) => ({
     },
 
     "@media (min-width: 390px) and (max-width: 575px)": {
-      marginLeft: "-1rem",
+      marginLeft: "-0.1rem",
       "&:not(:first-of-type)": {
         marginLeft: "-5rem",
       },
