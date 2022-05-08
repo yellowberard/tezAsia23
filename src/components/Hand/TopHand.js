@@ -11,6 +11,10 @@ const useStyles = createStyles((theme) => ({
     top: "6.5%",
     left: "48%",
     transform: "translateX(-50%) translateY(-50%) rotate(180deg)",
+
+    "@media screen and (orientation: portrait) and (max-device-width: 930px)": {
+      top: "4%",
+    },
   },
   area: {
     width: "900px",

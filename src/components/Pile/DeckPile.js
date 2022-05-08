@@ -18,6 +18,17 @@ const useStyles = createStyles((theme) => ({
       width: "115px",
       height: "140px",
     },
+    "@media screen and (orientation: landscape) and (max-device-width: 930px)":
+      {
+        width: "100px",
+        height: "120px",
+      },
+
+    "@media screen and (orientation: landscape) and (max-device-width: 653px)":
+      {
+        width: "50px",
+        height: "90px",
+      },
   },
 }));
 

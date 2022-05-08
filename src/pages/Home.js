@@ -36,6 +36,11 @@ const useStyles = createStyles((theme) => ({
       height: "260px",
       width: "260px",
     },
+    "@media screen and (orientation: landscape) and (max-device-width: 930px)":
+      {
+        height: "130px",
+        width: "130px",
+      },
   },
   infoButton: {
     position: "absolute",

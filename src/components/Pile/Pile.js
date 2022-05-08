@@ -26,7 +26,7 @@ const useStyles = createStyles((theme, { color }) => ({
     left: "48%",
     transform: "translateX(-50%) translateY(-50%)",
 
-    "@media (max-width: 375px)": {
+    "@media screen and (max-device-width: 375px)": {
       flexDirection: "column",
       width: "110px",
       top: "46%",
@@ -40,6 +40,20 @@ const useStyles = createStyles((theme, { color }) => ({
     "@media (min-width: 577px) and (max-width: 700px)": {
       width: "350px",
     },
+
+    "@media screen and (orientation: landscape) and (max-device-width: 930px)":
+      {
+        width: "300px",
+        top: "50%",
+        left: "48%",
+      },
+
+    "@media screen and (orientation: landscape) and (max-device-width: 653px)":
+      {
+        width: "230px",
+        top: "50%",
+        left: "48%",
+      },
   },
   background: {
     backgroundColor: ` ${theme.colors.gray[0]}`,
@@ -71,6 +85,26 @@ const useStyles = createStyles((theme, { color }) => ({
           ? ` ${theme.colors.gray[4]}`
           : `${theme.colors[color][4]} `,
     },
+
+    "@media screen and (orientation: landscape) and (max-device-width: 653px)":
+      {
+        border: "25px solid transparent",
+        top: "-25px",
+        borderBottomColor:
+          color === "random"
+            ? ` ${theme.colors.gray[4]}`
+            : `${theme.colors[color][4]} `,
+
+        "&:after": {
+          left: "-25px",
+          top: "25px",
+          border: "25px solid transparent ",
+          borderTopColor:
+            color === "random"
+              ? ` ${theme.colors.gray[4]}`
+              : `${theme.colors[color][4]} `,
+        },
+      },
   },
 }));
 

@@ -27,6 +27,12 @@ const useStyles = createStyles((theme, { isCurrentPlayer }) => ({
       width: "112px",
       height: "40px",
     },
+    "@media screen and (orientation: landscape) and (max-device-width: 930px)":
+      {
+        fontSize: "8px",
+        width: "100px",
+        height: "30px",
+      },
   },
   avatar: {
     border: `${theme.colors.dark[8]} solid 2px`,
@@ -46,6 +52,12 @@ const useStyles = createStyles((theme, { isCurrentPlayer }) => ({
       width: "15px",
       height: "30px",
     },
+
+    "@media screen and (orientation: landscape) and (max-device-width: 930px)":
+      {
+        width: "5px",
+        height: "30px",
+      },
   },
   currentPlayerAvatar: {
     border: `${theme.colors.dark[8]} solid 2px`,
@@ -70,6 +82,11 @@ const useStyles = createStyles((theme, { isCurrentPlayer }) => ({
       width: "50px",
       height: "45px",
     },
+    "@media screen and (orientation: landscape) and (max-device-width: 930px)":
+      {
+        width: "50px",
+        height: "50px",
+      },
   },
 }));
 

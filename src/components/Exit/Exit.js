@@ -17,8 +17,12 @@ const useStyles = createStyles((theme) => ({
     top: "80%",
     left: "45%",
 
-    "@media (max-width: 444px)": {
+    "@media screen and (max-width: 444px) and (orientation:portrait)": {
       left: "68.5%",
+    },
+    "@media screen and (orientation:landscape) and (max-device-width: 930px)": {
+      top: "70%",
+      left: "70%",
     },
   },
 }));

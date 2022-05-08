@@ -45,8 +45,8 @@ const useStyles = createStyles((theme) => ({
     },
 
     "@media (max-width: 450px)": {
-      top: "20%",
-      left: "10%",
+      top: "10%",
+      left: "5%",
     },
   },
 

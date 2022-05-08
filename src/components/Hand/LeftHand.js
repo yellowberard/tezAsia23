@@ -40,6 +40,11 @@ const useStyles = createStyles((theme) => ({
       width: "600px",
       height: "125px",
     },
+    "@media screen and (orientation: landscape) and (max-device-width: 930px)":
+      {
+        width: "400px",
+        height: "125px",
+      },
   },
   text: {
     position: "absolute",
@@ -67,6 +72,13 @@ const useStyles = createStyles((theme) => ({
       top: "28%",
       left: "90%",
     },
+
+    "@media screen and (orientation: landscape) and (max-device-width: 930px)":
+      {
+        top: "1%",
+        left: "50%",
+        transform: "translateX(-50%) translateY(-50%) rotate(360deg)",
+      },
   },
   cards: {
     display: "flex",
@@ -127,6 +139,13 @@ const useStyles = createStyles((theme) => ({
         marginLeft: "-7.1rem",
       },
     },
+    "@media screen and (orientation: landscape) and (max-device-width: 930px)":
+      {
+        marginLeft: "-1rem",
+        "&:not(:first-of-type)": {
+          marginLeft: "-7.3rem",
+        },
+      },
   },
 
   moreCard: {
@@ -176,6 +195,10 @@ const useStyles = createStyles((theme) => ({
     "@media (min-width: 1200px) and (max-width: 1300px)": {
       marginLeft: "-3.5rem",
     },
+    "@media screen and (orientation: landscape) and (max-device-width: 930px)":
+      {
+        marginLeft: "-8rem",
+      },
   },
 }));
 
