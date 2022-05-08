@@ -266,6 +266,7 @@ function Game() {
 
           {playerLeaveMessage && (
             <Alert
+              className={classes.center}
               icon={<DoorExit size={16} />}
               radius="md"
               title="Player Left!"
