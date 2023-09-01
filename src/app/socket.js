@@ -1,5 +1,5 @@
 import io from "socket.io-client";
-const ENDPOINT = "https://unobackend.onrender.com";
+const ENDPOINT = "http://localhost:3002";
 export default io(ENDPOINT, {
   closeOnBeforeunload: false,
 });
