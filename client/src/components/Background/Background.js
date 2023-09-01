@@ -24,6 +24,7 @@ function Background() {
       className="area"
       style={{
         backgroundColor: theme.colors.red[8],
+        zIndex: -1000
       }}
     >
       <div className="cards">

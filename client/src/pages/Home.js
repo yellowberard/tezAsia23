@@ -1,4 +1,21 @@
 import React, { useEffect, useState } from "react";
+import {connectWallet, disconnectWallet, getAccount} from "../utils/wallet";
+// import { BeaconWallet } from '@taquito/beacon-wallet';
+
+// const options = {
+//   name: 'MyAwesomeDapp',
+//   iconUrl: 'https://tezostaquito.io/img/favicon.svg',
+//   network: { type: 'ghostnet' },
+//   eventHandlers: {
+//     PERMISSION_REQUEST_SUCCESS: {
+//       handler: async (data) => {
+//         console.log('permission data:', data);
+//       },
+//     },
+//   },
+// };
+// const wallet = new BeaconWallet(options);
+
 import {
   useMantineTheme,
   Popover,
@@ -60,6 +77,22 @@ function Home() {
 
   const theme = useMantineTheme();
 
+  const [account, setAccount] = useState("");
+
+  useEffect(() => {
+    (async () => {
+        const account = await getAccount();
+        setAccount(account);        
+        console.log(account)
+    })();
+  }, []);
+
+  const onClickConnect = async () => {
+    await connectWallet();
+    const account = await getAccount();
+    setAccount(account);
+  }
+
   const query = useMediaQuery("(max-width: 719px)");
   const dispatch = useDispatch();
 
@@ -74,9 +107,30 @@ function Home() {
   return (
     <>
       <Group position="center" direction="column" spacing="xl">
+        {account !== "" && (
+            <Group position="right" direction="row" spacing="xl">
+              <Button
+                color="dark"
+                radius="md"
+                size={query ? "lg" : "xl"}
+                onClick={() => disconnectWallet()}
+              >
+                {account.slice(0,6) + "..."}
+              </Button>
+            </Group>
+        )}
         <img src={logo} alt="Uno Game Logo" className={classes.img} />
-
-        <Group
+        {account === "" ? (
+          <Button
+            color="dark"
+            radius="md"
+            size={query ? "lg" : "xl"}
+            onClick={() => onClickConnect()}
+          >
+            Connect Wallet
+          </Button>
+          ) : (
+            <Group
           position="center"
           direction={query ? "column" : "row"}
           spacing="xl"
@@ -134,9 +188,12 @@ function Home() {
             </Group>
           </Popover>
         </Group>
+          )}
+        
+        
       </Group>
 
-      <Tooltip
+      {/* <Tooltip
         className={classes.infoButton}
         position="top"
         placement="center"
@@ -151,11 +208,11 @@ function Home() {
         >
           <InfoCircle size={75} />
         </ActionIcon>
-      </Tooltip>
+      </Tooltip> */}
 
-      <Credits openInfo={openInfo} setOpenInfo={setOpenInfo} />
+      {/* <Credits openInfo={openInfo} setOpenInfo={setOpenInfo} /> */}
 
-      <Tooltip
+      {/* <Tooltip
         className={classes.rulesButton}
         position="top"
         placement="center"
@@ -173,7 +230,9 @@ function Home() {
         >
           <PlayCard size={50} />
         </ActionIcon>
-      </Tooltip>
+      </Tooltip> */}
+      
+       
 
       <Background />
     </>
