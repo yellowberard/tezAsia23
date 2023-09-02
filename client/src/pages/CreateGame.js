@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { generatePath, useNavigate } from "react-router-dom";
+import {connectWallet, disconnectWallet, getAccount} from "../utils/wallet";
 
 import {
   createStyles,
@@ -21,6 +22,7 @@ import { useClipboard } from "@mantine/hooks";
 import { useForm } from "@mantine/form";
 import { EyeCheck, EyeOff } from "tabler-icons-react";
 import socket from "../app/socket";
+import { buyTicketOperation, endGameOperation } from "../utils/operation";
 
 const useStyles = createStyles((theme) => ({
   background: {
@@ -45,6 +47,7 @@ function CreateGame() {
   const { classes } = useStyles();
   const [opened, setOpened] = useState(true);
   const [roomID, setRoomID] = useState("");
+  const [loading, setLoading] = useState(false);
   const [isPrivateGame, setIsPrivateGame] = useState(false);
   const navigate = useNavigate();
   const theme = useMantineTheme();
@@ -84,6 +87,16 @@ function CreateGame() {
     };
   }, []);
 
+  const [account, setAccount] = useState("");
+
+  useEffect(() => {
+    (async () => {
+        const account = await getAccount();
+        setAccount(account);        
+        console.log(account)
+    })();
+  }, []);
+
   useEffect(() => {
     //resets password field when the private game checkbox is not clicked
     if (form.values.checked === false && form.values.password !== "") {
@@ -116,6 +129,29 @@ function CreateGame() {
   function handleRoomCodeClick() {
     handleNavigate(roomID);
   }
+
+  const onBuyTicket = async () => {
+    try {
+      setLoading(true);
+      await buyTicketOperation();
+      alert("1 TEZOS is now on stake")
+    } catch (error) {
+      throw error;
+    }
+    setLoading(false);
+  };
+
+  const onEndGame = async () => {
+    try {
+      setLoading(true);
+      await endGameOperation();
+      alert("Game Ended")
+    } catch (error) {
+      throw error;
+    }
+    setLoading(false);
+  };
+
 
   function joinRoom(values) {
     const gameInfo = {
@@ -222,10 +258,30 @@ function CreateGame() {
               >
                 Back
               </Button>
+              <Button
+                color="dark"
+                size="md"
+                onClick={() => {
+                  onBuyTicket();
+                }}
+              >
+                {loading ? "transacting...." : "Stake to Play"}
+              </Button>
+
+              <Button
+                color="dark"
+                size="md"
+                onClick={() => {
+                  onEndGame();
+                }}
+              >
+                {loading ? "transacting...." : "End Game"}
+              </Button>
 
               <Button type="submit" color="dark" size="md">
                 Create
               </Button>
+              
             </Group>
           </form>
         </Paper>
