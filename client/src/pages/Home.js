@@ -177,14 +177,14 @@ function Home() {
                 Private Game
               </Button>
 
-              <Button
+              {/* <Button
                 size={query ? "sm" : "md"}
                 radius="md"
                 color="gray"
                 onClick={() => navigate("/JoinPublic")}
               >
                 Public Game
-              </Button>
+              </Button> */}
             </Group>
           </Popover>
         </Group>

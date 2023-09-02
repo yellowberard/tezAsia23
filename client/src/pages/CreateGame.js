@@ -174,9 +174,9 @@ function CreateGame() {
                 {...form.getInputProps("numOfPlayers", { type: "radiogroup" })}
               >
                 <Radio value="2" label={2} />
-                <Radio value="3" label={3} />
+                {/* <Radio value="3" label={3} />
 
-                <Radio value="4" label={4} />
+                <Radio value="4" label={4} /> */}
               </RadioGroup>
 
               <Group>
