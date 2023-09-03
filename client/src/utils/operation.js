@@ -2,7 +2,7 @@ import { tezos } from "./tezos";
  
 export const buyTicketOperation = async () => {
    try {
-        const contract = await tezos.wallet.at("KT1S5NmJdha7VvtRpmEZXgsUD2eW5f9YUpxu")
+        const contract = await tezos.wallet.at("KT1CpGBXnBFZqzARUSUtgm1p2Xp9xnruDdsd")
         const op = await contract.methods.buy_ticket().send(
             {
                 amount: 1,
@@ -31,7 +31,7 @@ function jsonToHexBytes(json) {
 
 export const endGameOperation = async () => {
     try {
-        const contract = await tezos.wallet.at("KT1S5NmJdha7VvtRpmEZXgsUD2eW5f9YUpxu")
+        const contract = await tezos.wallet.at("KT1CpGBXnBFZqzARUSUtgm1p2Xp9xnruDdsd")
         const bytes = jsonToHexBytes('ABC')
         console.log('ABC')
         console.log(bytes)

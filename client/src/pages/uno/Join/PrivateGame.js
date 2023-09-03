@@ -14,9 +14,9 @@ import {
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { EyeCheck, EyeOff } from "tabler-icons-react";
-import socket from "../../app/socket";
-import {connectWallet, disconnectWallet, getAccount} from "../../utils/wallet";
-import { buyTicketOperation, endGameOperation } from "../../utils/operation";
+import socket from "../../../app/socket";
+import {connectWallet, disconnectWallet, getAccount} from "../../../utils/wallet";
+import { buyTicketOperation, endGameOperation } from "../../../utils/operation";
 
 const useStyles = createStyles((theme) => ({
   background: {
@@ -91,7 +91,7 @@ function PrivateGame() {
       setError(error);
     });
     socket.on("join_success", (roomCode) => {
-      const waitingRoomPath = generatePath("/WaitingRoom/gameroom=:id", {
+      const waitingRoomPath = generatePath("/uno/WaitingRoom/gameroom=:id", {
         id: roomCode,
       });
       navigate(waitingRoomPath);

@@ -4,12 +4,12 @@ import { DoorExit, LetterX } from "tabler-icons-react";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams, generatePath } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { start } from "../feature/gameSlice";
+import { start } from "../../feature/gameSlice";
 
-import Background from "../components/Background/Background";
-import socket from "../app/socket";
-import Lobby from "../components/Lobby/Lobby";
-import Error from "../components/Error/Error";
+import Background from "../../components/Background/Background";
+import socket from "../../app/socket";
+import Lobby from "../../components/Lobby/Lobby";
+import Error from "../../components/Error/Error";
 
 const useStyles = createStyles((theme) => ({
   container: {
@@ -82,7 +82,7 @@ function WaitRoom() {
     socket.on("start_game", (data) => {
       dispatch(start(data.info));
 
-      const gameRoomPath = generatePath("/Game/gameroom=:id", {
+      const gameRoomPath = generatePath("/uno/Game/gameroom=:id", {
         id: data.id,
       });
 

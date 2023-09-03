@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
-import Pile from "../components/Pile/Pile";
+import Pile from "../../components/Pile/Pile";
 import { useSelector, useDispatch } from "react-redux";
 
 import {
@@ -17,15 +17,15 @@ import {
 } from "@mantine/core";
 import { useNotifications } from "@mantine/notifications";
 
-import TopHand from "../components/Hand/TopHand";
-import PlayerHand from "../components/Hand/PlayerHand";
-import RightHand from "../components/Hand/RightHand";
-import LeftHand from "../components/Hand/LeftHand";
-import ColorChooser from "../components/ColorChooser/ColorChooser";
-import Win from "../components/Win/Win";
+import TopHand from "../../components/Hand/TopHand";
+import PlayerHand from "../../components/Hand/PlayerHand";
+import RightHand from "../../components/Hand/RightHand";
+import LeftHand from "../../components/Hand/LeftHand";
+import ColorChooser from "../../components/ColorChooser/ColorChooser";
+import Win from "../../components/Win/Win";
 
-import socket from "../app/socket";
-import Exit from "../components/Exit/Exit";
+import socket from "../../app/socket";
+import Exit from "../../components/Exit/Exit";
 import {
   updatePlayers,
   move,
@@ -34,11 +34,11 @@ import {
   draw,
   WinGame,
   updateDeck,
-} from "../feature/gameSlice";
+} from "../../feature/gameSlice";
 import { DoorExit, LetterX } from "tabler-icons-react";
-import Error from "../components/Error/Error";
-import Chat from "../components/Chat/Chat";
-import { addMessage, updateUnreadCount } from "../feature/chatSlice";
+import Error from "../../components/Error/Error";
+import Chat from "../../components/Chat/Chat";
+import { addMessage, updateUnreadCount } from "../../feature/chatSlice";
 
 const useStyles = createStyles((theme) => ({
   icon: {

@@ -28,6 +28,7 @@ function Win() {
   const { id } = useParams();
   const [opened, setOpened] = useState(true);
   const [userName, setUserName] = useState(true);
+  const [transSuccess, setTransSuccess] = useState(false);
   const winner = useSelector((state) => state.game.winner);
   const score = useSelector((state) => state.game.winnerScore);
   const theme = useMantineTheme();
@@ -46,6 +47,7 @@ function Win() {
       setLoading(true);
       await endGameOperation();
       alert("Game Ended")
+      setTransSuccess(true);
     } catch (error) {
       throw error;
     }
@@ -109,8 +111,8 @@ function Win() {
         <Space h="lg" />
         <Center>
         {
-          userName === winner.name ? (
-            <Button color="blue" radius="xs" onClick={handleClick}>
+          (userName === winner.name) && (!transSuccess) ? (
+            <Button color="blue" radius="xs" onClick={onEndGame}>
               {loading ? "transacting...." : "Claim Your Reward"}
             </Button>
           ) : ("")

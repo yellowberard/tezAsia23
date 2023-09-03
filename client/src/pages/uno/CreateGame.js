@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { generatePath, useNavigate } from "react-router-dom";
-import {connectWallet, disconnectWallet, getAccount} from "../utils/wallet";
+import { getAccount } from "../../utils/wallet";
 
 import {
   createStyles,
@@ -21,8 +21,8 @@ import {
 import { useClipboard } from "@mantine/hooks";
 import { useForm } from "@mantine/form";
 import { EyeCheck, EyeOff } from "tabler-icons-react";
-import socket from "../app/socket";
-import { buyTicketOperation, endGameOperation } from "../utils/operation";
+import socket from "../../app/socket";
+import { buyTicketOperation } from "../../utils/operation";
 
 const useStyles = createStyles((theme) => ({
   background: {
@@ -107,7 +107,7 @@ function CreateGame() {
 
   const handleNavigate = useCallback(
     (id) => {
-      const waitingRoomPath = generatePath("/WaitingRoom/gameroom=:id", {
+      const waitingRoomPath = generatePath("/uno/WaitingRoom/gameroom=:id", {
         id: id,
       });
       navigate(waitingRoomPath);

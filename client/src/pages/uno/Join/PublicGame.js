@@ -15,8 +15,8 @@ import {
   Group,
 } from "@mantine/core";
 import { Refresh } from "tabler-icons-react";
-import socket from "../../app/socket";
-import PublicForm from "../../components/PublicForm/PublicForm";
+import socket from "../../../app/socket";
+import PublicForm from "../../../components/PublicForm/PublicForm";
 import { generatePath, useNavigate } from "react-router-dom";
 
 const useStyles = createStyles((theme) => ({
@@ -59,7 +59,7 @@ function PublicGame() {
     });
 
     socket.on("join_success", (roomCode) => {
-      const waitingRoomPath = generatePath("/WaitingRoom/gameroom=:id", {
+      const waitingRoomPath = generatePath("/uno/WaitingRoom/gameroom=:id", {
         id: roomCode,
       });
       navigate(waitingRoomPath);

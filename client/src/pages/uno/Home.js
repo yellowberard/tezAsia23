@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {connectWallet, disconnectWallet, getAccount} from "../utils/wallet";
+import {connectWallet, disconnectWallet, getAccount} from "../../utils/wallet";
 // import { BeaconWallet } from '@taquito/beacon-wallet';
 
 // const options = {
@@ -30,12 +30,12 @@ import { useNavigate } from "react-router-dom";
 import { InfoCircle, PlayCard } from "tabler-icons-react";
 
 import { useDispatch } from "react-redux";
-import { reset } from "../feature/gameSlice";
-import { resetChat } from "../feature/chatSlice";
+import { reset } from "../../feature/gameSlice";
+import { resetChat } from "../../feature/chatSlice";
 
-import Background from "../components/Background/Background";
-import logo from "../assets/logo.png";
-import Credits from "../components/Credits/Credits";
+import Background from "../../components/Background/Background";
+import logo from "../../assets/logo.png";
+import Credits from "../../components/Credits/Credits";
 
 const useStyles = createStyles((theme) => ({
   img: {
@@ -71,7 +71,7 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-function Home() {
+function UnoHome() {
   const { classes } = useStyles();
   const navigate = useNavigate();
 
@@ -139,7 +139,7 @@ function Home() {
             color="dark"
             radius="md"
             size={query ? "lg" : "xl"}
-            onClick={() => navigate("/Create")}
+            onClick={() => navigate("/uno/Create")}
           >
             Create Game
           </Button>
@@ -172,7 +172,7 @@ function Home() {
                 size={query ? "sm" : "md"}
                 radius="md"
                 color="gray"
-                onClick={() => navigate("/JoinPrivate")}
+                onClick={() => navigate("/uno/JoinPrivate")}
               >
                 Private Game
               </Button>
@@ -181,7 +181,7 @@ function Home() {
                 size={query ? "sm" : "md"}
                 radius="md"
                 color="gray"
-                onClick={() => navigate("/JoinPublic")}
+                onClick={() => navigate("/uno/JoinPublic")}
               >
                 Public Game
               </Button>
@@ -239,4 +239,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default UnoHome;
