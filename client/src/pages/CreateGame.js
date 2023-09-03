@@ -48,6 +48,7 @@ function CreateGame() {
   const [opened, setOpened] = useState(true);
   const [roomID, setRoomID] = useState("");
   const [loading, setLoading] = useState(false);
+  const [staked, isStaked] = useState(false);
   const [isPrivateGame, setIsPrivateGame] = useState(false);
   const navigate = useNavigate();
   const theme = useMantineTheme();
@@ -133,24 +134,25 @@ function CreateGame() {
   const onBuyTicket = async () => {
     try {
       setLoading(true);
-      await buyTicketOperation();
+      const res = await buyTicketOperation();
       alert("1 TEZOS is now on stake")
+      isStaked(true);
     } catch (error) {
       throw error;
     }
     setLoading(false);
   };
 
-  const onEndGame = async () => {
-    try {
-      setLoading(true);
-      await endGameOperation();
-      alert("Game Ended")
-    } catch (error) {
-      throw error;
-    }
-    setLoading(false);
-  };
+  // const onEndGame = async () => {
+  //   try {
+  //     setLoading(true);
+  //     await endGameOperation();
+  //     alert("Game Ended")
+  //   } catch (error) {
+  //     throw error;
+  //   }
+  //   setLoading(false);
+  // };
 
 
   function joinRoom(values) {
@@ -264,11 +266,12 @@ function CreateGame() {
                 onClick={() => {
                   onBuyTicket();
                 }}
+                disabled={staked ? true : false}
               >
                 {loading ? "transacting...." : "Stake to Play"}
               </Button>
 
-              <Button
+              {/* <Button
                 color="dark"
                 size="md"
                 onClick={() => {
@@ -276,9 +279,9 @@ function CreateGame() {
                 }}
               >
                 {loading ? "transacting...." : "End Game"}
-              </Button>
+              </Button> */}
 
-              <Button type="submit" color="dark" size="md">
+              <Button type="submit" color="dark" size="md" disabled={staked ? false : true}>
                 Create
               </Button>
               

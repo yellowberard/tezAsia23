@@ -1,5 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { endGameOperation } from "../../utils/operation";
+
 import {
   useMantineTheme,
   Modal,
@@ -25,16 +27,36 @@ const useStyles = createStyles((theme) => ({
 function Win() {
   const { id } = useParams();
   const [opened, setOpened] = useState(true);
+  const [userName, setUserName] = useState(true);
   const winner = useSelector((state) => state.game.winner);
   const score = useSelector((state) => state.game.winnerScore);
   const theme = useMantineTheme();
   const navigate = useNavigate();
   const { classes } = useStyles();
+  const playersList = useSelector((state) => state.game.players);
+  const [loading, setLoading] = useState(false);
 
   function handleClick() {
     socket.emit("leave_game_room", id);
     navigate("/");
   }
+
+  const onEndGame = async () => {
+    try {
+      setLoading(true);
+      await endGameOperation();
+      alert("Game Ended")
+    } catch (error) {
+      throw error;
+    }
+    setLoading(false);
+  };
+  
+
+  useEffect(() => {
+    // console.log();
+    setUserName((playersList.find((player) => player.id === socket.id)).name)
+  }, [])
 
   return (
     <>
@@ -86,6 +108,14 @@ function Win() {
         </Center>
         <Space h="lg" />
         <Center>
+        {
+          userName === winner.name ? (
+            <Button color="blue" radius="xs" onClick={handleClick}>
+              {loading ? "transacting...." : "Claim Your Reward"}
+            </Button>
+          ) : ("")
+        }
+          
           <Button color="blue" radius="xs" onClick={handleClick}>
             End Game
           </Button>

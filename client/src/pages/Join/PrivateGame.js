@@ -15,6 +15,8 @@ import {
 import { useForm } from "@mantine/form";
 import { EyeCheck, EyeOff } from "tabler-icons-react";
 import socket from "../../app/socket";
+import {connectWallet, disconnectWallet, getAccount} from "../../utils/wallet";
+import { buyTicketOperation, endGameOperation } from "../../utils/operation";
 
 const useStyles = createStyles((theme) => ({
   background: {
@@ -35,6 +37,9 @@ function PrivateGame() {
   const navigate = useNavigate();
   const theme = useMantineTheme();
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [staked, isStaked] = useState(false);
+  const [account, setAccount] = useState("");
 
   const form = useForm({
     initialValues: {
@@ -56,6 +61,26 @@ function PrivateGame() {
           : "You must enter a password if you want to play in a private game",
     },
   });
+
+  useEffect(() => {
+    (async () => {
+        const account = await getAccount();
+        setAccount(account);        
+        console.log(account)
+    })();
+  }, []);
+
+  const onBuyTicket = async () => {
+    try {
+      setLoading(true);
+      const res = await buyTicketOperation();
+      alert("1 TEZOS is now on stake")
+      isStaked(true);
+    } catch (error) {
+      throw error;
+    }
+    setLoading(false);
+  };
 
   useEffect(() => {
     return () => {};
@@ -145,7 +170,17 @@ function PrivateGame() {
                 >
                   Back
                 </Button>
-                <Button type="submit" size="md">
+                <Button
+                      color="dark"
+                      size="md"
+                      onClick={() => {
+                        onBuyTicket();
+                      }}
+                      disabled={staked ? true : false}
+                    >
+                      {loading ? "transacting...." : "Stake to Play"}
+                </Button>
+                <Button type="submit" size="md" disabled={staked ? false : true}>
                   Join
                 </Button>
               </Group>
