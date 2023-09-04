@@ -1,5 +1,6 @@
 import "./Background.css";
 import { useMantineTheme } from "@mantine/core";
+import React from 'react'
 
 const cardsPics = [
   "/images/Cards/Blue_2.png",

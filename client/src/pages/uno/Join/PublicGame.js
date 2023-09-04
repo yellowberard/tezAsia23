@@ -18,6 +18,7 @@ import { Refresh } from "tabler-icons-react";
 import socket from "../../../app/socket";
 import PublicForm from "../../../components/PublicForm/PublicForm";
 import { generatePath, useNavigate } from "react-router-dom";
+import React from 'react'
 
 const useStyles = createStyles((theme) => ({
   background: {

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { createStyles } from "@mantine/core";
 import NameTag from "../NameTag/NameTag";
 import Card from "../Card/Card";
+import React from 'react'
 
 const useStyles = createStyles((theme) => ({
   position: {

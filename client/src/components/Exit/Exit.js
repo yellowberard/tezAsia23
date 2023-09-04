@@ -7,6 +7,7 @@ import {
   useMantineTheme,
 } from "@mantine/core";
 import { DoorExit } from "tabler-icons-react";
+import React from 'react'
 
 import socket from "../../app/socket";
 import { useNavigate, useParams } from "react-router-dom";

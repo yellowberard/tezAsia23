@@ -17,8 +17,10 @@ root.render(
     <Provider store={store}>
       <DndProvider backend={HTML5Backend}>
         <NotificationsProvider>
-          <Header />
-          <App />
+          <React.StrictMode>
+            <Header />
+            <App />
+          </React.StrictMode>
         </NotificationsProvider>
       </DndProvider>
     </Provider>

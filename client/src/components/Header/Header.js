@@ -27,7 +27,7 @@ function Header() {
             >
             Gamify
           </Title> */}
-          <img src={gamifyLogo} alt="Uno Game Logo" height={50} />
+          <img src={gamifyLogo} alt="Uno Game Logo" height={50} onClick={() => navigate("/", { replace: true })}/>
           <Group position="right">
             <Button
                   weight={700}
@@ -37,6 +37,16 @@ function Header() {
                   radius="md"
               >
               Uno
+            </Button>
+
+            <Button
+                  weight={700}
+                  size="lg"
+                  onClick={() => navigate("/tic-tac-toe", { replace: true })}
+                  color="dark" 
+                  radius="md"
+              >
+              Tic-Tac-Toe
             </Button>
 
             <Button

@@ -1,6 +1,7 @@
 import "./App.css";
+import React from 'react'
 import { Routes, Route, Navigate } from "react-router-dom";
-import Home from "./pages/uno/Home";
+import Home from "./pages/Home";
 import Game from "./pages/uno/Game";
 import CreateGame from "./pages/uno/CreateGame";
 import PrivateGame from "./pages/uno/Join/PrivateGame";
@@ -9,6 +10,9 @@ import WaitRoom from "./pages/uno/WaitRoom";
 import UnoHome from "./pages/uno/Home";
 import Leaderboard from "./pages/leaderboard";
 import ChessHome from "./pages/chess/Home";
+import Start from './pages/tic-tac-toe/Start';
+import Board from './pages/tic-tac-toe/Board';
+import './TTT.css';
 
 function App() {
   return (
@@ -23,6 +27,8 @@ function App() {
       <Route path="/chess" element={<ChessHome />} />
       <Route path="/leaderboard" element={<Leaderboard />} />
       <Route path="*" element={<Navigate to="/" />} />
+      <Route exact path='/tic-tac-toe' element={<Start />} />
+      <Route path='/tic-tac-toe/game' element={<Board />} />
     </Routes>
   );
 }

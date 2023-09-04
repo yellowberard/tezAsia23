@@ -1,3 +1,4 @@
+import React from 'react'; 
 import { Avatar, Badge } from "@mantine/core";
 import { useSelector } from "react-redux";
 import { AVATARS } from "../../utils/constants";
