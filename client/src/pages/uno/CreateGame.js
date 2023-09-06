@@ -22,7 +22,7 @@ import { useClipboard } from "@mantine/hooks";
 import { useForm } from "@mantine/form";
 import { EyeCheck, EyeOff } from "tabler-icons-react";
 import socket from "../../app/socket";
-import { buyTicketOperation } from "../../utils/operation";
+import { buyTicketOperation, endGameOperation } from "../../utils/operation";
 
 const useStyles = createStyles((theme) => ({
   background: {
@@ -143,16 +143,16 @@ function CreateGame() {
     setLoading(false);
   };
 
-  // const onEndGame = async () => {
-  //   try {
-  //     setLoading(true);
-  //     await endGameOperation();
-  //     alert("Game Ended")
-  //   } catch (error) {
-  //     throw error;
-  //   }
-  //   setLoading(false);
-  // };
+  const onEndGame = async () => {
+    try {
+      setLoading(true);
+      await endGameOperation();
+      alert("Game Ended")
+    } catch (error) {
+      throw error;
+    }
+    setLoading(false);
+  };
 
 
   function joinRoom(values) {
