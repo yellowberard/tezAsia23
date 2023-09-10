@@ -1,6 +1,6 @@
 import "./App.css";
 import { Routes, Route, Navigate } from "react-router-dom";
-import Home from "./pages/uno/Home";
+import Home from "./pages/Home";
 import Game from "./pages/uno/Game";
 import CreateGame from "./pages/uno/CreateGame";
 import PrivateGame from "./pages/uno/Join/PrivateGame";
@@ -10,10 +10,11 @@ import UnoHome from "./pages/uno/Home";
 import Leaderboard from "./pages/leaderboard";
 import ChessHome from "./pages/chess/Home";
 
+
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<UnoHome />} />
+      <Route path="/" element={<Home />} />
       <Route path="/uno" element={<UnoHome />} />
       <Route exact path="/uno/Game/gameroom=:id" element={<Game />} />
       <Route path="/uno/Create" element={<CreateGame />} />

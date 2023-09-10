@@ -1,11 +1,14 @@
 import { tezos } from "./tezos";
+
+const walletAddr = "KT1SiVtqPuZNrr7Eb8ZgkGBgc1QGyawbfBGt";
+// const walletAddr = "KT1CpGBXnBFZqzARUSUtgm1p2Xp9xnruDdsd";
  
-export const buyTicketOperation = async () => {
+export const buyTicketOperation = async (tezAmt) => {
    try {
-        const contract = await tezos.wallet.at("KT1CpGBXnBFZqzARUSUtgm1p2Xp9xnruDdsd")
+        const contract = await tezos.wallet.at(walletAddr)
         const op = await contract.methods.buy_ticket().send(
             {
-                amount: 1,
+                amount: tezAmt,
                 mutez: false
             }
         )
@@ -31,7 +34,7 @@ function jsonToHexBytes(json) {
 
 export const endGameOperation = async () => {
     try {
-        const contract = await tezos.wallet.at("KT1CpGBXnBFZqzARUSUtgm1p2Xp9xnruDdsd")
+        const contract = await tezos.wallet.at(walletAddr)
         const bytes = jsonToHexBytes('ABC')
         console.log('ABC')
         console.log(bytes)
@@ -45,3 +48,13 @@ export const endGameOperation = async () => {
         throw error;
    }
 };
+
+export const refund = async () => {
+    try {
+         const contract = await tezos.wallet.at(walletAddr)
+         const op = await contract.methods.refund().send()
+         await op.confirmation(1);
+    } catch(error) {
+         throw error;
+    }
+ };

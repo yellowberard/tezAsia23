@@ -18,7 +18,9 @@
     "react-dnd": "^16.0.1",
     "react-dnd-html5-backend": "^16.0.1",
     "react-dom": "^18.1.0",
+    "react-icons": "^4.11.0",
     "react-redux": "^8.0.1",
+    "react-reveal": "^1.2.2",
     "react-router-dom": "^6.3.0",
     "react-scripts": "^4.0.3",
     "redux-persist": "^6.0.0",
@@ -41,7 +43,10 @@
   },
   "browserslist": [
     ">0.2%",
-   "not dead",
-   "not op_mini all"
- ]
+    "not dead",
+    "not op_mini all"
+  ],
+  "devDependencies": {
+    "tailwindcss": "^3.3.3"
+  }
 }

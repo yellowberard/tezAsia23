@@ -4,49 +4,281 @@ import { useMantineTheme } from "@mantine/core";
 function Leaderboard() {
     const theme = useMantineTheme();
 
+    const dados = [
+      {
+        id: 1,
+        name: 'Laura',
+        image: 'https://cdn-icons-png.flaticon.com/512/186/186037.png',
+        level: 16,
+        xp: 100,
+        coins: 500,
+        love: 6,
+        beacons: 2,
+        resources: 70,
+      },
+      {
+        id: 1,
+        name: 'Laura',
+        image: 'https://cdn-icons-png.flaticon.com/512/186/186037.png',
+        level: 16,
+        xp: 100,
+        coins: 500,
+        love: 6,
+        beacons: 2,
+        resources: 70,
+      },
+      {
+        id: 1,
+        name: 'Laura',
+        image: 'https://cdn-icons-png.flaticon.com/512/186/186037.png',
+        level: 16,
+        xp: 100,
+        coins: 500,
+        love: 6,
+        beacons: 2,
+        resources: 70,
+      },
+      {
+        id: 1,
+        name: 'Laura',
+        image: 'https://cdn-icons-png.flaticon.com/512/186/186037.png',
+        level: 16,
+        xp: 100,
+        coins: 500,
+        love: 6,
+        beacons: 2,
+        resources: 70,
+      },
+      {
+        id: 1,
+        name: 'Laura',
+        image: 'https://cdn-icons-png.flaticon.com/512/186/186037.png',
+        level: 16,
+        xp: 100,
+        coins: 500,
+        love: 6,
+        beacons: 2,
+        resources: 70,
+      },
+      {
+        id: 1,
+        name: 'Laura',
+        image: 'https://cdn-icons-png.flaticon.com/512/186/186037.png',
+        level: 16,
+        xp: 100,
+        coins: 500,
+        love: 6,
+        beacons: 2,
+        resources: 70,
+      },
+      {
+        id: 1,
+        name: 'Laura',
+        image: 'https://cdn-icons-png.flaticon.com/512/186/186037.png',
+        level: 16,
+        xp: 100,
+        coins: 500,
+        love: 6,
+        beacons: 2,
+        resources: 70,
+      },
+      {
+        id: 1,
+        name: 'Laura',
+        image: 'https://cdn-icons-png.flaticon.com/512/186/186037.png',
+        level: 16,
+        xp: 100,
+        coins: 500,
+        love: 6,
+        beacons: 2,
+        resources: 70,
+      },
+      {
+        id: 1,
+        name: 'Laura',
+        image: 'https://cdn-icons-png.flaticon.com/512/186/186037.png',
+        level: 16,
+        xp: 100,
+        coins: 500,
+        love: 6,
+        beacons: 2,
+        resources: 70,
+      },
+      {
+        id: 1,
+        name: 'Laura',
+        image: 'https://cdn-icons-png.flaticon.com/512/186/186037.png',
+        level: 16,
+        xp: 100,
+        coins: 500,
+        love: 6,
+        beacons: 2,
+        resources: 70,
+      },
+      {
+        id: 1,
+        name: 'Laura',
+        image: 'https://cdn-icons-png.flaticon.com/512/186/186037.png',
+        level: 16,
+        xp: 100,
+        coins: 500,
+        love: 6,
+        beacons: 2,
+        resources: 70,
+      },
+      {
+        id: 1,
+        name: 'Laura',
+        image: 'https://cdn-icons-png.flaticon.com/512/186/186037.png',
+        level: 16,
+        xp: 100,
+        coins: 500,
+        love: 6,
+        beacons: 2,
+        resources: 70,
+      },
+      {
+        id: 1,
+        name: 'Laura',
+        image: 'https://cdn-icons-png.flaticon.com/512/186/186037.png',
+        level: 16,
+        xp: 100,
+        coins: 500,
+        love: 6,
+        beacons: 2,
+        resources: 70,
+      },
+      {
+        id: 1,
+        name: 'Laura',
+        image: 'https://cdn-icons-png.flaticon.com/512/186/186037.png',
+        level: 16,
+        xp: 100,
+        coins: 500,
+        love: 6,
+        beacons: 2,
+        resources: 70,
+      },
+      {
+        id: 1,
+        name: 'Laura',
+        image: 'https://cdn-icons-png.flaticon.com/512/186/186037.png',
+        level: 16,
+        xp: 100,
+        coins: 500,
+        love: 6,
+        beacons: 2,
+        resources: 70,
+      },
+      {
+        id: 1,
+        name: 'Laura',
+        image: 'https://cdn-icons-png.flaticon.com/512/186/186037.png',
+        level: 16,
+        xp: 100,
+        coins: 500,
+        love: 6,
+        beacons: 2,
+        resources: 70,
+      },
+      {
+        id: 1,
+        name: 'Laura',
+        image: 'https://cdn-icons-png.flaticon.com/512/186/186037.png',
+        level: 16,
+        xp: 100,
+        coins: 500,
+        love: 6,
+        beacons: 2,
+        resources: 70,
+      },
+      {
+        id: 1,
+        name: 'Laura',
+        image: 'https://cdn-icons-png.flaticon.com/512/186/186037.png',
+        level: 16,
+        xp: 100,
+        coins: 500,
+        love: 6,
+        beacons: 2,
+        resources: 70,
+      },
+    ];
+
     return(
-        <div style={{
-            backgroundColor: theme.colors.red[8]
-        }}>
-            <div id="header">
-        <h1>Ranking</h1>
-        {/* <button class="share">
-          <i class="ph ph-share-network"></i>
-        </button> */}
+        // <div style={{
+        //     backgroundColor: theme.colors.red[8]
+        // }}>
+        <div className="leaderboardPg">
+
+        
+            <div className="container">
+      <div className="topLeadersList">
+        {dados.map((leader, index) => (
+          <div className="leader" key={leader.id}>
+            {index + 1 <= 3 && (
+              <div className="containerImage">
+                <img className="image" loading="lazy" src={leader.image} />
+                <div className="crown">
+                  <svg
+                    id="crown1"
+                    fill="#0f74b5"
+                    data-name="Layer 1"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 100 50"
+                  >
+                    <polygon
+                      className="cls-1"
+                      points="12.7 50 87.5 50 100 0 75 25 50 0 25.6 25 0 0 12.7 50"
+                    />
+                  </svg>
+                </div>
+                <div className="leaderName">{leader.name}</div>
+              </div>
+            )}
+          </div>
+        ))}
       </div>
-      <div id="leaderboard">
-        <div class="ribbon"></div>
-        <table>
-          <tr>
-            <td class="number">1</td>
-            <td class="name">Lee Taeyong</td>
-            <td class="points">
-              258.244 <img class="gold-medal" src="https://github.com/malunaridev/Challenges-iCodeThis/blob/master/4-leaderboard/assets/gold-medal.png?raw=true" alt="gold medal"/>
-            </td>
-          </tr>
-          <tr>
-            <td class="number">2</td>
-            <td class="name">Mark Lee</td>
-            <td class="points">258.242</td>
-          </tr>
-          <tr>
-            <td class="number">3</td>
-            <td class="name">Xiao Dejun</td>
-            <td class="points">258.223</td>
-          </tr>
-          <tr>
-            <td class="number">4</td>
-            <td class="name">Qian Kun</td>
-            <td class="points">258.212</td>
-          </tr>
-          <tr>
-            <td class="number">5</td>
-            <td class="name">Johnny Suh</td>
-            <td class="points">258.208</td>
-          </tr>
-        </table>
-      </div>
+
+      <div className="playerslist">
+        <div className="table">
+            <div>#</div>
+            <div>Name</div>
+            <div>LVL</div>
+            <div>XP</div>
+            <div>
+              Coins
+            </div>
+            <div>
+              Likes
+            </div>
+            <div>
+              Pass
+            </div>
+            <div>
+              Resources
+            </div>
         </div>
+        <div className="list">
+          {dados.map((leader, index) => (
+            <div className="player" key={leader.id}>
+              <span> {index + 1}</span>
+              <div className="user">
+                <img className="image" src={leader.image} />
+                <span> {leader.name} </span>
+              </div>
+              <span> {leader.level} </span>
+              <span> {leader.xp} </span>
+              <span> {leader.coins} </span>
+              <span> {leader.love} </span>
+              <span> {leader.beacons} </span>
+              <span> {leader.resources} </span>
+            </div>
+          ))}
+        </div>
+        </div>
+      </div>
+      </div>
     );
 }
 

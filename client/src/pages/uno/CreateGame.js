@@ -49,6 +49,7 @@ function CreateGame() {
   const [roomID, setRoomID] = useState("");
   const [loading, setLoading] = useState(false);
   const [staked, isStaked] = useState(false);
+  const [stakeAmt, setStakeAmt] = useState(false);
   const [isPrivateGame, setIsPrivateGame] = useState(false);
   const navigate = useNavigate();
   const theme = useMantineTheme();
@@ -132,15 +133,19 @@ function CreateGame() {
   }
 
   const onBuyTicket = async () => {
-    try {
-      setLoading(true);
-      const res = await buyTicketOperation();
-      alert("1 TEZOS is now on stake")
-      isStaked(true);
-    } catch (error) {
-      throw error;
+    if(stakeAmt > 0 && stakeAmt < 10) {
+      try {
+        setLoading(true);
+        const res = await buyTicketOperation(stakeAmt);
+        alert("1 TEZOS is now on stake")
+        isStaked(true);
+      } catch (error) {
+        throw error;
+      }
+      setLoading(false);
+    } else {
+      alert("Invalid Amount")
     }
-    setLoading(false);
   };
 
   const onEndGame = async () => {
@@ -156,13 +161,16 @@ function CreateGame() {
 
 
   function joinRoom(values) {
+    console.log(stakeAmt);
     const gameInfo = {
       room: values.roomName,
       name: values.name,
       maxPlayers: values.numOfPlayers,
       password: values.password,
       publicGameCheck: values.checked ? "private" : "public",
+      stakeAmt: stakeAmt,
     };
+    console.log(gameInfo);
     socket.emit("create_game", gameInfo);
   }
 
@@ -201,6 +209,19 @@ function CreateGame() {
                 radius="xl"
                 size="md"
                 {...form.getInputProps("name")}
+              />
+
+              <TextInput
+                required
+                placeholder="Amount to be Staked (1-9 TEZ)"
+                label="TEZ to be Staked"
+                radius="xl"
+                size="md"
+                type="number"
+                min={1}
+                max={9}
+                {...form.getInputProps("stakedAmt")}
+                onChange={(e) => setStakeAmt(e.target.value)}
               />
 
               <RadioGroup
