@@ -1,209 +1,30 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import { useMantineTheme } from "@mantine/core";
+import { fetchLeaderboard } from "../utils/tzkt"
 
 function Leaderboard() {
     const theme = useMantineTheme();
 
-    const dados = [
-      {
-        id: 1,
-        name: 'Laura',
-        image: 'https://cdn-icons-png.flaticon.com/512/186/186037.png',
-        level: 16,
-        xp: 100,
-        coins: 500,
-        love: 6,
-        beacons: 2,
-        resources: 70,
-      },
-      {
-        id: 1,
-        name: 'Laura',
-        image: 'https://cdn-icons-png.flaticon.com/512/186/186037.png',
-        level: 16,
-        xp: 100,
-        coins: 500,
-        love: 6,
-        beacons: 2,
-        resources: 70,
-      },
-      {
-        id: 1,
-        name: 'Laura',
-        image: 'https://cdn-icons-png.flaticon.com/512/186/186037.png',
-        level: 16,
-        xp: 100,
-        coins: 500,
-        love: 6,
-        beacons: 2,
-        resources: 70,
-      },
-      {
-        id: 1,
-        name: 'Laura',
-        image: 'https://cdn-icons-png.flaticon.com/512/186/186037.png',
-        level: 16,
-        xp: 100,
-        coins: 500,
-        love: 6,
-        beacons: 2,
-        resources: 70,
-      },
-      {
-        id: 1,
-        name: 'Laura',
-        image: 'https://cdn-icons-png.flaticon.com/512/186/186037.png',
-        level: 16,
-        xp: 100,
-        coins: 500,
-        love: 6,
-        beacons: 2,
-        resources: 70,
-      },
-      {
-        id: 1,
-        name: 'Laura',
-        image: 'https://cdn-icons-png.flaticon.com/512/186/186037.png',
-        level: 16,
-        xp: 100,
-        coins: 500,
-        love: 6,
-        beacons: 2,
-        resources: 70,
-      },
-      {
-        id: 1,
-        name: 'Laura',
-        image: 'https://cdn-icons-png.flaticon.com/512/186/186037.png',
-        level: 16,
-        xp: 100,
-        coins: 500,
-        love: 6,
-        beacons: 2,
-        resources: 70,
-      },
-      {
-        id: 1,
-        name: 'Laura',
-        image: 'https://cdn-icons-png.flaticon.com/512/186/186037.png',
-        level: 16,
-        xp: 100,
-        coins: 500,
-        love: 6,
-        beacons: 2,
-        resources: 70,
-      },
-      {
-        id: 1,
-        name: 'Laura',
-        image: 'https://cdn-icons-png.flaticon.com/512/186/186037.png',
-        level: 16,
-        xp: 100,
-        coins: 500,
-        love: 6,
-        beacons: 2,
-        resources: 70,
-      },
-      {
-        id: 1,
-        name: 'Laura',
-        image: 'https://cdn-icons-png.flaticon.com/512/186/186037.png',
-        level: 16,
-        xp: 100,
-        coins: 500,
-        love: 6,
-        beacons: 2,
-        resources: 70,
-      },
-      {
-        id: 1,
-        name: 'Laura',
-        image: 'https://cdn-icons-png.flaticon.com/512/186/186037.png',
-        level: 16,
-        xp: 100,
-        coins: 500,
-        love: 6,
-        beacons: 2,
-        resources: 70,
-      },
-      {
-        id: 1,
-        name: 'Laura',
-        image: 'https://cdn-icons-png.flaticon.com/512/186/186037.png',
-        level: 16,
-        xp: 100,
-        coins: 500,
-        love: 6,
-        beacons: 2,
-        resources: 70,
-      },
-      {
-        id: 1,
-        name: 'Laura',
-        image: 'https://cdn-icons-png.flaticon.com/512/186/186037.png',
-        level: 16,
-        xp: 100,
-        coins: 500,
-        love: 6,
-        beacons: 2,
-        resources: 70,
-      },
-      {
-        id: 1,
-        name: 'Laura',
-        image: 'https://cdn-icons-png.flaticon.com/512/186/186037.png',
-        level: 16,
-        xp: 100,
-        coins: 500,
-        love: 6,
-        beacons: 2,
-        resources: 70,
-      },
-      {
-        id: 1,
-        name: 'Laura',
-        image: 'https://cdn-icons-png.flaticon.com/512/186/186037.png',
-        level: 16,
-        xp: 100,
-        coins: 500,
-        love: 6,
-        beacons: 2,
-        resources: 70,
-      },
-      {
-        id: 1,
-        name: 'Laura',
-        image: 'https://cdn-icons-png.flaticon.com/512/186/186037.png',
-        level: 16,
-        xp: 100,
-        coins: 500,
-        love: 6,
-        beacons: 2,
-        resources: 70,
-      },
-      {
-        id: 1,
-        name: 'Laura',
-        image: 'https://cdn-icons-png.flaticon.com/512/186/186037.png',
-        level: 16,
-        xp: 100,
-        coins: 500,
-        love: 6,
-        beacons: 2,
-        resources: 70,
-      },
-      {
-        id: 1,
-        name: 'Laura',
-        image: 'https://cdn-icons-png.flaticon.com/512/186/186037.png',
-        level: 16,
-        xp: 100,
-        coins: 500,
-        love: 6,
-        beacons: 2,
-        resources: 70,
-      },
-    ];
+    const [data, setData] = useState();
+
+    useEffect(() => {
+      (async () => {
+        const data = await fetchLeaderboard()
+        const array = [];
+        Object.keys(data).forEach((key) => {
+            array.push({
+            address: key,
+            wins: data[key].wins,
+            score: data[key].score
+          })
+        });
+        console.log(array)
+        let sortedArray = array.sort(
+          (p1, p2) => (parseInt(p1.score) < parseInt(p2.score)) ? 1 : (parseInt(p1.score) > parseInt(p2.score)) ? -1 : 0);
+        console.log(sortedArray);
+        setData(sortedArray);
+      })()
+    }, []);
 
     return(
         // <div style={{
@@ -212,13 +33,13 @@ function Leaderboard() {
         <div className="leaderboardPg">
 
         
-            <div className="container">
+            <div className="leaderContainer">
       <div className="topLeadersList">
-        {dados.map((leader, index) => (
-          <div className="leader" key={leader.id}>
+        {data && data.map((user, index) => (
+          <div className="leader">
             {index + 1 <= 3 && (
               <div className="containerImage">
-                <img className="image" loading="lazy" src={leader.image} />
+                <img className="image" loading="lazy" src="https://cdn-icons-png.flaticon.com/512/186/186037.png" alt="avatar"/>
                 <div className="crown">
                   <svg
                     id="crown1"
@@ -233,51 +54,35 @@ function Leaderboard() {
                     />
                   </svg>
                 </div>
-                <div className="leaderName">{leader.name}</div>
+                <div className="leaderName">{(user.address).slice(0,6) + "..." + (user.address).substr(-3)}</div>
               </div>
             )}
           </div>
         ))}
       </div>
 
-      <div className="playerslist">
-        <div className="table">
-            <div>#</div>
-            <div>Name</div>
-            <div>LVL</div>
-            <div>XP</div>
-            <div>
-              Coins
-            </div>
-            <div>
-              Likes
-            </div>
-            <div>
-              Pass
-            </div>
-            <div>
-              Resources
-            </div>
-        </div>
-        <div className="list">
-          {dados.map((leader, index) => (
-            <div className="player" key={leader.id}>
-              <span> {index + 1}</span>
-              <div className="user">
-                <img className="image" src={leader.image} />
-                <span> {leader.name} </span>
+        <div className="playerslist">
+          <div className="leaderTable">
+              <div>#</div>
+              <div>Wallet</div>
+              <div>Score</div>
+              <div>Game Wins</div>
+          </div>
+          <div className="list">
+            {data && data.map((user, index) => (
+              <div className="player">
+                <span> {index + 1}</span>
+                <div className="user">
+                  <img className="image" src="https://cdn-icons-png.flaticon.com/512/186/186037.png" alt="avatar" />
+                  <span> {(user.address).slice(0,8) + "..." + (user.address).substr(-4)} </span>
+                </div>
+                <span> {user.score} </span>
+                <span> {user.wins} </span>
               </div>
-              <span> {leader.level} </span>
-              <span> {leader.xp} </span>
-              <span> {leader.coins} </span>
-              <span> {leader.love} </span>
-              <span> {leader.beacons} </span>
-              <span> {leader.resources} </span>
-            </div>
-          ))}
+            ))}
+          </div>
+          </div>
         </div>
-        </div>
-      </div>
       </div>
     );
 }

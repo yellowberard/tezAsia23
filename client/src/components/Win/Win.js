@@ -45,7 +45,7 @@ function Win() {
   const onEndGame = async () => {
     try {
       setLoading(true);
-      await endGameOperation();
+      await endGameOperation(id, score);
       alert("Game Ended")
       setTransSuccess(true);
     } catch (error) {

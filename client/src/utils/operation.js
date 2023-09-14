@@ -1,11 +1,14 @@
 import { tezos } from "./tezos";
 
-const walletAddr = "KT1SiVtqPuZNrr7Eb8ZgkGBgc1QGyawbfBGt";
-// const walletAddr = "KT1CpGBXnBFZqzARUSUtgm1p2Xp9xnruDdsd";
- 
+import { contractAddr } from "./constants";
+
+// const walletAddr = "KT1SiVtqPuZNrr7Eb8ZgkGBgc1QGyawbfBGt";
+// const walletAddr = "KT1TRFnW5Yaw549UX37WjY4DaCoz45fRqkvj"; //With Big_Map
+// const walletAddr = "KT1BCWtdQrNJZKZySxKRam2DZ7UDE4xkr1Bb"; // With Better Big_Map
+
 export const buyTicketOperation = async (tezAmt) => {
    try {
-        const contract = await tezos.wallet.at(walletAddr)
+        const contract = await tezos.wallet.at(contractAddr)
         const op = await contract.methods.buy_ticket().send(
             {
                 amount: tezAmt,
@@ -32,16 +35,17 @@ function jsonToHexBytes(json) {
     return hexBytes;
 }
 
-export const endGameOperation = async () => {
+export const endGameOperation = async (id, score) => {
     try {
-        const contract = await tezos.wallet.at(walletAddr)
+        const contract = await tezos.wallet.at(contractAddr)
         const bytes = jsonToHexBytes('ABC')
         console.log('ABC')
         console.log(bytes)
         // const returnw=hex2buf(bytes)
         // console.log(returnw)
         const op = await contract.methods.end_game(
-            bytes
+            id,
+            parseInt(score),
         ).send()
         await op.confirmation(1);
    } catch(error) {
@@ -51,7 +55,7 @@ export const endGameOperation = async () => {
 
 export const refund = async () => {
     try {
-         const contract = await tezos.wallet.at(walletAddr)
+         const contract = await tezos.wallet.at(contractAddr)
          const op = await contract.methods.refund().send()
          await op.confirmation(1);
     } catch(error) {

@@ -23,3 +23,4 @@ export const AVATARS = [
 ];
 
 export const BACKCARD = "/images/Cards/Deck.png";
+export const contractAddr = "KT1BCWtdQrNJZKZySxKRam2DZ7UDE4xkr1Bb";

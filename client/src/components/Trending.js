@@ -1,5 +1,7 @@
 import TrendingCard from "./TrendingCard"
 // import Fade from 'react-reveal/Fade';
+import UNOBg from "../assets/uno-wallpaper.jpeg";
+import ChessBg from "../assets/chess_bg.jpeg";
 
 const Trending = () => {
   return (
@@ -13,8 +15,8 @@ const Trending = () => {
 
         {/* <Fade bottom> */}
         <div className="flex flex-wrap items-center justify-center xl:justify-between sm:space-x-4 xl:space-x-0 mt-[4rem]" >
-            <TrendingCard image={require("../assets/uno-wallpaper.jpeg")} name={'UNO'} />
-            <TrendingCard image={require("../assets/chess_bg.jpeg")} name={'CHESS'} />
+            <TrendingCard image={UNOBg} name={'UNO'} />
+            <TrendingCard image={ChessBg} name={'CHESS'} />
             
         </div>
         {/* </Fade> */}

@@ -1,4 +1,5 @@
-import "./App.css";
+import "./App.css?version=1";
+import "./dist/output.css?version=1";
 import { Routes, Route, Navigate } from "react-router-dom";
 import Home from "./pages/Home";
 import Game from "./pages/uno/Game";

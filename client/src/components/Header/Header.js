@@ -27,7 +27,7 @@ function Header() {
             >
             Gamify
           </Title> */}
-          <img src={gamifyLogo} alt="Uno Game Logo" height={50} />
+          <img className="pointer" src={gamifyLogo} alt="Uno Game Logo" height={50} width={150} onClick={() => navigate("/", { replace: true })} />
           <Group position="right">
             <Button
                   weight={700}
