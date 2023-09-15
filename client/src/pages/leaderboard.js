@@ -39,7 +39,15 @@ function Leaderboard() {
           <div className="leader">
             {index + 1 <= 3 && (
               <div className="containerImage">
-                <img className="image" loading="lazy" src="https://cdn-icons-png.flaticon.com/512/186/186037.png" alt="avatar"/>
+                <img className="image" 
+                  loading="lazy" 
+                  src={
+                    index % 2 === 0 
+                      ? "https://cdn-icons-png.flaticon.com/512/186/186037.png" 
+                      : "https://cdn-icons-png.flaticon.com/512/186/186038.png"
+                    } 
+                  alt="avatar"  
+                />
                 <div className="crown">
                   <svg
                     id="crown1"
