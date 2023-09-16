@@ -74,7 +74,7 @@ function PrivateGame() {
     try {
       setLoading(true);
       const res = await buyTicketOperation();
-      alert("TEZOS is now on stake")
+      alert("Your TEZOS is now on stake")
       isStaked(true);
     } catch (error) {
       throw error;

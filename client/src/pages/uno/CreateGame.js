@@ -108,9 +108,10 @@ function CreateGame() {
 
   const handleNavigate = useCallback(
     (id) => {
-      const waitingRoomPath = generatePath("/uno/WaitingRoom/gameroom=:id", {
+      const waitingRoomPath = generatePath(`/uno/WaitingRoom/gameroom=:id`, {
         id: id,
       });
+      console.log(waitingRoomPath);
       navigate(waitingRoomPath);
     },
     [navigate]
@@ -137,7 +138,7 @@ function CreateGame() {
       try {
         setLoading(true);
         const res = await buyTicketOperation(stakeAmt);
-        alert("1 TEZOS is now on stake")
+        alert("Your TEZOS is now on stake")
         isStaked(true);
       } catch (error) {
         throw error;

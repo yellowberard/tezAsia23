@@ -44,7 +44,7 @@ function PublicForm({ roomID, stakeAmt }) {
     try {
       setLoading(true);
       const res = await buyTicketOperation(stakeAmt);
-      alert("1 TEZOS is now on stake")
+      alert("Your TEZOS is now on stake")
       isStaked(true);
     } catch (error) {
       throw error;

@@ -62,3 +62,56 @@ export const refund = async () => {
          throw error;
     }
  };
+
+ export const createWeeklyOperation = async (gameName) => {
+    try {
+         const contract = await tezos.wallet.at(contractAddr)
+         const op = await contract.methods.create_weekly_challenge(
+            gameName
+         ).send()
+         await op.confirmation(1);
+    } catch(error) {
+         throw error;
+    }
+ };
+
+ export const enterWeeklyOperation = async (challengeId) => {
+    try {
+         const contract = await tezos.wallet.at(contractAddr)
+         const op = await contract.methods.enter_weekly_challenge(
+            challengeId
+         ).send(
+            {
+                amount: 1,
+                mutez: false
+            }
+         )
+         await op.confirmation(1);
+    } catch(error) {
+         throw error;
+    }
+ };
+
+ export const participatedWeeklyOperation = async (challengeId) => {
+    try {
+         const contract = await tezos.wallet.at(contractAddr)
+         const op = await contract.methods.participated_weekly_challenge(
+            challengeId
+         ).send()
+         await op.confirmation(1);
+    } catch(error) {
+         throw error;
+    }
+ };
+
+ export const endWeeklyOperation = async (challengeId) => {
+    try {
+         const contract = await tezos.wallet.at(contractAddr)
+         const op = await contract.methods.end_weekly_challenge(
+            challengeId
+         ).send()
+         await op.confirmation(1);
+    } catch(error) {
+         throw error;
+    }
+ };

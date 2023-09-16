@@ -30,7 +30,7 @@ function Leaderboard() {
         // <div style={{
         //     backgroundColor: theme.colors.red[8]
         // }}>
-        <div className="leaderboardPg">
+        <div className="leaderboardPg ">
 
         
             <div className="leaderContainer">

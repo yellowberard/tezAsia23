@@ -1,13 +1,14 @@
 import {useState,useEffect} from 'react';
+import { useNavigate } from "react-router-dom";
 
-  const  WeeklyGameCard= ({bidAmount,image}) => {
+  const  WeeklyGameCard= ({bidAmount,image,name,deadLine}) => {
 
   const [days, setDays] = useState(0);
   const [hours, setHours] = useState(0);
   const [minutes, setMinutes] = useState(0);
   const [seconds, setSeconds] = useState(0);
-
-  const deadline = "December, 31, 2023";
+  const navigate = useNavigate();
+  const deadline = "September , 20, 2023";
 
   const getTime = () => {
     const time = Date.parse(deadline) - Date.now();    
@@ -34,12 +35,12 @@ import {useState,useEffect} from 'react';
   
     <div className="px-5 timer pb-5 flex flex-col items-center my-5 border-gray-200">
         
-            <h1 className="font-bold timer-card-heading tracking-tight text-gray-900 dark:text-white m-5"> Sudoku Game </h1>
+            <h1 className="font-bold timer-card-heading tracking-tight text-gray-900 dark:text-white m-5"> {name} </h1>
           <div className='card-info flex justify-between w-full'>
             <span>Current Bid: {bidAmount} tez</span>
-            <button className='card-participate-btn'> Participate</button>
+            <button className='card-participate-btn' onClick={() => navigate("/whac-a-mole", { replace: true })}> Participate</button>
           </div>
-          <h2 className="font-bold tracking-tight text-gray-900 dark:text-white m-5" > Time Left</h2>
+          <h2 className="font-bold tracking-tight text-gray-900 dark:text-white m-5"> Time Left</h2>
 
         <div className="flex items-center align-middle justify-center gap-x-3 mt-2.5 mb-5 w-full ">
              <div className="flex flex-col mx-3 my-3 border-gray-200 box-timer ">
