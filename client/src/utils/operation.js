@@ -92,11 +92,12 @@ export const refund = async () => {
     }
  };
 
- export const participatedWeeklyOperation = async (challengeId) => {
+ export const participatedWeeklyOperation = async (challengeId, score) => {
     try {
          const contract = await tezos.wallet.at(contractAddr)
          const op = await contract.methods.participated_weekly_challenge(
-            challengeId
+            challengeId,
+            score
          ).send()
          await op.confirmation(1);
     } catch(error) {

@@ -1,5 +1,6 @@
 import {useState,useEffect} from 'react';
 import { useNavigate } from "react-router-dom";
+import { enterWeeklyOperation } from "../utils/operation";
 
   const  WeeklyGameCard= ({bidAmount,image,name,deadLine}) => {
 
@@ -25,6 +26,11 @@ import { useNavigate } from "react-router-dom";
     return () => clearInterval(interval);
   }, []);
 
+  const participate = async() => {
+    await enterWeeklyOperation(0);
+    navigate("/whac-a-mole", { replace: true })
+  }
+
     return (
     
  <div className=" flex flex-col justify-center align-middle my-2 rounded-lg shadow ">
@@ -32,13 +38,12 @@ import { useNavigate } from "react-router-dom";
        {/* <div className=""> */}
              <img className="weekly-img" src={image} />
        {/* </div> */}
-  
     <div className="px-5 timer pb-5 flex flex-col items-center my-5 border-gray-200">
         
             <h1 className="font-bold timer-card-heading tracking-tight text-gray-900 dark:text-white m-5"> {name} </h1>
           <div className='card-info flex justify-between w-full'>
             <span>Current Bid: {bidAmount} tez</span>
-            <button className='card-participate-btn' onClick={() => navigate("/whac-a-mole", { replace: true })}> Participate</button>
+            <button className='card-participate-btn' onClick={() => participate()}> Participate</button>
           </div>
           <h2 className="font-bold tracking-tight text-gray-900 dark:text-white m-5"> Time Left</h2>
 

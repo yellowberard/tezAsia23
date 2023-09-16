@@ -4,6 +4,8 @@ import confetti from 'canvas-confetti'
 import Splitting from 'splitting'
 import gsap from 'gsap'
 import T from 'prop-types'
+import { participatedWeeklyOperation } from "../../utils/operation";
+import { useNavigate } from "react-router-dom";
 
 import malletSrc from '../../assets/mallet.svg'
 
@@ -138,13 +140,13 @@ CountDown.propTypes = {
   onComplete: T.func.isRequired,
 }
 
-const FinishScreen = ({ onRestart, onReset, result }) => (
+const FinishScreen = ({ onRestart, onReset, result, navigate }) => (
   <div className="info-screen">
     <div className="results">
       <h2 className="info__text boring-text">{`You Scored ${result}`}</h2>
     </div>
-    <button className='whacButton' onClick={onRestart}>Play Again</button>
-    <button className='whacButton' onClick={onReset}>Main Menu</button>
+    {/* <button className='whacButton' onClick={onRestart}>Play Again</button> */}
+    <button className='whacButton' onClick={() => navigate('/', { replace: true })}>Main Menu</button>
   </div>
 )
 
@@ -152,6 +154,7 @@ FinishScreen.propTypes = {
   onRestart: T.func.isRequired,
   onReset: T.func.isRequired,
   result: T.number.isRequired,
+  navigate: T.func.isRequired,
 }
 
 const StartScreen = ({ onStart }) => (
@@ -829,7 +832,7 @@ const WhacAMoleGame = () => {
     setScore(score + points)
   }
 
-  const endGame = () => {
+  const endGame = async () => {
     if (!muted) {
       playClick()
       playWhistle()
@@ -842,8 +845,10 @@ const WhacAMoleGame = () => {
       setHighScore(score)
       setNewHighScore(true)
     }
+    
     setPlaying(false)
     setFinished(true)
+    await participatedWeeklyOperation(0, score)
   }
 
   const startPlaying = () => {
@@ -876,6 +881,7 @@ const WhacAMoleGame = () => {
     if (muted) playClick()
     setMuted(!muted)
   }
+  const navigate = useNavigate();
 
   return (
     <Fragment className="whacMoleBody">
@@ -956,11 +962,13 @@ const WhacAMoleGame = () => {
         </div>
       </main>
       {/* Finished */}
+      
       {finished && (
         <FinishScreen
           onRestart={startGame}
           onReset={resetGame}
           result={score}
+          navigate={navigate}
         />
       )}
     </Fragment>
