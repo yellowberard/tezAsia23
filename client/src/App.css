@@ -262,3 +262,59 @@ body {
     overflow-x: hidden;
   }
 }
+
+/** Weekly  **/
+.weekly-games {
+  margin-bottom: 2rem;
+  ;
+}
+
+.weekly-heading {
+  font-size: 1.8rem;
+  margin-bottom: 4rem
+}
+
+.box-timer {
+  /* border-right: solid 1px rgba(255, 255, 255, 0.2); */
+  font-weight: 300;
+  padding: 1.5rem;
+}
+
+.timer {
+  background-color: rgba(255, 255, 255, 0.1);
+  display: inline-block;
+  z-index: -10;
+  margin-top: -0.5rem;
+  padding: 10px;
+  text-align: center;
+  width: 25rem;
+  border-radius: 0.5rem;
+
+}
+
+.weekly-img {
+  width: 25rem;
+  height: 20rem;
+  border-radius: 0.5rem;
+}
+
+.timer-card-heading {
+  margin-top: 0.5rem;
+  font-size: 1.5rem;
+}
+
+.card-info {
+  margin-top: 0.5rem;
+}
+
+.card-participate-btn {
+  background-color: #843fe477;
+  padding: 0.5rem;
+  border-radius: 0.35rem;
+  cursor: pointer;
+}
+
+.timer h2 {
+  margin-top: 0.5rem;
+  font-size: 1rem;
+}
