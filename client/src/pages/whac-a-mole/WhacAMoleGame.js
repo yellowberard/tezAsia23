@@ -6,6 +6,15 @@ import gsap from 'gsap'
 import T from 'prop-types'
 import { participatedWeeklyOperation } from "../../utils/operation";
 import { useNavigate } from "react-router-dom";
+import countdownBeep from "../../assets/audio/countdown-beep.mp3";
+import pop from "../../assets/audio/pop.mp3";
+import squeakIn from "../../assets/audio/squeak-in.mp3";
+import squeakOut from "../../assets/audio/squeak-out.mp3";
+import kidsCheering from "../../assets/audio/kids-cheering.mp3";
+import thudSmall from "../../assets/audio/thud--small.mp3";
+import whistle from "../../assets/audio/whistle.mp3";
+import sparkle from "../../assets/audio/sparkle.mp3";
+import click from "../../assets/audio/click.mp3";
 
 import malletSrc from '../../assets/mallet.svg'
 
@@ -776,33 +785,33 @@ const Mallet = () => {
 
 const WhacAMoleGame = () => {
   const { play: playCount } = useAudio(
-    'https://assets.codepen.io/605876/countdown-beep.mp3'
+    countdownBeep
   )
   const { play: playWhack } = useAudio(
-    'https://assets.codepen.io/605876/pop.mp3'
+    pop
   )
   const { play: playSqueak } = useAudio(
-    'https://assets.codepen.io/605876/squeak-in.mp3'
+    squeakIn
   )
   const { play: playSqueakOut } = useAudio(
-    'https://assets.codepen.io/605876/squeak-out.mp3'
+    squeakOut
   )
   const { play: playCheer } = useAudio(
-    'https://assets.codepen.io/605876/kids-cheering.mp3'
+    kidsCheering
   )
   const { play: playThud } = useAudio(
-    'https://assets.codepen.io/605876/thud--small.mp3',
+    thudSmall,
     0.65
   )
   const { play: playWhistle } = useAudio(
-    'https://assets.codepen.io/605876/whistle.mp3',
+    whistle,
     0.65
   )
   const { play: playSparkle } = useAudio(
-    'https://assets.codepen.io/605876/sparkle.mp3'
+    sparkle
   )
   const { play: playClick } = useAudio(
-    'https://assets.codepen.io/605876/click.mp3'
+    click
   )
   const [moles, setMoles] = useState(generateMoles())
   const [playing, setPlaying] = useState(false)
